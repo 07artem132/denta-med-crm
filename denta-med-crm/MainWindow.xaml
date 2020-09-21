@@ -5,8 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:denta_med_crm"
         mc:Ignorable="d"
-        Title="denta-med-crm" Height="450" Width="800">
+        Title="Denta Med crm" Height="450" Width="800">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Menu  Grid.Row="0" VerticalAlignment="Top" Height="18" Margin="0,0,-0.4,0" >
+            <MenuItem Header="База данных">
+                <MenuItem Header="Загрузить" ></MenuItem>
+                <MenuItem Header="Выгрузить" ></MenuItem>
+            </MenuItem>
+            <MenuItem Header="О программе" ></MenuItem>
+        </Menu>
+        <TabControl Grid.Row="1"   >
+            <TabItem Header="Список пациентов">
+
+            </TabItem>
+            <TabItem Header="Записи">
+
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>
