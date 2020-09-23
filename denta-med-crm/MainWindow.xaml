@@ -12,7 +12,7 @@
                 <MenuItem Header="Загрузить" ></MenuItem>
                 <MenuItem Header="Выгрузить" ></MenuItem>
             </MenuItem>
-            <MenuItem Header="Поля" ></MenuItem>
+            <MenuItem x:Name="menuFields" Header="Поля" ></MenuItem>
             <MenuItem Header="О программе" ></MenuItem>
             <Separator Width="10"></Separator>
             <MenuItem Header="Пациенты" Foreground="#FF0169B0" ></MenuItem>
@@ -45,9 +45,7 @@
                     </Button>
                     <DataGrid x:Name="dataGrid" Margin="0,52,0,0" SelectionChanged="DataGrid_SelectionChanged">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Фамилия" Binding="{Binding FirstName}" Width="150" />
-                            <DataGridTextColumn Header="Имя" Binding="{Binding MiddleName}" Width="150" />
-                            <DataGridTextColumn Header="Отчество" Binding="{Binding LastName}" Width="150" />
+                            <DataGridTextColumn Header="ФИО" Binding="{Binding FirstName}" Width="150" />
                             <DataGridTextColumn Header="Дата рождения" Binding="{Binding DateOfBirth}" Width="150" />
                             <DataGridTextColumn Header="Первый визит" Binding="{Binding FirstVisit}" Width="150" />
                             <DataGridTextColumn Header="Последний визит" Binding="{Binding LastVisit}" Width="150" />
@@ -55,15 +53,14 @@
                             <DataGridTextColumn Header="Телефон" Binding="{Binding MainPhoneNumber}" Width="150" />
                             <DataGridTextColumn Header="Доп. телефон" Binding="{Binding AlternativePhoneNumber}" Width="150" />
 
-                            <DataGridTemplateColumn>
+                            <!--<DataGridTemplateColumn>
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <Button Click="Button_Click" Content="Процедуры"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
-                            </DataGridTemplateColumn>
+                            </DataGridTemplateColumn>-->
 
-                            <DataGridTextColumn Header="Процедуры" Binding="{Binding Procedures}" Width="150" />
                         </DataGrid.Columns>
                     </DataGrid>
                     <Button x:Name="btAddEvent" Content="" Margin="80,10,0,0" Click="BtAddEvent_Click" Height="37" VerticalAlignment="Top" HorizontalAlignment="Left" Width="75">
@@ -76,6 +73,7 @@
                             <ImageBrush ImageSource="Images/EditUser.png" Stretch="Uniform"/>
                         </Button.Background>
                     </Button>
+                    <TextBox TextWrapping="Wrap" Text="TextBox" Margin="249,10,10,0" Height="37" VerticalAlignment="Top" VerticalContentAlignment="Center" Padding="2,0,0,0"/>
                 </Grid>
             </TabItem>
 
