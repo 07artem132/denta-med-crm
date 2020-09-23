@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace denta_med_crm.Model
 {
     [Serializable]
-    class Client
+    public class Client
     {
         [JsonProperty("first_name")]
         public string FirstName;

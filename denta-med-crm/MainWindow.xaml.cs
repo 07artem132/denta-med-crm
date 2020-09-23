@@ -1,4 +1,5 @@
-﻿using System;
+﻿using denta_med_crm.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,57 @@ namespace denta_med_crm
     /// </summary>
     public partial class MainWindow : Window
     {
+        Database db = new Database();
+
         public MainWindow()
         {
             InitializeComponent();
+
+            //db init
+
+            InitializeOrUpdate();
+        }
+
+
+        public void InitializeOrUpdate()
+        {
+            if (dataGrid.ItemsSource == null)
+                dataGrid.ItemsSource = db.Clients;
+            else dataGrid.Items.Refresh();
+            
+        }
+
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var context = ((System.Windows.Controls.Button)e.Source).DataContext as Client;
+
+            //TODO: Code
+        }
+
+        private void BtAddUser_Click(object sender, RoutedEventArgs e)
+        {
+            //
+        }
+
+        private void BtAddEvent_Click(object sender, RoutedEventArgs e)
+        {
+            if (dataGrid.SelectedItem == null)
+                return;
+            var client = (Client)dataGrid.SelectedItem;
+
+        }
+
+        private void BtEditUser_Click(object sender, RoutedEventArgs e)
+        {
+            if (dataGrid.SelectedItem == null)
+                return;
+            var client = (Client)dataGrid.SelectedItem;
+
+        }
+
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
         }
     }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace denta_med_crm.Model
 {
     [Serializable]
-    struct Procedure
+    public class Procedure
     {
         //Авто подсказка по первым буквам (поиск по всей строке любых процедур которые когда либо и кому либо были проведены, при поиске приведение к одному регистру)
         [JsonProperty("procedure_name")]
