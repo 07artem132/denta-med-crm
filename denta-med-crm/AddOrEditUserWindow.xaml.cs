@@ -1,4 +1,5 @@
-﻿using System;
+﻿using denta_med_crm.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,19 @@ namespace denta_med_crm
     /// </summary>
     public partial class AddOrEditUserWindow : Window
     {
+        public Client EditableClient;
+
         public AddOrEditUserWindow()
         {
             InitializeComponent();
+        }
+
+
+        public void Init(Client clientOrNull)
+        {
+            this.EditableClient = clientOrNull;
+
+            //
         }
     }
 }

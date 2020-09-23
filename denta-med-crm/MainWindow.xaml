@@ -12,6 +12,7 @@
                 <MenuItem Header="Загрузить" ></MenuItem>
                 <MenuItem Header="Выгрузить" ></MenuItem>
             </MenuItem>
+            <MenuItem Header="Поля" ></MenuItem>
             <MenuItem Header="О программе" ></MenuItem>
             <Separator Width="10"></Separator>
             <MenuItem Header="Пациенты" Foreground="#FF0169B0" ></MenuItem>
