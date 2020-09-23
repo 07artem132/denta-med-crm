@@ -11,11 +11,7 @@ namespace denta_med_crm.Model
     public class Client
     {
         [JsonProperty("first_name")]
-        public string FirstName;
-        [JsonProperty("middle_name")]
-        public string MiddleName;
-        [JsonProperty("last_name")]
-        public string LastName;
+        public string FullName;
         //подсветить если сегодня его день рождения или в пределах 7 дней в карточке
         [JsonProperty("date_of_birth")]
         public DateTime DateOfBirth;

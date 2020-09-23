@@ -30,6 +30,23 @@ namespace denta_med_crm
             //db init
 
             InitializeOrUpdate();
+
+            foreach (var column in dataGrid.Columns)
+            {
+                var item = new MenuItem();
+                item.IsCheckable = true;
+                item.IsChecked = true; //default
+                item.Header = column.Header;
+                item.Checked += (x,y) =>
+                {
+                    column.Visibility = Visibility.Visible;
+                };
+                item.Unchecked += (x, y) =>
+                {
+                    column.Visibility = Visibility.Hidden;
+                };
+                menuFields.Items.Add(item);
+            }
         }
 
 
