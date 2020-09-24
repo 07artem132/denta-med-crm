@@ -79,7 +79,8 @@ namespace denta_med_crm
         private void LoadToothData(Inspection from)
         {
             disallowEditingTeeth = true;
-            var enu = new Grid[] { _ts1, _ts2, _ts3, _ts4 };
+            //  var enu = new Grid[] { _ts1, _ts2, _ts3, _ts4 };
+            var enu= new Grid[1];
             foreach (var grid in enu)
                 foreach (var ui in grid.Children)
                 {

@@ -227,42 +227,42 @@
                             <Label Grid.Row="0" Grid.Column="5" Content="36"/>
                             <Label Grid.Row="0" Grid.Column="6" Content="37"/>
                             <Label Grid.Row="0" Grid.Column="7" Content="38"/>
-                            <Button  Grid.Row="1" Grid.Column="0">
+                            <Button Tag="31"  Grid.Row="1" Grid.Column="0">
                                 <Button.Background>
                                     <ImageBrush ImageSource="Images\AddItem.png"/>
                                 </Button.Background>
                             </Button>
-                            <Button  Grid.Row="1" Grid.Column="1">
+                            <Button Tag="32" Grid.Row="1" Grid.Column="1">
                                 <Button.Background>
                                     <ImageBrush ImageSource="Images\AddItem.png"/>
                                 </Button.Background>
                             </Button>
-                            <Button  Grid.Row="1" Grid.Column="2">
+                            <Button Tag="33" Grid.Row="1" Grid.Column="2">
                                 <Button.Background>
                                     <ImageBrush ImageSource="Images\AddItem.png"/>
                                 </Button.Background>
                             </Button>
-                            <Button  Grid.Row="1" Grid.Column="3">
+                            <Button Tag="34" Grid.Row="1" Grid.Column="3">
                                 <Button.Background>
                                     <ImageBrush ImageSource="Images\AddItem.png"/>
                                 </Button.Background>
                             </Button>
-                            <Button Grid.Row="1" Grid.Column="4">
+                            <Button Tag="35" Grid.Row="1" Grid.Column="4">
                                 <Button.Background>
                                     <ImageBrush ImageSource="Images\AddItem.png"/>
                                 </Button.Background>
                             </Button>
-                            <Button   Grid.Row="1" Grid.Column="5">
+                            <Button  Tag="36" Grid.Row="1" Grid.Column="5">
                                 <Button.Background>
                                     <ImageBrush ImageSource="Images\AddItem.png"/>
                                 </Button.Background>
                             </Button>
-                            <Button   Grid.Row="1" Grid.Column="6">
+                            <Button Tag="37"  Grid.Row="1" Grid.Column="6">
                                 <Button.Background>
                                     <ImageBrush ImageSource="Images\AddItem.png"/>
                                 </Button.Background>
                             </Button>
-                            <Button   Grid.Row="1" Grid.Column="7">
+                            <Button Tag="38"  Grid.Row="1" Grid.Column="7">
                                 <Button.Background>
                                     <ImageBrush ImageSource="Images\AddItem.png"/>
                                 </Button.Background>
@@ -291,42 +291,42 @@
                             <Label Grid.Row="0" Grid.Column="5" Content="13"/>
                             <Label Grid.Row="0" Grid.Column="6" Content="12"/>
                             <Label Grid.Row="0" Grid.Column="7" Content="11"/>
-                            <Button  Grid.Row="1" Grid.Column="0">
+                            <Button Tag="18" Grid.Row="1" Grid.Column="0">
                                 <Button.Background>
                                     <ImageBrush ImageSource="Images\AddItem.png"/>
                                 </Button.Background>
                             </Button>
-                            <Button  Grid.Row="1" Grid.Column="1">
+                            <Button Tag="17" Grid.Row="1" Grid.Column="1">
                                 <Button.Background>
                                     <ImageBrush ImageSource="Images\AddItem.png"/>
                                 </Button.Background>
                             </Button>
-                            <Button  Grid.Row="1" Grid.Column="2">
+                            <Button Tag="16" Grid.Row="1" Grid.Column="2">
                                 <Button.Background>
                                     <ImageBrush ImageSource="Images\AddItem.png"/>
                                 </Button.Background>
                             </Button>
-                            <Button  Grid.Row="1" Grid.Column="3">
+                            <Button Tag="15" Grid.Row="1" Grid.Column="3">
                                 <Button.Background>
                                     <ImageBrush ImageSource="Images\AddItem.png"/>
                                 </Button.Background>
                             </Button>
-                            <Button Grid.Row="1" Grid.Column="4">
+                            <Button Tag="14" Grid.Row="1" Grid.Column="4">
                                 <Button.Background>
                                     <ImageBrush ImageSource="Images\AddItem.png"/>
                                 </Button.Background>
                             </Button>
-                            <Button   Grid.Row="1" Grid.Column="5">
+                            <Button Tag="13"  Grid.Row="1" Grid.Column="5">
                                 <Button.Background>
                                     <ImageBrush ImageSource="Images\AddItem.png"/>
                                 </Button.Background>
                             </Button>
-                            <Button   Grid.Row="1" Grid.Column="6">
+                            <Button Tag="12"  Grid.Row="1" Grid.Column="6">
                                 <Button.Background>
                                     <ImageBrush ImageSource="Images\AddItem.png"/>
                                 </Button.Background>
                             </Button>
-                            <Button   Grid.Row="1" Grid.Column="7">
+                            <Button  Tag="11" Grid.Row="1" Grid.Column="7">
                                 <Button.Background>
                                     <ImageBrush ImageSource="Images\AddItem.png"/>
                                 </Button.Background>
@@ -355,42 +355,42 @@
                             <Label Grid.Row="1" Grid.Column="5" Content="43"/>
                             <Label Grid.Row="1" Grid.Column="6" Content="42"/>
                             <Label Grid.Row="1" Grid.Column="7" Content="41"/>
-                            <Button  Grid.Row="0" Grid.Column="0">
+                            <Button Tag="48" Grid.Row="0" Grid.Column="0">
                                 <Button.Background>
                                     <ImageBrush ImageSource="Images\AddItem.png"/>
                                 </Button.Background>
                             </Button>
-                            <Button  Grid.Row="0" Grid.Column="1">
+                            <Button Tag="47" Grid.Row="0" Grid.Column="1">
                                 <Button.Background>
                                     <ImageBrush ImageSource="Images\AddItem.png"/>
                                 </Button.Background>
                             </Button>
-                            <Button  Grid.Row="0" Grid.Column="2">
+                            <Button Tag="46" Grid.Row="0" Grid.Column="2">
                                 <Button.Background>
                                     <ImageBrush ImageSource="Images\AddItem.png"/>
                                 </Button.Background>
                             </Button>
-                            <Button  Grid.Row="0" Grid.Column="3">
+                            <Button Tag="45" Grid.Row="0" Grid.Column="3">
                                 <Button.Background>
                                     <ImageBrush ImageSource="Images\AddItem.png"/>
                                 </Button.Background>
                             </Button>
-                            <Button Grid.Row="0" Grid.Column="4">
+                            <Button Tag="44" Grid.Row="0" Grid.Column="4">
                                 <Button.Background>
                                     <ImageBrush ImageSource="Images\AddItem.png"/>
                                 </Button.Background>
                             </Button>
-                            <Button   Grid.Row="0" Grid.Column="5">
+                            <Button  Tag="43" Grid.Row="0" Grid.Column="5">
                                 <Button.Background>
                                     <ImageBrush ImageSource="Images\AddItem.png"/>
                                 </Button.Background>
                             </Button>
-                            <Button   Grid.Row="0" Grid.Column="6">
+                            <Button Tag="42"  Grid.Row="0" Grid.Column="6">
                                 <Button.Background>
                                     <ImageBrush ImageSource="Images\AddItem.png"/>
                                 </Button.Background>
                             </Button>
-                            <Button   Grid.Row="0" Grid.Column="7">
+                            <Button Tag="41"  Grid.Row="0" Grid.Column="7">
                                 <Button.Background>
                                     <ImageBrush ImageSource="Images\AddItem.png"/>
                                 </Button.Background>
@@ -419,42 +419,42 @@
                             <Label Grid.Row="1" Grid.Column="5" Content="26"/>
                             <Label Grid.Row="1" Grid.Column="6" Content="27"/>
                             <Label Grid.Row="1" Grid.Column="7" Content="28"/>
-                            <Button  Grid.Row="0" Grid.Column="0">
+                            <Button Tag="21" Grid.Row="0" Grid.Column="0">
                                 <Button.Background>
                                     <ImageBrush ImageSource="Images\AddItem.png"/>
                                 </Button.Background>
                             </Button>
-                            <Button  Grid.Row="0" Grid.Column="1">
+                            <Button  Tag="22" Grid.Row="0" Grid.Column="1">
                                 <Button.Background>
                                     <ImageBrush ImageSource="Images\AddItem.png"/>
                                 </Button.Background>
                             </Button>
-                            <Button  Grid.Row="0" Grid.Column="2">
+                            <Button Tag="23" Grid.Row="0" Grid.Column="2">
                                 <Button.Background>
                                     <ImageBrush ImageSource="Images\AddItem.png"/>
                                 </Button.Background>
                             </Button>
-                            <Button  Grid.Row="0" Grid.Column="3">
+                            <Button Tag="24" Grid.Row="0" Grid.Column="3">
                                 <Button.Background>
                                     <ImageBrush ImageSource="Images\AddItem.png"/>
                                 </Button.Background>
                             </Button>
-                            <Button Grid.Row="0" Grid.Column="4">
+                            <Button Tag="25"  Grid.Row="0" Grid.Column="4">
                                 <Button.Background>
                                     <ImageBrush ImageSource="Images\AddItem.png"/>
                                 </Button.Background>
                             </Button>
-                            <Button   Grid.Row="0" Grid.Column="5">
+                            <Button Tag="26"  Grid.Row="0" Grid.Column="5">
                                 <Button.Background>
                                     <ImageBrush ImageSource="Images\AddItem.png"/>
                                 </Button.Background>
                             </Button>
-                            <Button   Grid.Row="0" Grid.Column="6">
+                            <Button Tag="27"  Grid.Row="0" Grid.Column="6">
                                 <Button.Background>
                                     <ImageBrush ImageSource="Images\AddItem.png"/>
                                 </Button.Background>
                             </Button>
-                            <Button   Grid.Row="0" Grid.Column="7">
+                            <Button Tag="28"  Grid.Row="0" Grid.Column="7">
                                 <Button.Background>
                                     <ImageBrush ImageSource="Images\AddItem.png"/>
                                 </Button.Background>

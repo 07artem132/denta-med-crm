@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfScheduler;
 
 namespace denta_med_crm
 {
@@ -28,7 +29,6 @@ namespace denta_med_crm
         {
             InitializeComponent();
 
-            
             //db init
 
             InitializeOrUpdate();
@@ -56,7 +56,7 @@ namespace denta_med_crm
         {
             if (dataGrid.ItemsSource == null)
             {
-                if (filter != null)
+                if (filter == null)
                     dataGrid.ItemsSource = db.Clients.Where(filter);
                 else dataGrid.ItemsSource = db.Clients;
             }
@@ -99,11 +99,14 @@ namespace denta_med_crm
                         InspectionDate=DateTime.Now,
                         Doctor="Пупкин",
                         Description="asdfasdfa",
+
+                         
                     }, new Inspection(){
                         InspectionDate=DateTime.Now.AddDays(10),
                         Doctor="Николай",
                         Description="asdfasdfa",
 
+                        
                     }
                 },
                 Procedures = new ObservableCollection<Procedure>()
@@ -156,5 +159,17 @@ namespace denta_med_crm
         {
             InitializeOrUpdate(x => x.FullName.Contains(this._filterINput.Text));
         }
+        private void scheduler_Loaded(object sender, RoutedEventArgs e)
+        {
+        }
+        void scheduler_OnScheduleDoubleClick(object sender, DateTime e)
+        {
+        }
+        void scheduler_OnEventDoubleClick(object sender, Event e)
+        {
+            Console.WriteLine(e.Subject);
+        }
     }
-}
+        
+
+    }

@@ -125,5 +125,11 @@
   <ItemGroup>
     <Resource Include="Images\EditUser.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WpfScheduler\WpfScheduler.csproj">
+      <Project>{f9954c26-6234-43f5-8d96-8ec6e03c03b9}</Project>
+      <Name>WpfScheduler</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
