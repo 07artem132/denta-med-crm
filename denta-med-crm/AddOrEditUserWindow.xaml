@@ -58,7 +58,7 @@
                         <Label Margin="99,231,562.2,136.6" Content="{Binding Path=InspectionDate}"  ContentStringFormat="Выбранная дата: dd.MM.yyyy"></Label>
                         <Label Margin="388,231,257.2,136.6" Content="Врач проводивший осмотр"/>
                         <TextBox Text="{Binding Path=Doctor}" Margin="577,231,68.2,136.6" />
-                        <Grid Margin="361,328,148.2,9.6">
+                        <Grid x:Name="_ts3" Margin="361,328,148.2,9.6">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition></ColumnDefinition>
                                 <ColumnDefinition></ColumnDefinition>
@@ -81,7 +81,7 @@
                             <Label Grid.Row="0" Grid.Column="5" Content="36"/>
                             <Label Grid.Row="0" Grid.Column="6" Content="37"/>
                             <Label Grid.Row="0" Grid.Column="7" Content="38"/>
-                            <TextBox TextWrapping="Wrap" Text="{Binding Path=Tooth_38}" Grid.Row="1" Grid.Column="7" />
+                            <TextBox Tag="" TextWrapping="Wrap" Text="{Binding Path=Tooth_38}" Grid.Row="1" Grid.Column="7" />
                             <TextBox TextWrapping="Wrap" Text="{Binding Path=Tooth_37}" Grid.Row="1" Grid.Column="6" />
                             <TextBox TextWrapping="Wrap" Text="{Binding Path=Tooth_36}" Grid.Row="1" Grid.Column="5" />
                             <TextBox TextWrapping="Wrap" Text="{Binding Path=Tooth_35}" Grid.Row="1" Grid.Column="4" />
@@ -90,7 +90,7 @@
                             <TextBox TextWrapping="Wrap" Text="{Binding Path=Tooth_32}" Grid.Row="1" Grid.Column="1" />
                             <TextBox TextWrapping="Wrap" Text="{Binding Path=Tooth_31}" Grid.Row="1" Grid.Column="0" />
                         </Grid>
-                        <Grid Margin="26,267,473.2,70.6">
+                        <Grid x:Name="_ts1" Margin="26,267,473.2,70.6">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition></ColumnDefinition>
                                 <ColumnDefinition></ColumnDefinition>
@@ -122,7 +122,7 @@
                             <TextBox TextWrapping="Wrap" Text="{Binding Path=Tooth_17}" Grid.Row="1" Grid.Column="1" />
                             <TextBox TextWrapping="Wrap" Text="{Binding Path=Tooth_18}" Grid.Row="1" Grid.Column="0" />
                         </Grid>
-                        <Grid Margin="26,328,473.2,9.6">
+                        <Grid x:Name="_ts4" Margin="26,328,473.2,9.6">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition></ColumnDefinition>
                                 <ColumnDefinition></ColumnDefinition>
@@ -154,7 +154,7 @@
                             <TextBox TextWrapping="Wrap" Text="{Binding Path=Tooth_47}" Grid.Row="1" Grid.Column="1" />
                             <TextBox TextWrapping="Wrap" Text="{Binding Path=Tooth_48}" Grid.Row="1" Grid.Column="0" />
                         </Grid>
-                        <Grid Margin="361,267,148.2,70.6">
+                        <Grid x:Name="_ts2" Margin="361,267,148.2,70.6">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition></ColumnDefinition>
                                 <ColumnDefinition></ColumnDefinition>

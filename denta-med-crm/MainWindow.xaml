@@ -73,7 +73,7 @@
                             <ImageBrush ImageSource="Images/EditUser.png" Stretch="Uniform"/>
                         </Button.Background>
                     </Button>
-                    <TextBox TextWrapping="Wrap" Text="TextBox" Margin="249,10,10,0" Height="37" VerticalAlignment="Top" VerticalContentAlignment="Center" Padding="2,0,0,0"/>
+                    <TextBox x:Name="_filterINput" TextWrapping="Wrap" Text="" Margin="249,10,10,0" Height="37" VerticalAlignment="Top" VerticalContentAlignment="Center" Padding="2,0,0,0" TextChanged="TextBox_TextChanged"/>
                 </Grid>
             </TabItem>
 

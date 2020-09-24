@@ -51,12 +51,23 @@ namespace denta_med_crm
         }
 
 
-        public void InitializeOrUpdate()
+        public void InitializeOrUpdate(Func<Client, bool> filter = null)
         {
             if (dataGrid.ItemsSource == null)
-                dataGrid.ItemsSource = db.Clients;
-            else dataGrid.Items.Refresh();
-            
+            {
+                if (filter == null)
+                    dataGrid.ItemsSource = db.Clients.Where(filter);
+                else dataGrid.ItemsSource = db.Clients;
+            }
+            else
+            {
+                if (filter != null)
+                {
+                    dataGrid.ItemsSource = db.Clients.Where(filter);
+                    dataGrid.Items.Refresh();
+                }
+                else dataGrid.Items.Refresh();
+            }
         }
 
 
@@ -187,8 +198,7 @@ namespace denta_med_crm
                 }
             });
             temp.Show();
-
-
+            dataGrid.Items.Refresh();
         }
 
         private void BtAddEvent_Click(object sender, RoutedEventArgs e)
@@ -205,10 +215,16 @@ namespace denta_med_crm
                 return;
             var client = (Client)dataGrid.SelectedItem;
             new AddOrEditUserWindow(client);
+            dataGrid.Items.Refresh();
         }
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            InitializeOrUpdate(x => x.FullName.Contains(this._filterINput.Text));
         }
     }
 }
