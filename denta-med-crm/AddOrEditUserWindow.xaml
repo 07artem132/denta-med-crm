@@ -3,22 +3,483 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:denta_med_crm"
+        xmlns:model="clr-namespace:denta_med_crm.Model"
         mc:Ignorable="d"
-        Title="AddOrEditUserWindow" Height="450" Width="800">
+        ResizeMode="NoResize"
+        local:WindowBehavior.HideCloseButton="True"
+        Title="AddOrEditUserWindow" Height="502" Width="840" Name="addOrEditUserWindow" >
     <Grid>
-        <TabControl  >
+        <TabControl Margin="0,0,12.6,50.8" >
             <TabItem   Header="Общее" >
                 <Grid>
-                    <TextBox Height="23" TextWrapping="Wrap" Text="TextBox" Width="120"/>
-                    <TextBox Height="23" TextWrapping="Wrap" Text="TextBox" Width="120" Margin="49,10,619,360"/>
+
+                    <TextBox  TextWrapping="Wrap" Text="{Binding ElementName=addOrEditUserWindow, Path=Client.FullName}" Width="120" Margin="87,10,608.2,359.6" />
+                    <Label Content="ФИО" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Пол" HorizontalAlignment="Left" Margin="261,9,0,0" VerticalAlignment="Top"/>
+                    <ComboBox HorizontalAlignment="Center" VerticalAlignment="Center" 
+                  ItemsSource="{Binding Source={local:EnumBindingSource {x:Type model:Sex}}}" SelectedValue="{Binding ElementName=addOrEditUserWindow, Path=Client.Sex}" Margin="298,10,399.2,357.6" Width="118" Height="26"/>
+
+                    <Label Content="дата рождения" HorizontalAlignment="Left" Margin="421,10,0,0" VerticalAlignment="Top"/>
+                    <DatePicker Height="30" Width="105" SelectedDate="{Binding ElementName=addOrEditUserWindow, Path=Client.DateOfBirth}" Margin="519,7,191.2,356.6"/>
+                    <Label Content="Телефон" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
+                    <TextBox  TextWrapping="Wrap" Text="{Binding ElementName=addOrEditUserWindow, Path=Client.MainPhoneNumber}" Width="120" Margin="82,45,613.2,324.6" />
+                    <TextBox TextWrapping="Wrap" Text="{Binding ElementName=addOrEditUserWindow, Path=Client.AlternativePhoneNumber}" Width="120" Margin="309,45,386.2,324.6"/>
+                    <Label Content="Альтернативный" HorizontalAlignment="Left" Margin="207,45,0,0" VerticalAlignment="Top"/>
+                    <TextBox TextWrapping="Wrap" Text="{Binding ElementName=addOrEditUserWindow, Path=Client.ClientDescription}" Margin="7,217,12.2,68.6" />
+                    <Label Content="Заметка" HorizontalAlignment="Left" Margin="10,186,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.555,1.93"/>
+                    <Label Content="Скидка" HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top"/>
+                    <TextBox  TextWrapping="Wrap" Text="{Binding ElementName=addOrEditUserWindow, Path=Client.Discount}" Margin="73,76,673.2,293.6"/>
+                    <Label Content="Последний визит" HorizontalAlignment="Left" Margin="7,104,0,0" VerticalAlignment="Top"/>
+                    <Label Content="{Binding ElementName=addOrEditUserWindow, Path=Client.LastVisit}" ContentStringFormat="dd.MM.yyyy H:mm" HorizontalAlignment="Left" Margin="130,104,0,0" VerticalAlignment="Top" Width="123" Height="26" />
+                    <Label Content="Является клиентом" HorizontalAlignment="Left" Margin="10,156,0,0" VerticalAlignment="Top"/>
+                    <Label Content="{Binding ElementName=addOrEditUserWindow, Path=Client.ClientLong}" HorizontalAlignment="Left" Margin="130,156,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.58,0.555" Height="26" Width="94" />
+                    <Label Content="%" HorizontalAlignment="Left" Margin="147,72,0,0" VerticalAlignment="Top"/>
+                    <Label Content="(день рождения через х дней)" HorizontalAlignment="Left" Margin="629,9,0,0" VerticalAlignment="Top"/>
+                    <Label Content="Дата регистрации" HorizontalAlignment="Left" Margin="7,130,0,0" VerticalAlignment="Top"/>
+                    <Label Content="{Binding ElementName=addOrEditUserWindow, Path=Client.FirstVisit}" ContentStringFormat="dd.MM.yyyy" HorizontalAlignment="Left" Margin="130,130,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.58,0.555" Height="26" Width="123"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Зубная формула" >
+                <Grid>
+                    <ListView x:Name="_inspections"  Margin="10,19,148,163" ItemsSource="{Binding ElementName=addOrEditUserWindow, Path=Client.Inspections}" >
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Дата" Width="140" DisplayMemberBinding="{Binding InspectionDate}" />
+                                <GridViewColumn Header="Врач" Width="150" DisplayMemberBinding="{Binding Doctor}" />
+                                <GridViewColumn Header="Описание" Width="70" DisplayMemberBinding="{Binding Description}" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Button Content="добавить" HorizontalAlignment="Left" Margin="672,21,0,0" VerticalAlignment="Top" Width="75"/>
+                    <Button Content="удалить" HorizontalAlignment="Left" Margin="672,45,0,0" VerticalAlignment="Top" Width="75"/>
+                    <Grid DataContext="{Binding ElementName=_inspections, Path=SelectedItem}">
+                        <Label Margin="99,231,562.2,136.6" Content="{Binding Path=InspectionDate}"  ContentStringFormat="Выбранная дата: dd.MM.yyyy"></Label>
+                        <Label Margin="388,231,257.2,136.6" Content="Врач проводивший осмотр"/>
+                        <TextBox Text="{Binding Path=Doctor}" Margin="577,231,68.2,136.6" />
+                        <Grid Margin="361,328,148.2,9.6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Row="0" Grid.Column="0" Content="31"/>
+                            <Label Grid.Row="0" Grid.Column="1" Content="32"/>
+                            <Label Grid.Row="0" Grid.Column="2" Content="33"/>
+                            <Label Grid.Row="0" Grid.Column="3" Content="34"/>
+                            <Label Grid.Row="0" Grid.Column="4" Content="35"/>
+                            <Label Grid.Row="0" Grid.Column="5" Content="36"/>
+                            <Label Grid.Row="0" Grid.Column="6" Content="37"/>
+                            <Label Grid.Row="0" Grid.Column="7" Content="38"/>
+                            <TextBox TextWrapping="Wrap" Text="{Binding Path=Tooth_38}" Grid.Row="1" Grid.Column="7" />
+                            <TextBox TextWrapping="Wrap" Text="{Binding Path=Tooth_37}" Grid.Row="1" Grid.Column="6" />
+                            <TextBox TextWrapping="Wrap" Text="{Binding Path=Tooth_36}" Grid.Row="1" Grid.Column="5" />
+                            <TextBox TextWrapping="Wrap" Text="{Binding Path=Tooth_35}" Grid.Row="1" Grid.Column="4" />
+                            <TextBox TextWrapping="Wrap" Text="{Binding Path=Tooth_34}" Grid.Row="1" Grid.Column="3" />
+                            <TextBox TextWrapping="Wrap" Text="{Binding Path=Tooth_33}" Grid.Row="1" Grid.Column="2" />
+                            <TextBox TextWrapping="Wrap" Text="{Binding Path=Tooth_32}" Grid.Row="1" Grid.Column="1" />
+                            <TextBox TextWrapping="Wrap" Text="{Binding Path=Tooth_31}" Grid.Row="1" Grid.Column="0" />
+                        </Grid>
+                        <Grid Margin="26,267,473.2,70.6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Row="0" Grid.Column="0" Content="18"/>
+                            <Label Grid.Row="0" Grid.Column="1" Content="17"/>
+                            <Label Grid.Row="0" Grid.Column="2" Content="16"/>
+                            <Label Grid.Row="0" Grid.Column="3" Content="15"/>
+                            <Label Grid.Row="0" Grid.Column="4" Content="14"/>
+                            <Label Grid.Row="0" Grid.Column="5" Content="13"/>
+                            <Label Grid.Row="0" Grid.Column="6" Content="12"/>
+                            <Label Grid.Row="0" Grid.Column="7" Content="11"/>
+                            <TextBox TextWrapping="Wrap" Text="{Binding Path=Tooth_11}" Grid.Row="1" Grid.Column="7" />
+                            <TextBox TextWrapping="Wrap" Text="{Binding Path=Tooth_12}" Grid.Row="1" Grid.Column="6" />
+                            <TextBox TextWrapping="Wrap" Text="{Binding Path=Tooth_13}" Grid.Row="1" Grid.Column="5" />
+                            <TextBox TextWrapping="Wrap" Text="{Binding Path=Tooth_14}" Grid.Row="1" Grid.Column="4" />
+                            <TextBox TextWrapping="Wrap" Text="{Binding Path=Tooth_15}" Grid.Row="1" Grid.Column="3" />
+                            <TextBox TextWrapping="Wrap" Text="{Binding Path=Tooth_16}" Grid.Row="1" Grid.Column="2" />
+                            <TextBox TextWrapping="Wrap" Text="{Binding Path=Tooth_17}" Grid.Row="1" Grid.Column="1" />
+                            <TextBox TextWrapping="Wrap" Text="{Binding Path=Tooth_18}" Grid.Row="1" Grid.Column="0" />
+                        </Grid>
+                        <Grid Margin="26,328,473.2,9.6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Row="0" Grid.Column="0" Content="48"/>
+                            <Label Grid.Row="0" Grid.Column="1" Content="47"/>
+                            <Label Grid.Row="0" Grid.Column="2" Content="46"/>
+                            <Label Grid.Row="0" Grid.Column="3" Content="45"/>
+                            <Label Grid.Row="0" Grid.Column="4" Content="44"/>
+                            <Label Grid.Row="0" Grid.Column="5" Content="43"/>
+                            <Label Grid.Row="0" Grid.Column="6" Content="42"/>
+                            <Label Grid.Row="0" Grid.Column="7" Content="41"/>
+                            <TextBox TextWrapping="Wrap" Text="{Binding Path=Tooth_41}" Grid.Row="1" Grid.Column="7" />
+                            <TextBox TextWrapping="Wrap" Text="{Binding Path=Tooth_42}" Grid.Row="1" Grid.Column="6" />
+                            <TextBox TextWrapping="Wrap" Text="{Binding Path=Tooth_43}" Grid.Row="1" Grid.Column="5" />
+                            <TextBox TextWrapping="Wrap" Text="{Binding Path=Tooth_44}" Grid.Row="1" Grid.Column="4" />
+                            <TextBox TextWrapping="Wrap" Text="{Binding Path=Tooth_45}" Grid.Row="1" Grid.Column="3" />
+                            <TextBox TextWrapping="Wrap" Text="{Binding Path=Tooth_46}" Grid.Row="1" Grid.Column="2" />
+                            <TextBox TextWrapping="Wrap" Text="{Binding Path=Tooth_47}" Grid.Row="1" Grid.Column="1" />
+                            <TextBox TextWrapping="Wrap" Text="{Binding Path=Tooth_48}" Grid.Row="1" Grid.Column="0" />
+                        </Grid>
+                        <Grid Margin="361,267,148.2,70.6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Row="0" Grid.Column="0" Content="21"/>
+                            <Label Grid.Row="0" Grid.Column="1" Content="22"/>
+                            <Label Grid.Row="0" Grid.Column="2" Content="23"/>
+                            <Label Grid.Row="0" Grid.Column="3" Content="24"/>
+                            <Label Grid.Row="0" Grid.Column="4" Content="25"/>
+                            <Label Grid.Row="0" Grid.Column="5" Content="26"/>
+                            <Label Grid.Row="0" Grid.Column="6" Content="27"/>
+                            <Label Grid.Row="0" Grid.Column="7" Content="28"/>
+                            <TextBox TextWrapping="Wrap" Text="{Binding Path=Tooth_28}" Grid.Row="1" Grid.Column="7" />
+                            <TextBox TextWrapping="Wrap" Text="{Binding Path=Tooth_27}" Grid.Row="1" Grid.Column="6" />
+                            <TextBox TextWrapping="Wrap" Text="{Binding Path=Tooth_26}" Grid.Row="1" Grid.Column="5" />
+                            <TextBox TextWrapping="Wrap" Text="{Binding Path=Tooth_25}" Grid.Row="1" Grid.Column="4" />
+                            <TextBox TextWrapping="Wrap" Text="{Binding Path=Tooth_24}" Grid.Row="1" Grid.Column="3" />
+                            <TextBox TextWrapping="Wrap" Text="{Binding Path=Tooth_23}" Grid.Row="1" Grid.Column="2" />
+                            <TextBox TextWrapping="Wrap" Text="{Binding Path=Tooth_22}" Grid.Row="1" Grid.Column="1" />
+                            <TextBox TextWrapping="Wrap" Text="{Binding Path=Tooth_21}" Grid.Row="1" Grid.Column="0" />
+                        </Grid>
+                    </Grid>
+                </Grid>
             </TabItem>
             <TabItem Header="Записи">
+                <Grid>
+                    <ListView x:Name="_procedures" Margin="10,19,137.2,300.6"  ItemsSource="{Binding ElementName=addOrEditUserWindow, Path=Client.Procedures}" >
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Дата время" Width="140" DisplayMemberBinding="{Binding ProcedureDate}" />
+                                <GridViewColumn Header="длительность" Width="140" DisplayMemberBinding="{Binding ProcedureDuration}" />
+                                <GridViewColumn Header="Врач" Width="170" DisplayMemberBinding="{Binding Doctor}" />
+                                <GridViewColumn Header="Зубов" Width="170" DisplayMemberBinding="{Binding Tooth}" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Button Content="добавить" HorizontalAlignment="Left" Margin="697,21,0,0" VerticalAlignment="Top" Width="75"/>
+                    <Button Content="удалить" HorizontalAlignment="Left" Margin="697,45,0,0" VerticalAlignment="Top" Width="75"/>
+                    <Grid DataContext="{Binding ElementName=_procedures, Path=SelectedItem}">
+                        <Grid Margin="358,166,151.2,171.6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Row="0" Grid.Column="0" Content="31"/>
+                            <Label Grid.Row="0" Grid.Column="1" Content="32"/>
+                            <Label Grid.Row="0" Grid.Column="2" Content="33"/>
+                            <Label Grid.Row="0" Grid.Column="3" Content="34"/>
+                            <Label Grid.Row="0" Grid.Column="4" Content="35"/>
+                            <Label Grid.Row="0" Grid.Column="5" Content="36"/>
+                            <Label Grid.Row="0" Grid.Column="6" Content="37"/>
+                            <Label Grid.Row="0" Grid.Column="7" Content="38"/>
+                            <Button  Grid.Row="1" Grid.Column="0">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="Images\AddItem.png"/>
+                                </Button.Background>
+                            </Button>
+                            <Button  Grid.Row="1" Grid.Column="1">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="Images\AddItem.png"/>
+                                </Button.Background>
+                            </Button>
+                            <Button  Grid.Row="1" Grid.Column="2">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="Images\AddItem.png"/>
+                                </Button.Background>
+                            </Button>
+                            <Button  Grid.Row="1" Grid.Column="3">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="Images\AddItem.png"/>
+                                </Button.Background>
+                            </Button>
+                            <Button Grid.Row="1" Grid.Column="4">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="Images\AddItem.png"/>
+                                </Button.Background>
+                            </Button>
+                            <Button   Grid.Row="1" Grid.Column="5">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="Images\AddItem.png"/>
+                                </Button.Background>
+                            </Button>
+                            <Button   Grid.Row="1" Grid.Column="6">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="Images\AddItem.png"/>
+                                </Button.Background>
+                            </Button>
+                            <Button   Grid.Row="1" Grid.Column="7">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="Images\AddItem.png"/>
+                                </Button.Background>
+                            </Button>
+                        </Grid>
+                        <Grid Margin="22,166,477.2,171.6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Row="0" Grid.Column="0" Content="18"/>
+                            <Label Grid.Row="0" Grid.Column="1" Content="17"/>
+                            <Label Grid.Row="0" Grid.Column="2" Content="16"/>
+                            <Label Grid.Row="0" Grid.Column="3" Content="15"/>
+                            <Label Grid.Row="0" Grid.Column="4" Content="14"/>
+                            <Label Grid.Row="0" Grid.Column="5" Content="13"/>
+                            <Label Grid.Row="0" Grid.Column="6" Content="12"/>
+                            <Label Grid.Row="0" Grid.Column="7" Content="11"/>
+                            <Button  Grid.Row="1" Grid.Column="0">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="Images\AddItem.png"/>
+                                </Button.Background>
+                            </Button>
+                            <Button  Grid.Row="1" Grid.Column="1">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="Images\AddItem.png"/>
+                                </Button.Background>
+                            </Button>
+                            <Button  Grid.Row="1" Grid.Column="2">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="Images\AddItem.png"/>
+                                </Button.Background>
+                            </Button>
+                            <Button  Grid.Row="1" Grid.Column="3">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="Images\AddItem.png"/>
+                                </Button.Background>
+                            </Button>
+                            <Button Grid.Row="1" Grid.Column="4">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="Images\AddItem.png"/>
+                                </Button.Background>
+                            </Button>
+                            <Button   Grid.Row="1" Grid.Column="5">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="Images\AddItem.png"/>
+                                </Button.Background>
+                            </Button>
+                            <Button   Grid.Row="1" Grid.Column="6">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="Images\AddItem.png"/>
+                                </Button.Background>
+                            </Button>
+                            <Button   Grid.Row="1" Grid.Column="7">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="Images\AddItem.png"/>
+                                </Button.Background>
+                            </Button>
+                        </Grid>
+                        <Grid Margin="22,227,477.2,110.6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Row="1" Grid.Column="0" Content="48"/>
+                            <Label Grid.Row="1" Grid.Column="1" Content="47"/>
+                            <Label Grid.Row="1" Grid.Column="2" Content="46"/>
+                            <Label Grid.Row="1" Grid.Column="3" Content="45"/>
+                            <Label Grid.Row="1" Grid.Column="4" Content="44"/>
+                            <Label Grid.Row="1" Grid.Column="5" Content="43"/>
+                            <Label Grid.Row="1" Grid.Column="6" Content="42"/>
+                            <Label Grid.Row="1" Grid.Column="7" Content="41"/>
+                            <Button  Grid.Row="0" Grid.Column="0">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="Images\AddItem.png"/>
+                                </Button.Background>
+                            </Button>
+                            <Button  Grid.Row="0" Grid.Column="1">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="Images\AddItem.png"/>
+                                </Button.Background>
+                            </Button>
+                            <Button  Grid.Row="0" Grid.Column="2">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="Images\AddItem.png"/>
+                                </Button.Background>
+                            </Button>
+                            <Button  Grid.Row="0" Grid.Column="3">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="Images\AddItem.png"/>
+                                </Button.Background>
+                            </Button>
+                            <Button Grid.Row="0" Grid.Column="4">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="Images\AddItem.png"/>
+                                </Button.Background>
+                            </Button>
+                            <Button   Grid.Row="0" Grid.Column="5">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="Images\AddItem.png"/>
+                                </Button.Background>
+                            </Button>
+                            <Button   Grid.Row="0" Grid.Column="6">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="Images\AddItem.png"/>
+                                </Button.Background>
+                            </Button>
+                            <Button   Grid.Row="0" Grid.Column="7">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="Images\AddItem.png"/>
+                                </Button.Background>
+                            </Button>
+                        </Grid>
+                        <Grid Margin="358,227,151.2,110.6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Row="1" Grid.Column="0"  Content="21"/>
+                            <Label Grid.Row="1" Grid.Column="1" Content="22"/>
+                            <Label Grid.Row="1" Grid.Column="2" Content="23"/>
+                            <Label Grid.Row="1" Grid.Column="3" Content="24"/>
+                            <Label Grid.Row="1" Grid.Column="4" Content="25"/>
+                            <Label Grid.Row="1" Grid.Column="5" Content="26"/>
+                            <Label Grid.Row="1" Grid.Column="6" Content="27"/>
+                            <Label Grid.Row="1" Grid.Column="7" Content="28"/>
+                            <Button  Grid.Row="0" Grid.Column="0">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="Images\AddItem.png"/>
+                                </Button.Background>
+                            </Button>
+                            <Button  Grid.Row="0" Grid.Column="1">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="Images\AddItem.png"/>
+                                </Button.Background>
+                            </Button>
+                            <Button  Grid.Row="0" Grid.Column="2">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="Images\AddItem.png"/>
+                                </Button.Background>
+                            </Button>
+                            <Button  Grid.Row="0" Grid.Column="3">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="Images\AddItem.png"/>
+                                </Button.Background>
+                            </Button>
+                            <Button Grid.Row="0" Grid.Column="4">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="Images\AddItem.png"/>
+                                </Button.Background>
+                            </Button>
+                            <Button   Grid.Row="0" Grid.Column="5">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="Images\AddItem.png"/>
+                                </Button.Background>
+                            </Button>
+                            <Button   Grid.Row="0" Grid.Column="6">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="Images\AddItem.png"/>
+                                </Button.Background>
+                            </Button>
+                            <Button   Grid.Row="0" Grid.Column="7">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="Images\AddItem.png"/>
+                                </Button.Background>
+                            </Button>
+                        </Grid>
+
+                        <Label Content="Дата" Margin="10,133,751.2,232.6"/>
+                        <Label Content="Заметка" Margin="10,283,721.2,82.6" />
+                        <Label Content="Врач" Margin="189,133,579.2,232.6"/>
+                        <TextBox HorizontalAlignment="Left" Height="68" Margin="10,316,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="795"/>
+                        <TextBox HorizontalAlignment="Left" Height="23" Margin="241,138,0,0" TextWrapping="Wrap" Text="{Binding Path=Doctor}" VerticalAlignment="Top" Width="120"/>
+                        <DatePicker SelectedDate="{Binding Path=ProcedureDate}"  Height="30" Width="105" Margin="69,131,641.2,232.6"/>
+                        <Label Content="Длительность" Margin="366,137,351.2,228.6"/>
+                        <TextBox HorizontalAlignment="Left" Height="23" Margin="469,142,0,0" TextWrapping="Wrap" Text="{Binding Path=ProcedureDuration}" VerticalAlignment="Top" Width="100"/>
+                        <Label Content="минуты" Margin="580,137,137.2,228.6"/>
+                        <Label Content="{Binding Path=ProcedureDate}" ContentStringFormat="Выбранная дата: dd.MM.yyyy" Margin="226,100,373.2,265.6"/>
+                        <CheckBox Content="Завершена" IsChecked="{Binding Path=Сompleted}"  HorizontalAlignment="Left" Margin="499,100,0,0" VerticalAlignment="Top"/>
+
+                    </Grid>
+                </Grid>
             </TabItem>
-           
+
+
         </TabControl>
+        <Button Content="Сохранить и закрыть" Margin="495,427,213.6,9.8" Click="Save_Click"/>
+        <Button Content="Отменить изменения и закрыть" Margin="625,427,22.6,9.8" Click="Cancel_Click"/>
     </Grid>
 </Window>

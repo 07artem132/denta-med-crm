@@ -20,19 +20,41 @@ namespace denta_med_crm
     /// </summary>
     public partial class AddOrEditUserWindow : Window
     {
-        public Client EditableClient;
-
-        public AddOrEditUserWindow()
+        public Client Client
         {
-            InitializeComponent();
+            get { return (Client)GetValue(ClientProperty); }
+            set { SetValue(ClientProperty, value); }
         }
 
 
-        public void Init(Client clientOrNull)
-        {
-            this.EditableClient = clientOrNull;
+        public static readonly DependencyProperty ClientProperty;
 
-            //
+        public delegate void UpdateClient(Client client);
+        public event UpdateClient Notify;
+
+        public AddOrEditUserWindow(Client clientOrNull)
+        {
+            InitializeComponent();
+             if (clientOrNull == null)
+                Client = new Client();
+            else
+                Client = clientOrNull;
+        }
+        static AddOrEditUserWindow()
+        {
+            ClientProperty = DependencyProperty.Register("Client", typeof(Client), typeof(AddOrEditUserWindow));
+        }
+
+
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            Notify?.Invoke(Client);
+            this.Close();
+        }
+
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }
