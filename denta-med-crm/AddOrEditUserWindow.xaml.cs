@@ -42,6 +42,13 @@ namespace denta_med_crm
             else
                 Client = clientOrNull;
 
+
+            var enu = new Grid[] { _ts1, _ts2, _ts3, _ts4 };
+            foreach (var grid in enu)
+                foreach (var ui in grid.Children)
+                    if (ui is TextBox tb)
+                        tb.TextChanged += OnToothTextboxChanged;
+
             _inspections.SelectionChanged += (x, y) =>
             {
                 var selectedInspection = _inspections.SelectedItem as Inspection;
@@ -78,7 +85,7 @@ namespace denta_med_crm
                 {
                     if (ui is TextBox tb && tb.Tag != null)
                     {
-                        tb.Text = from.GetToothData((int)tb.Tag);
+                        tb.Text = from.GetToothData(int.Parse(tb.Tag.ToString()));
                     }
                 }
             disallowEditingTeeth = false;
@@ -90,7 +97,7 @@ namespace denta_med_crm
                 return;
 
             var textBox = ((TextBox)sender);
-            var num = (int)textBox.Tag;
+            var num = int.Parse(textBox.Tag.ToString());
 
             var selectedInspection = _inspections.SelectedItem as Inspection;
             if (selectedInspection == null)

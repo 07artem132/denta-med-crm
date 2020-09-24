@@ -58,7 +58,7 @@
                         <Label Margin="99,231,562.2,136.6" Content="{Binding Path=InspectionDate}"  ContentStringFormat="Выбранная дата: dd.MM.yyyy"></Label>
                         <Label Margin="388,231,257.2,136.6" Content="Врач проводивший осмотр"/>
                         <TextBox Text="{Binding Path=Doctor}" Margin="577,231,68.2,136.6" />
-                        <Grid Margin="361,328,148.2,9.6">
+                        <Grid x:Name="_ts3" Margin="361,328,148.2,9.6">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition></ColumnDefinition>
                                 <ColumnDefinition></ColumnDefinition>
@@ -90,7 +90,7 @@
                             <TextBox TextWrapping="Wrap" Tag="32" Grid.Row="1" Grid.Column="1" />
                             <TextBox TextWrapping="Wrap" Tag="31" Grid.Row="1" Grid.Column="0" />
                         </Grid>
-                        <Grid Margin="26,267,473.2,70.6">
+                        <Grid x:Name="_ts1" Margin="26,267,473.2,70.6">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition></ColumnDefinition>
                                 <ColumnDefinition></ColumnDefinition>
@@ -122,7 +122,7 @@
                             <TextBox Tag="17" TextWrapping="Wrap"  Grid.Row="1" Grid.Column="1" />
                             <TextBox Tag="18"  TextWrapping="Wrap"  Grid.Row="1" Grid.Column="0" />
                         </Grid>
-                        <Grid Margin="26,328,473.2,9.6">
+                        <Grid x:Name="_ts4" Margin="26,328,473.2,9.6">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition></ColumnDefinition>
                                 <ColumnDefinition></ColumnDefinition>
@@ -154,7 +154,7 @@
                             <TextBox TextWrapping="Wrap" Tag="47" Grid.Row="1" Grid.Column="1" />
                             <TextBox TextWrapping="Wrap" Tag="48" Grid.Row="1" Grid.Column="0" />
                         </Grid>
-                        <Grid Margin="361,267,148.2,70.6">
+                        <Grid x:Name="_ts2" Margin="361,267,148.2,70.6">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition></ColumnDefinition>
                                 <ColumnDefinition></ColumnDefinition>

@@ -28,6 +28,7 @@ namespace denta_med_crm
         {
             InitializeComponent();
 
+            
             //db init
 
             InitializeOrUpdate();
@@ -55,7 +56,7 @@ namespace denta_med_crm
         {
             if (dataGrid.ItemsSource == null)
             {
-                if (filter == null)
+                if (filter != null)
                     dataGrid.ItemsSource = db.Clients.Where(filter);
                 else dataGrid.ItemsSource = db.Clients;
             }
@@ -98,82 +99,11 @@ namespace denta_med_crm
                         InspectionDate=DateTime.Now,
                         Doctor="Пупкин",
                         Description="asdfasdfa",
-
-                        Tooth_11="x",
-                        Tooth_12="x",
-                        Tooth_13="x",
-                        Tooth_14="x",
-                        Tooth_15="x",
-                        Tooth_16="x",
-                        Tooth_17="x",
-                        Tooth_18="x",
-
-                        Tooth_21="x",
-                        Tooth_22="x",
-                        Tooth_23="x",
-                        Tooth_24="x",
-                        Tooth_25="x",
-                        Tooth_26="x",
-                        Tooth_27="x",
-                        Tooth_28="x",
-
-                        Tooth_31="x",
-                        Tooth_32="x",
-                        Tooth_33="x",
-                        Tooth_34="x",
-                        Tooth_35="x",
-                        Tooth_36="x",
-                        Tooth_37="x",
-                        Tooth_38="x",
-
-                        Tooth_41="x",
-                        Tooth_42="x",
-                        Tooth_43="x",
-                        Tooth_44="x",
-                        Tooth_45="x",
-                        Tooth_46="x",
-                        Tooth_47="x",
-                        Tooth_48="x"
                     }, new Inspection(){
                         InspectionDate=DateTime.Now.AddDays(10),
                         Doctor="Николай",
                         Description="asdfasdfa",
 
-                        Tooth_11="z",
-                        Tooth_12="z",
-                        Tooth_13="z",
-                        Tooth_14="z",
-                        Tooth_15="z",
-                        Tooth_16="z",
-                        Tooth_17="z",
-                        Tooth_18="z",
-
-                        Tooth_21="z",
-                        Tooth_22="z",
-                        Tooth_23="z",
-                        Tooth_24="z",
-                        Tooth_25="z",
-                        Tooth_26="z",
-                        Tooth_27="z",
-                        Tooth_28="z",
-
-                        Tooth_31="z",
-                        Tooth_32="z",
-                        Tooth_33="z",
-                        Tooth_34="z",
-                        Tooth_35="z",
-                        Tooth_36="z",
-                        Tooth_37="z",
-                        Tooth_38="z",
-
-                        Tooth_41="z",
-                        Tooth_42="z",
-                        Tooth_43="z",
-                        Tooth_44="z",
-                        Tooth_45="z",
-                        Tooth_46="z",
-                        Tooth_47="z",
-                        Tooth_48="z"
                     }
                 },
                 Procedures = new ObservableCollection<Procedure>()

@@ -20,21 +20,21 @@ namespace denta_med_crm.Model
 
 
         [JsonProperty("teeth")]
-        public string[] Teeth;
+        public string[] Teeth { get; set; } = new string[32];
 
         public string GetToothData(int num)
         {
             var x = num / 10;
-            var y = num - x;
-            var index = num + x * 8;
+            var y = num - x * 10;
+            var index = y-1 + (x - 1) * 8;
             return Teeth[index];
         }
 
         public void SetToothData(int num, string data)
         {
             var x = num / 10;
-            var y = num - x;
-            var index = num + x * 8;
+            var y = num - x * 10;
+            var index = y-1 + (x - 1) * 8;
             Teeth[index] = data;
         }
 
