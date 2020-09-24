@@ -17,7 +17,28 @@ namespace denta_med_crm.Model
         public string Doctor { get; set; }
         [JsonProperty("description")]
         public string Description { get; set; }
-        #region зубы   
+
+
+        [JsonProperty("teeth")]
+        public string[] Teeth;
+
+        public string GetToothData(int num)
+        {
+            var x = num / 10;
+            var y = num - x;
+            var index = num + x * 8;
+            return Teeth[index];
+        }
+
+        public void SetToothData(int num, string data)
+        {
+            var x = num / 10;
+            var y = num - x;
+            var index = num + x * 8;
+            Teeth[index] = data;
+        }
+
+        /*#region зубы   
         [JsonProperty("tooth_18")]
         public string Tooth_18 { get; set; }
         [JsonProperty("tooth_17")]
@@ -85,6 +106,6 @@ namespace denta_med_crm.Model
         public string Tooth_42 { get; set; }
     [JsonProperty("tooth_41")]
         public string Tooth_41 { get; set; }
-    #endregion
+    #endregion*/
 }
 }

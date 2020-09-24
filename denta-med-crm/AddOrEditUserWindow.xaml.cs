@@ -32,6 +32,8 @@ namespace denta_med_crm
         public delegate void UpdateClient(Client client);
         public event UpdateClient Notify;
 
+        private bool disallowEditingTeeth;
+        
         public AddOrEditUserWindow(Client clientOrNull)
         {
             InitializeComponent();
@@ -39,6 +41,14 @@ namespace denta_med_crm
                 Client = new Client();
             else
                 Client = clientOrNull;
+
+            _inspections.SelectionChanged += (x, y) =>
+            {
+                var selectedInspection = _inspections.SelectedItem as Inspection;
+                if (selectedInspection == null)
+                    return;
+                LoadToothData(selectedInspection);
+            };
         }
         static AddOrEditUserWindow()
         {
@@ -55,6 +65,38 @@ namespace denta_med_crm
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+
+
+        private void LoadToothData(Inspection from)
+        {
+            disallowEditingTeeth = true;
+            var enu = new Grid[] { _ts1, _ts2, _ts3, _ts4 };
+            foreach (var grid in enu)
+                foreach (var ui in grid.Children)
+                {
+                    if (ui is TextBox tb && tb.Tag != null)
+                    {
+                        tb.Text = from.GetToothData((int)tb.Tag);
+                    }
+                }
+            disallowEditingTeeth = false;
+        }
+
+        private void OnToothTextboxChanged(object sender, TextChangedEventArgs args)
+        {
+            if (disallowEditingTeeth)
+                return;
+
+            var textBox = ((TextBox)sender);
+            var num = (int)textBox.Tag;
+
+            var selectedInspection = _inspections.SelectedItem as Inspection;
+            if (selectedInspection == null)
+                return;
+
+            selectedInspection.SetToothData(num, textBox.Text);
         }
     }
 }
