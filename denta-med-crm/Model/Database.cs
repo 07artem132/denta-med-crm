@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,7 +10,7 @@ namespace denta_med_crm.Model
 {
     public class Database
     {
-        public readonly List<Client> Clients;
+        public List<Client> Clients;
         public readonly HistoryCache DoctorsHistory;
         public readonly HistoryCache ProcedureNameHistory;
 
@@ -30,14 +32,16 @@ namespace denta_med_crm.Model
 
         public void Import(string path)
         {
-            //!
+            var serializer = JsonSerializer.Create();
+                Clients = JsonConvert.DeserializeObject< List<Client>>(File.ReadAllText(path));
 
             FillInHistory();
         }
 
         public void Export(string path)
         {
-
+            var json = JsonConvert.SerializeObject(Clients);
+            File.WriteAllText(path, json);
         }
 
         public IEnumerable<Procedure> EnumerateProcedures()
