@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
        xmlns:my="clr-namespace:WpfScheduler;assembly=WpfScheduler"
+        Closing="Window_Closing"
         xmlns:local="clr-namespace:denta_med_crm"
         mc:Ignorable="d"
         Title="Denta Med crm" Height="450" Width="800">
@@ -79,24 +80,12 @@
             </TabItem>
 
             <TabItem >
-                <my:Scheduler   HorizontalAlignment="Stretch" Name="scheduler1"
+                <my:Scheduler   HorizontalAlignment="Stretch" Name="_patient_shuduler"
                                 VerticalAlignment="Stretch"
-                                Loaded="scheduler_Loaded"
-                                SelectedDate="2013-05-27"
-                                StartJourney="9:00"
-                                EndJourney="19:00"
-                                OnEventDoubleClick="scheduler_OnEventDoubleClick"
-                                OnScheduleDoubleClick="scheduler_OnScheduleDoubleClick"
-                                Mode="Week"
+                                Loaded="patient_shuduler_Loaded"
+                                OnEventDoubleClick="patient_shuduler_OnEventDoubleClick"
+                                OnScheduleDoubleClick="patient_shuduler_OnScheduleDoubleClick"
                                 >
-                    <my:Scheduler.Events>
-                        <my:Event Subject="Dad birthday" AllDay="True" Start="2013-05-29" End="2013-05-29" Color="Aqua"></my:Event>
-                        <my:Event Subject="Dev meeting" Start="2013-05-29 09:30:00" End="2013-05-29 11:30:00" Color="LightGreen"></my:Event>
-                        <my:Event Subject="Dev meeting" Start="2013-05-30 12:00:00" End="2013-05-30 12:30:00" Color="LightGreen"></my:Event>
-                        <my:Event Subject="Mike Holidays" Start="2013-05-27" End="2013-06-09" Color="LightSalmon"></my:Event>
-                        <my:Event Subject="Lunch with David" Start="2013-05-28 12:00:00" End="2013-05-28 13:00:00" Color="Violet"></my:Event>
-                        <my:Event Subject="Internet line installation" Start="2013-05-29 10:00:00" End="2013-05-29 14:00:00" Color="Yellow"></my:Event>
-                    </my:Scheduler.Events>
                 </my:Scheduler>
             </TabItem>
 

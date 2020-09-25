@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace denta_med_crm.Model
 {
@@ -13,7 +13,8 @@ namespace denta_med_crm.Model
         public List<Client> Clients;
         public readonly HistoryCache DoctorsHistory;
         public readonly HistoryCache ProcedureNameHistory;
-
+        private Timer Timer = null;
+        private string Path;
         public Database()
         {
             Clients = new List<Client>();
@@ -33,15 +34,22 @@ namespace denta_med_crm.Model
         public void Import(string path)
         {
             var serializer = JsonSerializer.Create();
-                Clients = JsonConvert.DeserializeObject< List<Client>>(File.ReadAllText(path));
+            Clients = JsonConvert.DeserializeObject<List<Client>>(File.ReadAllText(path));
 
             FillInHistory();
         }
-
+        public void Export(object path)
+        {
+            var json = JsonConvert.SerializeObject(Clients);
+            File.WriteAllText(path.ToString(), json);
+        }
         public void Export(string path)
         {
             var json = JsonConvert.SerializeObject(Clients);
             File.WriteAllText(path, json);
+            if (Timer != null)
+                Timer.Dispose();
+            Timer = new Timer(new TimerCallback(Export), path, 0, 1000 * 1);
         }
 
         public IEnumerable<Procedure> EnumerateProcedures()

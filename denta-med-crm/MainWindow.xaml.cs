@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,12 +26,13 @@ namespace denta_med_crm
     public partial class MainWindow : Window
     {
         Database db = new Database();
+        const string dbFile = "db.json";
 
         public MainWindow()
         {
             InitializeComponent();
-
-            //db init
+            if (File.Exists(dbFile))
+                db.Import(dbFile);
 
             InitializeOrUpdate();
 
@@ -39,7 +42,7 @@ namespace denta_med_crm
                 item.IsCheckable = true;
                 item.IsChecked = true; //default
                 item.Header = column.Header;
-                item.Checked += (x,y) =>
+                item.Checked += (x, y) =>
                 {
                     column.Visibility = Visibility.Visible;
                 };
@@ -51,6 +54,10 @@ namespace denta_med_crm
             }
         }
 
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            db.Export(dbFile);
+        }
 
         public void InitializeOrUpdate(Func<Client, bool> filter = null)
         {
@@ -70,7 +77,6 @@ namespace denta_med_crm
                 else dataGrid.Items.Refresh();
             }
         }
-
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -100,13 +106,13 @@ namespace denta_med_crm
                         Doctor="Пупкин",
                         Description="asdfasdfa",
 
-                         
+
                     }, new Inspection(){
                         InspectionDate=DateTime.Now.AddDays(10),
                         Doctor="Николай",
                         Description="asdfasdfa",
 
-                        
+
                     }
                 },
                 Procedures = new ObservableCollection<Procedure>()
@@ -131,6 +137,11 @@ namespace denta_med_crm
                 }
             });
             temp.Show();
+            temp.Notify += x =>
+            {
+                db.Clients.Add(x);
+                db.Export(dbFile);
+            };
             dataGrid.Items.Refresh();
         }
 
@@ -147,7 +158,7 @@ namespace denta_med_crm
             if (dataGrid.SelectedItem == null)
                 return;
             var client = (Client)dataGrid.SelectedItem;
-            new AddOrEditUserWindow(client);
+            new AddOrEditUserWindow(client).Show();
             dataGrid.Items.Refresh();
         }
 
@@ -159,17 +170,33 @@ namespace denta_med_crm
         {
             InitializeOrUpdate(x => x.FullName.Contains(this._filterINput.Text));
         }
-        private void scheduler_Loaded(object sender, RoutedEventArgs e)
+        private void patient_shuduler_Loaded(object sender, RoutedEventArgs e)
         {
-        }
-        void scheduler_OnScheduleDoubleClick(object sender, DateTime e)
-        {
-        }
-        void scheduler_OnEventDoubleClick(object sender, Event e)
-        {
-            Console.WriteLine(e.Subject);
-        }
-    }
-        
+            _patient_shuduler.SelectedDate = DateTime.Now;
+            _patient_shuduler.Mode = Mode.Day;
+            _patient_shuduler.Events.Clear();
+            foreach (Client Client in db.Clients)
+                foreach (Procedure Procedure in Client.Procedures)
+                    _patient_shuduler.AddEvent(
+                       new Event()
+                       {
+                           Subject = string.Format("Доктор: {0}\rПроцедура: {1}\rЗубов: {2}", Procedure.Doctor, Procedure.ProcedureName, Procedure.Tooth),
+                           Color = Brushes.LightGreen,
+                           Start = DateTime.Now,
+                           End = DateTime.Now.AddMinutes(90),
+                           RelObject = Client
+                       });
 
+
+        }
+        void patient_shuduler_OnScheduleDoubleClick(object sender, DateTime e)
+        {
+        }
+        void patient_shuduler_OnEventDoubleClick(object sender, Event e)
+        {
+            new AddOrEditUserWindow((Client)e.RelObject).Show();
+        }
     }
+
+
+}
