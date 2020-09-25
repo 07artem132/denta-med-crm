@@ -59,6 +59,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\CTextBox.xaml.cs">
+      <DependentUpon>CTextBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EnumBindingSourceExtension.cs" />
     <Compile Include="EnumDescriptionTypeConverter.cs" />
     <Compile Include="LocalizedDescriptionAttribute.cs" />
@@ -66,6 +69,10 @@
     <Compile Include="Model\Sex.cs" />
     <Compile Include="WindowBehavior.cs" />
     <Page Include="AddOrEditUserWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\CTextBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
