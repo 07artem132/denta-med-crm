@@ -31,6 +31,10 @@ namespace denta_med_crm
         public MainWindow()
         {
             InitializeComponent();
+            Style s = new Style();
+            s.Setters.Add(new Setter(VisibilityProperty, Visibility.Collapsed));
+            _tabControl.ItemContainerStyle = s;
+
             if (File.Exists(dbFile))
                 db.Import(dbFile);
 
