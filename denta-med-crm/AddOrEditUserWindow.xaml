@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         ResizeMode="NoResize"
         local:WindowBehavior.HideCloseButton="True"
-        Title="Клиент" Height="526" Width="837" Name="addOrEditUserWindow" >
+        Title="Клиент" Height="534" Width="842" Name="addOrEditUserWindow" >
 
     <Grid Background="#FF4D6082">
         <Grid.Resources>
@@ -22,13 +22,13 @@
                 <Setter Property="Background" Value="{x:Null}" />
             </Style>
         </Grid.Resources>
-        <TabControl Margin="10,10,10,46" >
+        <TabControl Margin="10,10,0,0" HorizontalAlignment="Left" Width="811" Height="441" VerticalAlignment="Top" >
             <TabItem   Header="Общее" >
                 <Grid>
 
                     <Grid Background="#FFE7E8EC" Margin="535,0,0,0">
                         <Label Content="Заметки:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.555,1.93" FontSize="14" Width="250" Background="#FFF3F3F3"/>
-                        <TextBox TextWrapping="Wrap" Text="{Binding Client.ClientDescription, ElementName=addOrEditUserWindow}" Margin="10,39,10,10" Background="White" />
+                        <TextBox TextWrapping="Wrap" Text="{Binding Client.ClientDescription, ElementName=addOrEditUserWindow}" Margin="10,39,10,10" Background="White" VerticalContentAlignment="Top" />
                     </Grid>
 
                     <TextBox  TextWrapping="Wrap" Text="{Binding Client.FullName, ElementName=addOrEditUserWindow}" Width="372" Margin="158,10,0,0" Height="29" VerticalAlignment="Top" HorizontalAlignment="Left" />
@@ -56,12 +56,6 @@
             </TabItem>
             <TabItem Header="Зубная формула" >
                 <Grid>
-
-                    <Grid Background="#FFE7E8EC" Margin="535,10,0,225">
-                        <Label Content="Описание:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.555,1.93" FontSize="14" Width="250" Background="#FFF3F3F3"/>
-                        <TextBox TextWrapping="Wrap" Text="{Binding Client.ClientDescription, ElementName=addOrEditUserWindow}" Margin="10,39,10,10" Background="White" />
-                    </Grid>
-
                     <ListView x:Name="_inspections"  Margin="10,10,280,225" ItemsSource="{Binding ElementName=addOrEditUserWindow, Path=Client.Inspections}" Background="#FFF6F6F6" >
                         <ListView.View>
                             <GridView>
@@ -72,6 +66,11 @@
                         </ListView.View>
                     </ListView>
                     <Grid DataContext="{Binding ElementName=_inspections, Path=SelectedItem}">
+                        <Grid Background="#FFE7E8EC" Margin="535,10,0,225">
+                            <Label Content="Описание:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.555,1.93" FontSize="14" Width="250" Background="#FFF3F3F3"/>
+                            <TextBox TextWrapping="Wrap" Text="{Binding Client.ClientDescription, ElementName=addOrEditUserWindow}" Margin="10,39,10,10" Background="White" VerticalContentAlignment="Top" />
+                        </Grid>
+
                         <Label Margin="361,246,172,138" Content="{Binding Path=InspectionDate}"  ContentStringFormat="Выбранная дата: dd.MM.yyyy"></Label>
                         <Label Margin="10,246,736,138" Content="Врач:" FontSize="14"/>
                         <TextBox Text="{Binding Path=Doctor}" Margin="74,246,0,0" HorizontalAlignment="Left" Width="261" Height="29" VerticalAlignment="Top" />
@@ -204,294 +203,52 @@
                             <TextBox Tag="21" TextWrapping="Wrap" Grid.Row="1" Grid.Column="0" />
                         </Grid>
                         <Label Margin="0,202,0,177" Content="" Background="#FFE7E8EC" FontSize="14"/>
-                        <Button Content="?" HorizontalAlignment="Left" Margin="210,206,0,0" VerticalAlignment="Top" Width="87" Height="28" FontSize="16" FontWeight="Bold" Foreground="#FF6C6C6C" Background="#FFEEEEEE"/>
-                        <Button Content="Добавить осмотр" HorizontalAlignment="Left" Margin="10,206,0,0" VerticalAlignment="Top" Width="195" Height="28" FontSize="14"/>
+                        <Button x:Name="_formulaTt" Content="?" HorizontalAlignment="Left" Margin="210,206,0,0" VerticalAlignment="Top" Width="87" Height="28" FontSize="16" FontWeight="Bold" Foreground="#FF6C6C6C" Background="#FFEEEEEE" xml:space="preserve">
+                            <Button.ToolTip xml:space="preserve">
+Расшифровка:
+O - Отсутствует
+R - Корень
+P - Пульпит
+Pt - Переодонтит
+A - Пародонтоз
+К - Коронка
+C - Кариес
+П - Пломбированный
+B - Искусственный зуб
+П/С - Пломба/Кариес
+                            </Button.ToolTip>
+                        </Button>
+                        <Button x:Name="_addFormula" Content="Добавить осмотр" HorizontalAlignment="Left" Margin="10,206,0,0" VerticalAlignment="Top" Width="195" Height="28" FontSize="14"/>
                     </Grid>
                 </Grid>
             </TabItem>
             <TabItem Header="Записи">
                 <Grid>
-                    <ListView x:Name="_procedures" Margin="10,19,137.2,300.6"  ItemsSource="{Binding ElementName=addOrEditUserWindow, Path=Client.Procedures}" >
+                    <ListView x:Name="_procedures" Margin="10,10,10,258"  ItemsSource="{Binding ElementName=addOrEditUserWindow, Path=Client.Procedures}" Background="#FFF6F6F6" >
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Дата время" Width="140" DisplayMemberBinding="{Binding ProcedureDate}" />
-                                <GridViewColumn Header="длительность" Width="140" DisplayMemberBinding="{Binding ProcedureDuration}" />
+                                <GridViewColumn Header="Дительность" Width="140" DisplayMemberBinding="{Binding ProcedureDuration}" />
                                 <GridViewColumn Header="Врач" Width="170" DisplayMemberBinding="{Binding Doctor}" />
-                                <GridViewColumn Header="Зубов" Width="170" DisplayMemberBinding="{Binding Tooth}" />
+                                <GridViewColumn Header="Описание" Width="220" DisplayMemberBinding="{Binding Description}" />
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Button Content="добавить" HorizontalAlignment="Left" Margin="697,21,0,0" VerticalAlignment="Top" Width="75"/>
-                    <Button Content="удалить" HorizontalAlignment="Left" Margin="697,45,0,0" VerticalAlignment="Top" Width="75"/>
+                    <Button x:Name="_addLabel" Content="Добавить запись" HorizontalAlignment="Left" Margin="10,160,0,0" VerticalAlignment="Top" Width="173" Height="24"/>
                     <Grid DataContext="{Binding ElementName=_procedures, Path=SelectedItem}">
-                        <Grid Margin="358,166,151.2,171.6">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Label Grid.Row="0" Grid.Column="0" Content="31"/>
-                            <Label Grid.Row="0" Grid.Column="1" Content="32"/>
-                            <Label Grid.Row="0" Grid.Column="2" Content="33"/>
-                            <Label Grid.Row="0" Grid.Column="3" Content="34"/>
-                            <Label Grid.Row="0" Grid.Column="4" Content="35"/>
-                            <Label Grid.Row="0" Grid.Column="5" Content="36"/>
-                            <Label Grid.Row="0" Grid.Column="6" Content="37"/>
-                            <Label Grid.Row="0" Grid.Column="7" Content="38"/>
-                            <Button Tag="31"  Grid.Row="1" Grid.Column="0">
-                                <Button.Background>
-                                    <ImageBrush ImageSource="Images\AddItem.png"/>
-                                </Button.Background>
-                            </Button>
-                            <Button Tag="32" Grid.Row="1" Grid.Column="1">
-                                <Button.Background>
-                                    <ImageBrush ImageSource="Images\AddItem.png"/>
-                                </Button.Background>
-                            </Button>
-                            <Button Tag="33" Grid.Row="1" Grid.Column="2">
-                                <Button.Background>
-                                    <ImageBrush ImageSource="Images\AddItem.png"/>
-                                </Button.Background>
-                            </Button>
-                            <Button Tag="34" Grid.Row="1" Grid.Column="3">
-                                <Button.Background>
-                                    <ImageBrush ImageSource="Images\AddItem.png"/>
-                                </Button.Background>
-                            </Button>
-                            <Button Tag="35" Grid.Row="1" Grid.Column="4">
-                                <Button.Background>
-                                    <ImageBrush ImageSource="Images\AddItem.png"/>
-                                </Button.Background>
-                            </Button>
-                            <Button  Tag="36" Grid.Row="1" Grid.Column="5">
-                                <Button.Background>
-                                    <ImageBrush ImageSource="Images\AddItem.png"/>
-                                </Button.Background>
-                            </Button>
-                            <Button Tag="37"  Grid.Row="1" Grid.Column="6">
-                                <Button.Background>
-                                    <ImageBrush ImageSource="Images\AddItem.png"/>
-                                </Button.Background>
-                            </Button>
-                            <Button Tag="38"  Grid.Row="1" Grid.Column="7">
-                                <Button.Background>
-                                    <ImageBrush ImageSource="Images\AddItem.png"/>
-                                </Button.Background>
-                            </Button>
-                        </Grid>
-                        <Grid Margin="22,166,477.2,171.6">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Label Grid.Row="0" Grid.Column="0" Content="18"/>
-                            <Label Grid.Row="0" Grid.Column="1" Content="17"/>
-                            <Label Grid.Row="0" Grid.Column="2" Content="16"/>
-                            <Label Grid.Row="0" Grid.Column="3" Content="15"/>
-                            <Label Grid.Row="0" Grid.Column="4" Content="14"/>
-                            <Label Grid.Row="0" Grid.Column="5" Content="13"/>
-                            <Label Grid.Row="0" Grid.Column="6" Content="12"/>
-                            <Label Grid.Row="0" Grid.Column="7" Content="11"/>
-                            <Button Tag="18" Grid.Row="1" Grid.Column="0">
-                                <Button.Background>
-                                    <ImageBrush ImageSource="Images\AddItem.png"/>
-                                </Button.Background>
-                            </Button>
-                            <Button Tag="17" Grid.Row="1" Grid.Column="1">
-                                <Button.Background>
-                                    <ImageBrush ImageSource="Images\AddItem.png"/>
-                                </Button.Background>
-                            </Button>
-                            <Button Tag="16" Grid.Row="1" Grid.Column="2">
-                                <Button.Background>
-                                    <ImageBrush ImageSource="Images\AddItem.png"/>
-                                </Button.Background>
-                            </Button>
-                            <Button Tag="15" Grid.Row="1" Grid.Column="3">
-                                <Button.Background>
-                                    <ImageBrush ImageSource="Images\AddItem.png"/>
-                                </Button.Background>
-                            </Button>
-                            <Button Tag="14" Grid.Row="1" Grid.Column="4">
-                                <Button.Background>
-                                    <ImageBrush ImageSource="Images\AddItem.png"/>
-                                </Button.Background>
-                            </Button>
-                            <Button Tag="13"  Grid.Row="1" Grid.Column="5">
-                                <Button.Background>
-                                    <ImageBrush ImageSource="Images\AddItem.png"/>
-                                </Button.Background>
-                            </Button>
-                            <Button Tag="12"  Grid.Row="1" Grid.Column="6">
-                                <Button.Background>
-                                    <ImageBrush ImageSource="Images\AddItem.png"/>
-                                </Button.Background>
-                            </Button>
-                            <Button  Tag="11" Grid.Row="1" Grid.Column="7">
-                                <Button.Background>
-                                    <ImageBrush ImageSource="Images\AddItem.png"/>
-                                </Button.Background>
-                            </Button>
-                        </Grid>
-                        <Grid Margin="22,227,477.2,110.6">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Label Grid.Row="1" Grid.Column="0" Content="48"/>
-                            <Label Grid.Row="1" Grid.Column="1" Content="47"/>
-                            <Label Grid.Row="1" Grid.Column="2" Content="46"/>
-                            <Label Grid.Row="1" Grid.Column="3" Content="45"/>
-                            <Label Grid.Row="1" Grid.Column="4" Content="44"/>
-                            <Label Grid.Row="1" Grid.Column="5" Content="43"/>
-                            <Label Grid.Row="1" Grid.Column="6" Content="42"/>
-                            <Label Grid.Row="1" Grid.Column="7" Content="41"/>
-                            <Button Tag="48" Grid.Row="0" Grid.Column="0">
-                                <Button.Background>
-                                    <ImageBrush ImageSource="Images\AddItem.png"/>
-                                </Button.Background>
-                            </Button>
-                            <Button Tag="47" Grid.Row="0" Grid.Column="1">
-                                <Button.Background>
-                                    <ImageBrush ImageSource="Images\AddItem.png"/>
-                                </Button.Background>
-                            </Button>
-                            <Button Tag="46" Grid.Row="0" Grid.Column="2">
-                                <Button.Background>
-                                    <ImageBrush ImageSource="Images\AddItem.png"/>
-                                </Button.Background>
-                            </Button>
-                            <Button Tag="45" Grid.Row="0" Grid.Column="3">
-                                <Button.Background>
-                                    <ImageBrush ImageSource="Images\AddItem.png"/>
-                                </Button.Background>
-                            </Button>
-                            <Button Tag="44" Grid.Row="0" Grid.Column="4">
-                                <Button.Background>
-                                    <ImageBrush ImageSource="Images\AddItem.png"/>
-                                </Button.Background>
-                            </Button>
-                            <Button  Tag="43" Grid.Row="0" Grid.Column="5">
-                                <Button.Background>
-                                    <ImageBrush ImageSource="Images\AddItem.png"/>
-                                </Button.Background>
-                            </Button>
-                            <Button Tag="42"  Grid.Row="0" Grid.Column="6">
-                                <Button.Background>
-                                    <ImageBrush ImageSource="Images\AddItem.png"/>
-                                </Button.Background>
-                            </Button>
-                            <Button Tag="41"  Grid.Row="0" Grid.Column="7">
-                                <Button.Background>
-                                    <ImageBrush ImageSource="Images\AddItem.png"/>
-                                </Button.Background>
-                            </Button>
-                        </Grid>
-                        <Grid Margin="358,227,151.2,110.6">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Label Grid.Row="1" Grid.Column="0"  Content="21"/>
-                            <Label Grid.Row="1" Grid.Column="1" Content="22"/>
-                            <Label Grid.Row="1" Grid.Column="2" Content="23"/>
-                            <Label Grid.Row="1" Grid.Column="3" Content="24"/>
-                            <Label Grid.Row="1" Grid.Column="4" Content="25"/>
-                            <Label Grid.Row="1" Grid.Column="5" Content="26"/>
-                            <Label Grid.Row="1" Grid.Column="6" Content="27"/>
-                            <Label Grid.Row="1" Grid.Column="7" Content="28"/>
-                            <Button Tag="21" Grid.Row="0" Grid.Column="0">
-                                <Button.Background>
-                                    <ImageBrush ImageSource="Images\AddItem.png"/>
-                                </Button.Background>
-                            </Button>
-                            <Button  Tag="22" Grid.Row="0" Grid.Column="1">
-                                <Button.Background>
-                                    <ImageBrush ImageSource="Images\AddItem.png"/>
-                                </Button.Background>
-                            </Button>
-                            <Button Tag="23" Grid.Row="0" Grid.Column="2">
-                                <Button.Background>
-                                    <ImageBrush ImageSource="Images\AddItem.png"/>
-                                </Button.Background>
-                            </Button>
-                            <Button Tag="24" Grid.Row="0" Grid.Column="3">
-                                <Button.Background>
-                                    <ImageBrush ImageSource="Images\AddItem.png"/>
-                                </Button.Background>
-                            </Button>
-                            <Button Tag="25"  Grid.Row="0" Grid.Column="4">
-                                <Button.Background>
-                                    <ImageBrush ImageSource="Images\AddItem.png"/>
-                                </Button.Background>
-                            </Button>
-                            <Button Tag="26"  Grid.Row="0" Grid.Column="5">
-                                <Button.Background>
-                                    <ImageBrush ImageSource="Images\AddItem.png"/>
-                                </Button.Background>
-                            </Button>
-                            <Button Tag="27"  Grid.Row="0" Grid.Column="6">
-                                <Button.Background>
-                                    <ImageBrush ImageSource="Images\AddItem.png"/>
-                                </Button.Background>
-                            </Button>
-                            <Button Tag="28"  Grid.Row="0" Grid.Column="7">
-                                <Button.Background>
-                                    <ImageBrush ImageSource="Images\AddItem.png"/>
-                                </Button.Background>
-                            </Button>
-                        </Grid>
-
-                        <Label Content="Дата" Margin="10,133,751.2,232.6"/>
-                        <Label Content="Заметка" Margin="10,283,721.2,82.6" />
-                        <Label Content="Врач" Margin="189,133,579.2,232.6"/>
-                        <TextBox HorizontalAlignment="Left" Height="68" Margin="10,316,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="795"/>
-                        <TextBox HorizontalAlignment="Left" Height="23" Margin="241,138,0,0" TextWrapping="Wrap" Text="{Binding Path=Doctor}" VerticalAlignment="Top" Width="120"/>
-                        <DatePicker SelectedDate="{Binding Path=ProcedureDate}"  Height="30" Width="105" Margin="69,131,641.2,232.6"/>
-                        <Label Content="Длительность" Margin="366,137,351.2,228.6"/>
-                        <TextBox HorizontalAlignment="Left" Height="23" Margin="469,142,0,0" TextWrapping="Wrap" Text="{Binding Path=ProcedureDuration}" VerticalAlignment="Top" Width="100"/>
-                        <Label Content="минуты" Margin="580,137,137.2,228.6"/>
-                        <Label Content="{Binding Path=ProcedureDate}" ContentStringFormat="Выбранная дата: dd.MM.yyyy" Margin="226,100,373.2,265.6"/>
-                        <CheckBox Content="Завершена" IsChecked="{Binding Path=Сompleted}"  HorizontalAlignment="Left" Margin="499,100,0,0" VerticalAlignment="Top"/>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="45*"/>
+                            <RowDefinition Height="14*"/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Дата:" Margin="10,203,751,83" FontSize="14"/>
+                        <Label Content="Описание:" Margin="366,165,10,120" FontSize="14" Background="#FFE7E8EC" />
+                        <Label Content="Врач:" Margin="10,237,730,49" FontSize="14"/>
+                        <TextBox HorizontalAlignment="Left" Height="208" Margin="366,195,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="429" Grid.RowSpan="2" VerticalContentAlignment="Top"/>
+                        <TextBox HorizontalAlignment="Left" Height="29" Margin="89,237,0,0" TextWrapping="Wrap" Text="{Binding Path=Doctor}" VerticalAlignment="Top" Width="219"/>
+                        <DatePicker SelectedDate="{Binding Path=ProcedureDate}" Margin="89,203,497,83" FontSize="14" VerticalContentAlignment="Center"/>
+                        <Label Content="Длительность (минут):" Margin="10,273,611,13" FontSize="14"/>
+                        <TextBox HorizontalAlignment="Left" Height="29" Margin="182,273,0,0" TextWrapping="Wrap" Text="{Binding Path=ProcedureDuration}" VerticalAlignment="Top" Width="126"/>
+                        <CheckBox Content="Завершено" IsChecked="{Binding Path=Сompleted}"  HorizontalAlignment="Left" Margin="14,310,0,0" VerticalAlignment="Top" FontSize="14" Width="222" Grid.RowSpan="2"/>
 
                     </Grid>
                 </Grid>
@@ -499,8 +256,8 @@
 
 
         </TabControl>
-        <Button Content="Готово" Margin="635,457,0,0" Click="Save_Click" Height="36" VerticalAlignment="Top" HorizontalAlignment="Left" Width="186" FontSize="14"/>
+        <Button Content="Готово" Margin="635,457,0,0" Height="36" VerticalAlignment="Top" HorizontalAlignment="Left" Width="186" FontSize="14" Click="Save_Click"/>
         <Label Content="Все изменения сохраняются автоматически" HorizontalAlignment="Left" Margin="10,458,0,0" VerticalAlignment="Top" Width="400" FontSize="14" Background="{x:Null}" Foreground="#FF97968F"/>
-        <Button Content="Отмена" Margin="444,457,0,0" Click="Save_Click" Height="36" VerticalAlignment="Top" HorizontalAlignment="Left" Width="186" FontSize="14"/>
+        <Button Content="Отмена" Margin="444,457,0,0"  Height="36" VerticalAlignment="Top" HorizontalAlignment="Left" Width="186" FontSize="14" Click="Cancel_Click" />
     </Grid>
 </Window>

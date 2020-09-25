@@ -33,6 +33,7 @@ namespace denta_med_crm
             InitializeComponent();
             if (File.Exists(dbFile))
                 db.Import(dbFile);
+            db.RunTimer(dbFile);
 
             InitializeOrUpdate();
 
@@ -87,8 +88,6 @@ namespace denta_med_crm
 
         private void BtAddUser_Click(object sender, RoutedEventArgs e)
         {
-
-
             var temp = new AddOrEditUserWindow(new Client()
             {
                 FullName = "asdfasdf",
@@ -141,8 +140,8 @@ namespace denta_med_crm
             {
                 db.Clients.Add(x);
                 db.Export(dbFile);
+                dataGrid.Items.Refresh();
             };
-            dataGrid.Items.Refresh();
         }
 
         private void BtAddEvent_Click(object sender, RoutedEventArgs e)

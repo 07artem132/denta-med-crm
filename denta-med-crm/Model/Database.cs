@@ -15,6 +15,8 @@ namespace denta_med_crm.Model
         public readonly HistoryCache ProcedureNameHistory;
         private Timer Timer = null;
         private string Path;
+        private object locker = new object();
+
         public Database()
         {
             Clients = new List<Client>();
@@ -35,21 +37,24 @@ namespace denta_med_crm.Model
         {
             var serializer = JsonSerializer.Create();
             Clients = JsonConvert.DeserializeObject<List<Client>>(File.ReadAllText(path));
-
             FillInHistory();
         }
-        public void Export(object path)
+
+        public void RunTimer(string path)
         {
-            var json = JsonConvert.SerializeObject(Clients);
-            File.WriteAllText(path.ToString(), json);
+            if (Timer != null)
+            {
+                Timer = new Timer(new TimerCallback(x => Export(path)), null, 0, 1000 * 1);
+            }
         }
+
         public void Export(string path)
         {
-            var json = JsonConvert.SerializeObject(Clients);
-            File.WriteAllText(path, json);
-            if (Timer != null)
-                Timer.Dispose();
-            Timer = new Timer(new TimerCallback(Export), path, 0, 1000 * 1);
+            lock (locker)
+            {
+                var json = JsonConvert.SerializeObject(Clients);
+                File.WriteAllText(path, json);
+            }
         }
 
         public IEnumerable<Procedure> EnumerateProcedures()

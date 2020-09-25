@@ -75,7 +75,30 @@
                             <ImageBrush ImageSource="Images/EditUser.png" Stretch="Uniform"/>
                         </Button.Background>
                     </Button>
-                    <TextBox x:Name="_filterINput" TextWrapping="Wrap" Text="" Margin="249,10,10,0" Height="37" VerticalAlignment="Top" VerticalContentAlignment="Center" Padding="2,0,0,0" TextChanged="TextBox_TextChanged"/>
+                    <TextBox x:Name="_filterINput" TextWrapping="Wrap" Text="" Margin="249,10,10,0" Height="37" VerticalAlignment="Top" VerticalContentAlignment="Center" Padding="2,0,0,0" TextChanged="TextBox_TextChanged">
+                        <TextBox.Style>
+                            <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
+                                <Style.Resources>
+                                    <VisualBrush x:Key="CueBannerBrush" AlignmentX="Left" AlignmentY="Center" Stretch="None">
+                                        <VisualBrush.Visual>
+                                            <Label Content=" Поиск по базе..." Foreground="LightGray" FontSize="14" />
+                                        </VisualBrush.Visual>
+                                    </VisualBrush>
+                                </Style.Resources>
+                                <Style.Triggers>
+                                    <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                        <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                    </Trigger>
+                                    <Trigger Property="Text" Value="{x:Null}">
+                                        <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                    </Trigger>
+                                    <Trigger Property="IsKeyboardFocused" Value="True">
+                                        <Setter Property="Background" Value="White" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
                 </Grid>
             </TabItem>
 
