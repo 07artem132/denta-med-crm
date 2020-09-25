@@ -56,7 +56,7 @@ namespace denta_med_crm
         {
             if (dataGrid.ItemsSource == null)
             {
-                if (filter == null)
+                if (filter != null)
                     dataGrid.ItemsSource = db.Clients.Where(filter);
                 else dataGrid.ItemsSource = db.Clients;
             }
