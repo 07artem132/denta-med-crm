@@ -44,7 +44,7 @@
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
-                    <DataGrid x:Name="dataGrid" Margin="0,52,0,0" SelectionChanged="DataGrid_SelectionChanged">
+                    <DataGrid IsReadOnly="true" AutoGenerateColumns="false" x:Name="dataGrid" Margin="0,52,0,0" SelectionChanged="DataGrid_SelectionChanged">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ФИО" Binding="{Binding FirstName}" Width="150" />
                             <DataGridTextColumn Header="Дата рождения" Binding="{Binding DateOfBirth}" Width="150" />

@@ -9,56 +9,73 @@
         mc:Ignorable="d"
         ResizeMode="NoResize"
         local:WindowBehavior.HideCloseButton="True"
-        Title="AddOrEditUserWindow" Height="502" Width="840" Name="addOrEditUserWindow" >
-    <Grid>
-        <TabControl Margin="0,0,12.6,50.8" >
+        Title="Клиент" Height="526" Width="837" Name="addOrEditUserWindow" >
+
+    <Grid Background="#FF4D6082">
+        <Grid.Resources>
+            <Style TargetType="{x:Type TextBox}">
+                <Setter Property="Foreground" Value="#FF007ACC" />
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="VerticalContentAlignment" Value="Center" />
+                <Setter Property="Padding" Value="2,0,0,0" />
+                <Setter Property="TextDecorations" Value="Underline" />
+                <Setter Property="Background" Value="{x:Null}" />
+            </Style>
+        </Grid.Resources>
+        <TabControl Margin="10,10,10,46" >
             <TabItem   Header="Общее" >
                 <Grid>
 
-                    <TextBox  TextWrapping="Wrap" Text="{Binding ElementName=addOrEditUserWindow, Path=Client.FullName}" Width="120" Margin="87,10,608.2,359.6" />
-                    <Label Content="ФИО" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-                    <Label Content="Пол" HorizontalAlignment="Left" Margin="261,9,0,0" VerticalAlignment="Top"/>
-                    <ComboBox HorizontalAlignment="Center" VerticalAlignment="Center" 
-                  ItemsSource="{Binding Source={local:EnumBindingSource {x:Type model:Sex}}}" SelectedValue="{Binding ElementName=addOrEditUserWindow, Path=Client.Sex}" Margin="298,10,399.2,357.6" Width="118" Height="26"/>
+                    <Grid Background="#FFE7E8EC" Margin="535,0,0,0">
+                        <Label Content="Заметки:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.555,1.93" FontSize="14" Width="250" Background="#FFF3F3F3"/>
+                        <TextBox TextWrapping="Wrap" Text="{Binding Client.ClientDescription, ElementName=addOrEditUserWindow}" Margin="10,39,10,10" Background="White" />
+                    </Grid>
 
-                    <Label Content="дата рождения" HorizontalAlignment="Left" Margin="421,10,0,0" VerticalAlignment="Top"/>
-                    <DatePicker Height="30" Width="105" SelectedDate="{Binding ElementName=addOrEditUserWindow, Path=Client.DateOfBirth}" Margin="519,7,191.2,356.6"/>
-                    <Label Content="Телефон" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
-                    <TextBox  TextWrapping="Wrap" Text="{Binding ElementName=addOrEditUserWindow, Path=Client.MainPhoneNumber}" Width="120" Margin="82,45,613.2,324.6" />
-                    <TextBox TextWrapping="Wrap" Text="{Binding ElementName=addOrEditUserWindow, Path=Client.AlternativePhoneNumber}" Width="120" Margin="309,45,386.2,324.6"/>
-                    <Label Content="Альтернативный" HorizontalAlignment="Left" Margin="207,45,0,0" VerticalAlignment="Top"/>
-                    <TextBox TextWrapping="Wrap" Text="{Binding ElementName=addOrEditUserWindow, Path=Client.ClientDescription}" Margin="7,217,12.2,68.6" />
-                    <Label Content="Заметка" HorizontalAlignment="Left" Margin="10,186,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.555,1.93"/>
-                    <Label Content="Скидка" HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top"/>
-                    <TextBox  TextWrapping="Wrap" Text="{Binding ElementName=addOrEditUserWindow, Path=Client.Discount}" Margin="73,76,673.2,293.6"/>
-                    <Label Content="Последний визит" HorizontalAlignment="Left" Margin="7,104,0,0" VerticalAlignment="Top"/>
-                    <Label Content="{Binding ElementName=addOrEditUserWindow, Path=Client.LastVisit}" ContentStringFormat="dd.MM.yyyy H:mm" HorizontalAlignment="Left" Margin="130,104,0,0" VerticalAlignment="Top" Width="123" Height="26" />
-                    <Label Content="Является клиентом" HorizontalAlignment="Left" Margin="10,156,0,0" VerticalAlignment="Top"/>
-                    <Label Content="{Binding ElementName=addOrEditUserWindow, Path=Client.ClientLong}" HorizontalAlignment="Left" Margin="130,156,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.58,0.555" Height="26" Width="94" />
-                    <Label Content="%" HorizontalAlignment="Left" Margin="147,72,0,0" VerticalAlignment="Top"/>
-                    <Label Content="(день рождения через х дней)" HorizontalAlignment="Left" Margin="629,9,0,0" VerticalAlignment="Top"/>
-                    <Label Content="Дата регистрации" HorizontalAlignment="Left" Margin="7,130,0,0" VerticalAlignment="Top"/>
-                    <Label Content="{Binding ElementName=addOrEditUserWindow, Path=Client.FirstVisit}" ContentStringFormat="dd.MM.yyyy" HorizontalAlignment="Left" Margin="130,130,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.58,0.555" Height="26" Width="123"/>
+                    <TextBox  TextWrapping="Wrap" Text="{Binding Client.FullName, ElementName=addOrEditUserWindow}" Width="372" Margin="158,10,0,0" Height="29" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                    <Label Content="ФИО:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="14" Width="143"/>
+                    <Label Content="Пол:" HorizontalAlignment="Left" Margin="10,44,0,0" VerticalAlignment="Top" FontSize="14"/>
+                    <ComboBox HorizontalAlignment="Left" VerticalAlignment="Top" 
+                  ItemsSource="{Binding Source={local:EnumBindingSource {x:Type model:Sex}}}" SelectedValue="{Binding Client.Sex, ElementName=addOrEditUserWindow}" Margin="158,47,0,0" Width="118" Height="26"/>
+
+                    <Label Content="Дата рождения:" HorizontalAlignment="Left" Margin="10,180,0,0" VerticalAlignment="Top" FontSize="14"/>
+                    <DatePicker Height="29" Width="208" SelectedDate="{Binding Client.DateOfBirth, ElementName=addOrEditUserWindow}" Margin="158,180,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="14" VerticalContentAlignment="Center"/>
+                    <Label Content="Телефон:" HorizontalAlignment="Left" Margin="10,78,0,0" VerticalAlignment="Top" FontSize="14" Width="143"/>
+                    <TextBox  TextWrapping="Wrap" Text="{Binding Client.MainPhoneNumber, ElementName=addOrEditUserWindow}" Width="208" Margin="158,78,0,0" Height="29" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                    <TextBox TextWrapping="Wrap" Text="{Binding Client.AlternativePhoneNumber, ElementName=addOrEditUserWindow}" Width="208" Margin="158,112,0,0" HorizontalAlignment="Left" Height="29" VerticalAlignment="Top"/>
+                    <Label Content="Альтернативный:" HorizontalAlignment="Left" Margin="10,112,0,0" VerticalAlignment="Top" FontSize="14" RenderTransformOrigin="2.017,1.069"/>
+                    <Label Content="Скидка, %:" HorizontalAlignment="Left" Margin="10,146,0,0" VerticalAlignment="Top" FontSize="14" Width="143"/>
+                    <TextBox  TextWrapping="Wrap" Text="{Binding Client.Discount, ElementName=addOrEditUserWindow}" Margin="158,146,0,0" Height="29" VerticalAlignment="Top" HorizontalAlignment="Left" Width="208"/>
+                    <Label Content="Последний визит:" HorizontalAlignment="Left" Margin="10,214,0,0" VerticalAlignment="Top" FontSize="14" Width="146"/>
+                    <Label Content="{Binding Client.LastVisit, ElementName=addOrEditUserWindow}" ContentStringFormat="dd.MM.yyyy H:mm" HorizontalAlignment="Left" Margin="158,214,0,0" VerticalAlignment="Top" Width="208" Height="26" />
+                    <Label Content="Является клиентом с:" HorizontalAlignment="Left" Margin="10,282,0,0" VerticalAlignment="Top" FontSize="14" Width="146"/>
+                    <Label Content="{Binding Client.ClientLong, ElementName=addOrEditUserWindow}" HorizontalAlignment="Left" Margin="158,251,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.58,0.555" Height="26" Width="208" />
+                    <Label Content="(день рождения через х дней)" HorizontalAlignment="Left" Margin="10,316,0,0" VerticalAlignment="Top" FontSize="14"/>
+                    <Label Content="Дата регистрации:" HorizontalAlignment="Left" Margin="10,248,0,0" VerticalAlignment="Top" FontSize="14" Width="146"/>
+                    <Label Content="{Binding Client.FirstVisit, ElementName=addOrEditUserWindow}" ContentStringFormat="dd.MM.yyyy" HorizontalAlignment="Left" Margin="158,285,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.58,0.555" Height="26" Width="208"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Зубная формула" >
                 <Grid>
-                    <ListView x:Name="_inspections"  Margin="10,19,148,163" ItemsSource="{Binding ElementName=addOrEditUserWindow, Path=Client.Inspections}" >
+
+                    <Grid Background="#FFE7E8EC" Margin="535,10,0,225">
+                        <Label Content="Описание:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.555,1.93" FontSize="14" Width="250" Background="#FFF3F3F3"/>
+                        <TextBox TextWrapping="Wrap" Text="{Binding Client.ClientDescription, ElementName=addOrEditUserWindow}" Margin="10,39,10,10" Background="White" />
+                    </Grid>
+
+                    <ListView x:Name="_inspections"  Margin="10,10,280,225" ItemsSource="{Binding ElementName=addOrEditUserWindow, Path=Client.Inspections}" Background="#FFF6F6F6" >
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="Дата" Width="140" DisplayMemberBinding="{Binding InspectionDate}" />
+                                <GridViewColumn Header="Дата осмотра" Width="140" DisplayMemberBinding="{Binding InspectionDate}" />
                                 <GridViewColumn Header="Врач" Width="150" DisplayMemberBinding="{Binding Doctor}" />
-                                <GridViewColumn Header="Описание" Width="70" DisplayMemberBinding="{Binding Description}" />
+                                <GridViewColumn Header="Описание" Width="215" DisplayMemberBinding="{Binding Description}" />
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Button Content="добавить" HorizontalAlignment="Left" Margin="672,21,0,0" VerticalAlignment="Top" Width="75"/>
-                    <Button Content="удалить" HorizontalAlignment="Left" Margin="672,45,0,0" VerticalAlignment="Top" Width="75"/>
                     <Grid DataContext="{Binding ElementName=_inspections, Path=SelectedItem}">
-                        <Label Margin="99,231,562.2,136.6" Content="{Binding Path=InspectionDate}"  ContentStringFormat="Выбранная дата: dd.MM.yyyy"></Label>
-                        <Label Margin="388,231,257.2,136.6" Content="Врач проводивший осмотр"/>
-                        <TextBox Text="{Binding Path=Doctor}" Margin="577,231,68.2,136.6" />
-                        <Grid x:Name="_ts3" Margin="361,328,148.2,9.6">
+                        <Label Margin="361,246,172,138" Content="{Binding Path=InspectionDate}"  ContentStringFormat="Выбранная дата: dd.MM.yyyy"></Label>
+                        <Label Margin="10,246,736,138" Content="Врач:" FontSize="14"/>
+                        <TextBox Text="{Binding Path=Doctor}" Margin="74,246,0,0" HorizontalAlignment="Left" Width="261" Height="29" VerticalAlignment="Top" />
+                        <Grid x:Name="_ts3" Margin="348,342,130,10">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition></ColumnDefinition>
                                 <ColumnDefinition></ColumnDefinition>
@@ -90,7 +107,7 @@
                             <TextBox TextWrapping="Wrap" Tag="32" Grid.Row="1" Grid.Column="1" />
                             <TextBox TextWrapping="Wrap" Tag="31" Grid.Row="1" Grid.Column="0" />
                         </Grid>
-                        <Grid x:Name="_ts1" Margin="26,267,473.2,70.6">
+                        <Grid x:Name="_ts1" Margin="10,282,473,71">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition></ColumnDefinition>
                                 <ColumnDefinition></ColumnDefinition>
@@ -122,7 +139,7 @@
                             <TextBox Tag="17" TextWrapping="Wrap"  Grid.Row="1" Grid.Column="1" />
                             <TextBox Tag="18"  TextWrapping="Wrap"  Grid.Row="1" Grid.Column="0" />
                         </Grid>
-                        <Grid x:Name="_ts4" Margin="26,328,473.2,9.6">
+                        <Grid x:Name="_ts4" Margin="10,342,473,10">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition></ColumnDefinition>
                                 <ColumnDefinition></ColumnDefinition>
@@ -154,7 +171,7 @@
                             <TextBox TextWrapping="Wrap" Tag="47" Grid.Row="1" Grid.Column="1" />
                             <TextBox TextWrapping="Wrap" Tag="48" Grid.Row="1" Grid.Column="0" />
                         </Grid>
-                        <Grid x:Name="_ts2" Margin="361,267,148.2,70.6">
+                        <Grid x:Name="_ts2" Margin="348,282,130,71">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition></ColumnDefinition>
                                 <ColumnDefinition></ColumnDefinition>
@@ -186,6 +203,9 @@
                             <TextBox Tag="22" TextWrapping="Wrap" Grid.Row="1" Grid.Column="1" />
                             <TextBox Tag="21" TextWrapping="Wrap" Grid.Row="1" Grid.Column="0" />
                         </Grid>
+                        <Label Margin="0,202,0,177" Content="" Background="#FFE7E8EC" FontSize="14"/>
+                        <Button Content="?" HorizontalAlignment="Left" Margin="210,206,0,0" VerticalAlignment="Top" Width="87" Height="28" FontSize="16" FontWeight="Bold" Foreground="#FF6C6C6C" Background="#FFEEEEEE"/>
+                        <Button Content="Добавить осмотр" HorizontalAlignment="Left" Margin="10,206,0,0" VerticalAlignment="Top" Width="195" Height="28" FontSize="14"/>
                     </Grid>
                 </Grid>
             </TabItem>
@@ -479,7 +499,8 @@
 
 
         </TabControl>
-        <Button Content="Сохранить и закрыть" Margin="495,427,213.6,9.8" Click="Save_Click"/>
-        <Button Content="Отменить изменения и закрыть" Margin="625,427,22.6,9.8" Click="Cancel_Click"/>
+        <Button Content="Готово" Margin="635,457,0,0" Click="Save_Click" Height="36" VerticalAlignment="Top" HorizontalAlignment="Left" Width="186" FontSize="14"/>
+        <Label Content="Все изменения сохраняются автоматически" HorizontalAlignment="Left" Margin="10,458,0,0" VerticalAlignment="Top" Width="400" FontSize="14" Background="{x:Null}" Foreground="#FF97968F"/>
+        <Button Content="Отмена" Margin="444,457,0,0" Click="Save_Click" Height="36" VerticalAlignment="Top" HorizontalAlignment="Left" Width="186" FontSize="14"/>
     </Grid>
 </Window>
