@@ -11,9 +11,9 @@
         ResizeMode="NoResize"
         local:WindowBehavior.HideCloseButton="True"
         WindowStartupLocation="CenterScreen"
-        Title="Клиент" Height="534" Width="842" Name="addOrEditUserWindow" >
+        Title="Клиент" Height="534" Width="842" Name="addOrEditUserWindow" Icon="Images/Icon.ico" >
 
-    <Grid Background="#FF4D6082">
+    <Grid Background="#FFE7E8EC">
         <Grid.Resources>
             <Style TargetType="{x:Type TextBox}">
                 <Setter Property="Foreground" Value="#FF007ACC" />
@@ -284,7 +284,7 @@ C - Кариес
 
         </TabControl>
         <Button Content="Готово" Margin="635,457,0,0" Height="36" VerticalAlignment="Top" HorizontalAlignment="Left" Width="186" FontSize="14" Click="Save_Click"/>
-        <Label Content="Все изменения сохраняются автоматически" HorizontalAlignment="Left" Margin="10,458,0,0" VerticalAlignment="Top" Width="400" FontSize="14" Background="{x:Null}" Foreground="#FF97968F"/>
+        <Label Content="Все изменения сохраняются автоматически" HorizontalAlignment="Left" Margin="10,460,0,0" VerticalAlignment="Top" Width="400" FontSize="14" Background="{x:Null}" Foreground="#FF97968F"/>
         <Button x:Name="_undoButton" Content="Отмена" Margin="444,457,0,0"  Height="36" VerticalAlignment="Top" HorizontalAlignment="Left" Width="186" FontSize="14" Click="Cancel_Click" />
     </Grid>
 </Window>

@@ -176,6 +176,30 @@ namespace denta_med_crm
         {
             
         }
+
+        private void MenuItem_ExportDb(object sender, RoutedEventArgs e)
+        {
+            using (var fbd = new System.Windows.Forms.FolderBrowserDialog())
+            {
+                var result = fbd.ShowDialog();
+                if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                {
+                    var full = System.IO.Path.Combine(fbd.SelectedPath, dbFile);
+                    db.Export(full);
+                }
+            }
+        }
+
+        private void MenuItem_ImportDb(object sender, RoutedEventArgs e)
+        {
+            var dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.Title = "Открыть существующую базу данных?";
+            dlg.Multiselect = false;
+            dlg.Filter = $"DB Files (*.json)";
+            var result = dlg.ShowDialog();
+            if (result == true)
+                db.Import(dlg.FileName);
+        }
     }
 
 
