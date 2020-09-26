@@ -92,60 +92,14 @@ namespace denta_med_crm
 
         private void BtAddUser_Click(object sender, RoutedEventArgs e)
         {
-            var temp = new AddOrEditUserWindow(new Client()
+            var temp = new AddOrEditUserWindow(null);
+            temp.ShowDialog();
+            if (temp.AddedUser != null)
             {
-                FullName = "asdfasdf",
-                MainPhoneNumber = "asd",
-                AlternativePhoneNumber = "asdfasdf",
-                Sex = Sex.Male,
-                Discount = 10,
-                FirstVisit = DateTime.Now.AddDays(-10),
-                DateOfBirth = DateTime.Now.AddDays(5),
-                LastVisit = DateTime.Now,
-                ClientDescription = "asdfasdf",
-                Inspections = new ObservableCollection<Inspection>() {
-                    new Inspection(){
-                        InspectionDate=DateTime.Now,
-                        Doctor="Пупкин",
-                        Description="asdfasdfa",
-
-
-                    }, new Inspection(){
-                        InspectionDate=DateTime.Now.AddDays(10),
-                        Doctor="Николай",
-                        Description="asdfasdfa",
-
-
-                    }
-                },
-                Procedures = new ObservableCollection<Procedure>()
-                {
-                    new Procedure()
-                    {
-                        ProcedureName="Тестовая один",
-                        ProcedureDuration=60,
-                        WarrantyPeriod=DateTime.Now.AddDays(100),
-                        ProcedureDate=DateTime.Now,
-                        Сompleted=false,
-                        Doctor="test1",
-                    }, new Procedure()
-                    {
-                        ProcedureName="Тестовая два",
-                        ProcedureDuration=11,
-                        WarrantyPeriod=DateTime.Now.AddDays(99),
-                        ProcedureDate=DateTime.Now.AddDays(-1),
-                        Сompleted=true,
-                        Doctor="test2",
-                    }
-                }
-            });
-            temp.Show();
-            temp.Notify += x =>
-            {
-                db.Clients.Add(x);
+                db.Clients.Add(temp.AddedUser);
                 db.Export(dbFile);
                 dataGrid.Items.Refresh();
-            };
+            }
         }
 
         private void BtAddEvent_Click(object sender, RoutedEventArgs e)
@@ -154,20 +108,7 @@ namespace denta_med_crm
                 return;
             var client = (Client)dataGrid.SelectedItem;
 
-        }
-
-        private void BtEditUser_Click(object sender, RoutedEventArgs e)
-        {
-            if (dataGrid.SelectedItem == null)
-                return;
-            var client = (Client)dataGrid.SelectedItem;
-            new AddOrEditUserWindow(client).Show();
-            dataGrid.Items.Refresh();
-        }
-
-        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-        }
+        }//!!!!
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -183,7 +124,7 @@ namespace denta_med_crm
                     _patient_shuduler.AddEvent(
                        new Event()
                        {
-                           Subject = string.Format("Доктор: {0}\rПроцедура: {1}\rЗубов: {2}", Procedure.Doctor, Procedure.ProcedureName, Procedure.Tooth),
+                           Subject = string.Format("Доктор: {0}\rПроцедура: {1}", Procedure.Doctor, Procedure.ProcedureName),
                            Color = Brushes.LightGreen,
                            Start = DateTime.Now,
                            End = DateTime.Now.AddMinutes(90),
@@ -198,6 +139,15 @@ namespace denta_med_crm
         void patient_shuduler_OnEventDoubleClick(object sender, Event e)
         {
             new AddOrEditUserWindow((Client)e.RelObject).Show();
+        }
+
+        private void DataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if ( dataGrid.SelectedItem == null)
+                return;
+            var client = (Client)dataGrid.SelectedItem;
+            new AddOrEditUserWindow(client).ShowDialog();
+            dataGrid.Items.Refresh();
         }
     }
 

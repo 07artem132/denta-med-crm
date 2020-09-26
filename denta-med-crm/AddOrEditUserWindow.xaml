@@ -6,6 +6,7 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:denta_med_crm"
         xmlns:model="clr-namespace:denta_med_crm.Model"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         ResizeMode="NoResize"
         local:WindowBehavior.HideCloseButton="True"
@@ -38,7 +39,7 @@
                   ItemsSource="{Binding Source={local:EnumBindingSource {x:Type model:Sex}}}" SelectedValue="{Binding Client.Sex, ElementName=addOrEditUserWindow}" Margin="158,47,0,0" Width="118" Height="26"/>
 
                     <Label Content="Дата рождения:" HorizontalAlignment="Left" Margin="10,180,0,0" VerticalAlignment="Top" FontSize="14"/>
-                    <DatePicker Height="29" Width="208" SelectedDate="{Binding Client.DateOfBirth, ElementName=addOrEditUserWindow}" Margin="158,180,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="14" VerticalContentAlignment="Center"/>
+                    <DatePicker x:Name="_dateOfBirth" Height="29" Width="208" SelectedDate="{Binding Client.DateOfBirth, ElementName=addOrEditUserWindow}" Margin="158,180,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" FontSize="14" VerticalContentAlignment="Center"/>
                     <Label Content="Телефон:" HorizontalAlignment="Left" Margin="10,78,0,0" VerticalAlignment="Top" FontSize="14" Width="143"/>
                     <TextBox  TextWrapping="Wrap" Text="{Binding Client.MainPhoneNumber, ElementName=addOrEditUserWindow}" Width="208" Margin="158,78,0,0" Height="29" VerticalAlignment="Top" HorizontalAlignment="Left" />
                     <TextBox TextWrapping="Wrap" Text="{Binding Client.AlternativePhoneNumber, ElementName=addOrEditUserWindow}" Width="208" Margin="158,112,0,0" HorizontalAlignment="Left" Height="29" VerticalAlignment="Top"/>
@@ -46,12 +47,11 @@
                     <Label Content="Скидка, %:" HorizontalAlignment="Left" Margin="10,146,0,0" VerticalAlignment="Top" FontSize="14" Width="143"/>
                     <TextBox  TextWrapping="Wrap" Text="{Binding Client.Discount, ElementName=addOrEditUserWindow}" Margin="158,146,0,0" Height="29" VerticalAlignment="Top" HorizontalAlignment="Left" Width="208"/>
                     <Label Content="Последний визит:" HorizontalAlignment="Left" Margin="10,214,0,0" VerticalAlignment="Top" FontSize="14" Width="146"/>
-                    <Label Content="{Binding Client.LastVisit, ElementName=addOrEditUserWindow}" ContentStringFormat="dd.MM.yyyy H:mm" HorizontalAlignment="Left" Margin="158,214,0,0" VerticalAlignment="Top" Width="208" Height="26" />
-                    <Label Content="Является клиентом с:" HorizontalAlignment="Left" Margin="10,282,0,0" VerticalAlignment="Top" FontSize="14" Width="146"/>
-                    <Label Content="{Binding Client.ClientLong, ElementName=addOrEditUserWindow}" HorizontalAlignment="Left" Margin="158,251,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.58,0.555" Height="26" Width="208" />
-                    <Label Content="(день рождения через х дней)" HorizontalAlignment="Left" Margin="10,316,0,0" VerticalAlignment="Top" FontSize="14"/>
-                    <Label Content="Дата регистрации:" HorizontalAlignment="Left" Margin="10,248,0,0" VerticalAlignment="Top" FontSize="14" Width="146"/>
-                    <Label Content="{Binding Client.FirstVisit, ElementName=addOrEditUserWindow}" ContentStringFormat="dd.MM.yyyy" HorizontalAlignment="Left" Margin="158,285,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.58,0.555" Height="26" Width="208"/>
+                    <Label Content="Является клиентом с:" HorizontalAlignment="Left" Margin="10,248,0,0" VerticalAlignment="Top" FontSize="14" Width="146" RenderTransformOrigin="0.527,-0.345"/>
+                    <Label Content="День рождения:" HorizontalAlignment="Left" Margin="10,282,0,0" VerticalAlignment="Top" FontSize="14" Width="146"/>
+                    <Label Content="{Binding Client.FirstVisit, ElementName=addOrEditUserWindow}" ContentStringFormat="dd.MM.yyyy" HorizontalAlignment="Left" Margin="158,251,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.58,0.555" Height="26" Width="208"/>
+                    <Label x:Name="_lastVisitInfo" HorizontalAlignment="Left" Margin="158,214,0,0" VerticalAlignment="Top" Width="208" Height="26" />
+                    <Label x:Name="_daysToBirthday"  HorizontalAlignment="Left" Margin="158,285,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.58,0.555" Height="26" Width="208"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Зубная формула" >
@@ -68,7 +68,7 @@
                     <Grid DataContext="{Binding ElementName=_inspections, Path=SelectedItem}">
                         <Grid Background="#FFE7E8EC" Margin="535,10,0,225">
                             <Label Content="Описание:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.555,1.93" FontSize="14" Width="250" Background="#FFF3F3F3"/>
-                            <TextBox TextWrapping="Wrap" Text="{Binding Client.ClientDescription, ElementName=addOrEditUserWindow}" Margin="10,39,10,10" Background="White" VerticalContentAlignment="Top" />
+                            <TextBox TextWrapping="Wrap" Text="{Binding Path=Description}" Margin="10,39,10,10" Background="White" VerticalContentAlignment="Top" />
                         </Grid>
 
                         <Label Margin="361,246,172,138" Content="{Binding Path=InspectionDate}"  ContentStringFormat="Выбранная дата: dd.MM.yyyy"></Label>
@@ -204,21 +204,21 @@
                         </Grid>
                         <Label Margin="0,202,0,177" Content="" Background="#FFE7E8EC" FontSize="14"/>
                         <Button x:Name="_formulaTt" Content="?" HorizontalAlignment="Left" Margin="210,206,0,0" VerticalAlignment="Top" Width="87" Height="28" FontSize="16" FontWeight="Bold" Foreground="#FF6C6C6C" Background="#FFEEEEEE" xml:space="preserve">
-                            <Button.ToolTip xml:space="preserve">
-Расшифровка:
-O - Отсутствует
-R - Корень
-P - Пульпит
-Pt - Переодонтит
-A - Пародонтоз
-К - Коронка
-C - Кариес
-П - Пломбированный
-B - Искусственный зуб
-П/С - Пломба/Кариес
+                            <Button.ToolTip>
+Расшифровка:&#xa;
+O - Отсутствует&#xa;
+R - Корень&#xa;
+P - Пульпит&#xa;
+Pt - Переодонтит&#xa;
+A - Пародонтоз&#xa;
+К - Коронка&#xa;
+C - Кариес&#xa;
+П - Пломбированный&#xa;
+B - Искусственный зуб&#xa;
+П/С - Пломба/Кариес&#xa;
                             </Button.ToolTip>
                         </Button>
-                        <Button x:Name="_addFormula" Content="Добавить осмотр" HorizontalAlignment="Left" Margin="10,206,0,0" VerticalAlignment="Top" Width="195" Height="28" FontSize="14"/>
+                        <Button x:Name="_addFormula" Content="Добавить осмотр" HorizontalAlignment="Left" Margin="10,206,0,0" VerticalAlignment="Top" Width="195" Height="28" FontSize="14" Click="_addFormula_Click"/>
                     </Grid>
                 </Grid>
             </TabItem>
@@ -234,7 +234,7 @@ B - Искусственный зуб
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Button x:Name="_addLabel" Content="Добавить запись" HorizontalAlignment="Left" Margin="10,160,0,0" VerticalAlignment="Top" Width="173" Height="24"/>
+                    <Button x:Name="_addLabel" Content="Добавить запись" HorizontalAlignment="Left" Margin="10,160,0,0" VerticalAlignment="Top" Width="173" Height="24" FontSize="14" Click="_addLabel_Click"/>
                     <Grid DataContext="{Binding ElementName=_procedures, Path=SelectedItem}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="45*"/>
@@ -243,9 +243,9 @@ B - Искусственный зуб
                         <Label Content="Дата:" Margin="10,203,751,83" FontSize="14"/>
                         <Label Content="Описание:" Margin="366,165,10,120" FontSize="14" Background="#FFE7E8EC" />
                         <Label Content="Врач:" Margin="10,237,730,49" FontSize="14"/>
-                        <TextBox HorizontalAlignment="Left" Height="208" Margin="366,195,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="429" Grid.RowSpan="2" VerticalContentAlignment="Top"/>
+                        <TextBox HorizontalAlignment="Left" Height="208" Margin="366,195,0,0" TextWrapping="Wrap" Text="{Binding Path=Description}" VerticalAlignment="Top" Width="429" Grid.RowSpan="2" VerticalContentAlignment="Top"/>
                         <TextBox HorizontalAlignment="Left" Height="29" Margin="89,237,0,0" TextWrapping="Wrap" Text="{Binding Path=Doctor}" VerticalAlignment="Top" Width="219"/>
-                        <DatePicker SelectedDate="{Binding Path=ProcedureDate}" Margin="89,203,497,83" FontSize="14" VerticalContentAlignment="Center"/>
+                        <xctk:DateTimePicker Value="{Binding Path=ProcedureDate}" Margin="89,203,497,83" FontSize="14" VerticalContentAlignment="Center"/>
                         <Label Content="Длительность (минут):" Margin="10,273,611,13" FontSize="14"/>
                         <TextBox HorizontalAlignment="Left" Height="29" Margin="182,273,0,0" TextWrapping="Wrap" Text="{Binding Path=ProcedureDuration}" VerticalAlignment="Top" Width="126"/>
                         <CheckBox Content="Завершено" IsChecked="{Binding Path=Сompleted}"  HorizontalAlignment="Left" Margin="14,310,0,0" VerticalAlignment="Top" FontSize="14" Width="222" Grid.RowSpan="2"/>
@@ -258,6 +258,6 @@ B - Искусственный зуб
         </TabControl>
         <Button Content="Готово" Margin="635,457,0,0" Height="36" VerticalAlignment="Top" HorizontalAlignment="Left" Width="186" FontSize="14" Click="Save_Click"/>
         <Label Content="Все изменения сохраняются автоматически" HorizontalAlignment="Left" Margin="10,458,0,0" VerticalAlignment="Top" Width="400" FontSize="14" Background="{x:Null}" Foreground="#FF97968F"/>
-        <Button Content="Отмена" Margin="444,457,0,0"  Height="36" VerticalAlignment="Top" HorizontalAlignment="Left" Width="186" FontSize="14" Click="Cancel_Click" />
+        <Button x:Name="_undoButton" Content="Отмена" Margin="444,457,0,0"  Height="36" VerticalAlignment="Top" HorizontalAlignment="Left" Width="186" FontSize="14" Click="Cancel_Click" />
     </Grid>
 </Window>

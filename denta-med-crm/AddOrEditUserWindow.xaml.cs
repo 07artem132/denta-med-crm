@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace denta_med_crm
 {
@@ -28,20 +29,19 @@ namespace denta_med_crm
 
 
         public static readonly DependencyProperty ClientProperty;
-
-        public delegate void UpdateClient(Client client);
-        public event UpdateClient Notify;
+        public Client AddedUser;
 
         private bool disallowEditingTeeth;
-        
+
         public AddOrEditUserWindow(Client clientOrNull)
         {
             InitializeComponent();
+
+            _undoButton.Visibility = clientOrNull == null ? Visibility.Visible : Visibility.Hidden;
+
              if (clientOrNull == null)
                 Client = new Client();
-            else
-                Client = clientOrNull;
-
+            else Client = clientOrNull;
 
             var enu = new Grid[] { _ts1, _ts2, _ts3, _ts4 };
             foreach (var grid in enu)
@@ -56,6 +56,15 @@ namespace denta_med_crm
                     return;
                 LoadToothData(selectedInspection);
             };
+            
+            var dt = new DispatcherTimer();
+            dt.Tick += (x,y) =>
+            {
+                _daysToBirthday.Content = Client.DaysToBirthday;
+                _lastVisitInfo.Content = Client.LastVisitInfo;
+            };
+            dt.Interval = new TimeSpan(0, 0, 0, 0, 500);
+            dt.Start();
         }
         static AddOrEditUserWindow()
         {
@@ -65,7 +74,7 @@ namespace denta_med_crm
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            Notify?.Invoke(Client);
+            AddedUser = Client;
             this.Close();
         }
 
@@ -79,8 +88,7 @@ namespace denta_med_crm
         private void LoadToothData(Inspection from)
         {
             disallowEditingTeeth = true;
-            //  var enu = new Grid[] { _ts1, _ts2, _ts3, _ts4 };
-            var enu= new Grid[1];
+             var enu = new Grid[] { _ts1, _ts2, _ts3, _ts4 };
             foreach (var grid in enu)
                 foreach (var ui in grid.Children)
                 {
@@ -105,6 +113,18 @@ namespace denta_med_crm
                 return;
 
             selectedInspection.SetToothData(num, textBox.Text);
+        }
+
+        private void _addFormula_Click(object sender, RoutedEventArgs e)
+        {
+            Client.Inspections.Add(new Inspection());
+            _inspections.SelectedIndex = _inspections.Items.Count - 1;
+        }
+
+        private void _addLabel_Click(object sender, RoutedEventArgs e)
+        {
+            Client.Procedures.Add(new Procedure());
+            _procedures.SelectedIndex = _procedures.Items.Count - 1;
         }
     }
 }

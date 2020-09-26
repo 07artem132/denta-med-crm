@@ -45,9 +45,10 @@
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
-                    <DataGrid IsReadOnly="true" AutoGenerateColumns="false" x:Name="dataGrid" Margin="0,52,0,0" SelectionChanged="DataGrid_SelectionChanged">
+                    <DataGrid IsReadOnly="true" AutoGenerateColumns="false" x:Name="dataGrid" Margin="0,52,0,0" 
+                              MouseDoubleClick="DataGrid_MouseDoubleClick">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="ФИО" Binding="{Binding FirstName}" Width="150" />
+                            <DataGridTextColumn Header="ФИО" Binding="{Binding FullName}" Width="150" />
                             <DataGridTextColumn Header="Дата рождения" Binding="{Binding DateOfBirth}" Width="150" />
                             <DataGridTextColumn Header="Первый визит" Binding="{Binding FirstVisit}" Width="150" />
                             <DataGridTextColumn Header="Последний визит" Binding="{Binding LastVisit}" Width="150" />
@@ -70,12 +71,7 @@
                             <ImageBrush ImageSource="Images/AddItem.png" Stretch="Uniform"/>
                         </Button.Background>
                     </Button>
-                    <Button x:Name="btEditUser" Content="" Margin="160,10,0,0" Click="BtEditUser_Click" HorizontalAlignment="Left" Width="75" Height="37" VerticalAlignment="Top">
-                        <Button.Background>
-                            <ImageBrush ImageSource="Images/EditUser.png" Stretch="Uniform"/>
-                        </Button.Background>
-                    </Button>
-                    <TextBox x:Name="_filterINput" TextWrapping="Wrap" Text="" Margin="249,10,10,0" Height="37" VerticalAlignment="Top" VerticalContentAlignment="Center" Padding="2,0,0,0" TextChanged="TextBox_TextChanged">
+                    <TextBox x:Name="_filterINput" TextWrapping="Wrap" Text="" Margin="160,10,10,0" Height="37" VerticalAlignment="Top" VerticalContentAlignment="Center" Padding="2,0,0,0" TextChanged="TextBox_TextChanged">
                         <TextBox.Style>
                             <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
                                 <Style.Resources>

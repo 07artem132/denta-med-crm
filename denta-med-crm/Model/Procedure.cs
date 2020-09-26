@@ -12,23 +12,23 @@ namespace denta_med_crm.Model
     {
         //Авто подсказка по первым буквам (поиск по всей строке любых процедур которые когда либо и кому либо были проведены, при поиске приведение к одному регистру)
         [JsonProperty("procedure_name")]
-        public string ProcedureName { get; set; }
+        public string ProcedureName { get; set; } = "";
         [JsonProperty("procedure_duration")]
-        public int ProcedureDuration { get; set; }
+        public int ProcedureDuration { get; set; } = 30;
         //до какого гарантия, автоматически выставлять +1 год от текущей даты
         [JsonProperty("warranty_period")]
-        public DateTime WarrantyPeriod { get; set; }
+        public DateTime WarrantyPeriod { get; set; } = DateTime.Now.AddYears(1);
         //по умолчанию текущая дата может быть будующей датой (записан пациент на какое-то число)
         [JsonProperty("procedure_date")]
-        public DateTime ProcedureDate { get; set; }
+        public DateTime ProcedureDate { get; set; } = DateTime.Now;
         //Выполнена или нет
         [JsonProperty("completed")]
-        public bool Сompleted { get; set; }
+        public bool Сompleted { get; set; } = true;
         //Авто подсказка по первым буквам (поиск по всей строке прошлых докторов которые когда либо и кому либо были указаны, при поиске приведение к одному регистру)
         [JsonProperty("doctor")]
-        public string Doctor { get; set; }
+        public string Doctor { get; set; } = "";
         [JsonProperty("description")]
-        public string Description { get; set; }
+        public string Description { get; set; } = "";
 
     }
 }
