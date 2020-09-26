@@ -116,6 +116,9 @@ namespace denta_med_crm
         }
         private void patient_shuduler_Loaded(object sender, RoutedEventArgs e)
         {
+            if (_tabControl.SelectedIndex != 1)
+                return;
+
             _patient_shuduler.SelectedDate = DateTime.Now;
             _patient_shuduler.Mode = Mode.Day;
             _patient_shuduler.Events.Clear();
@@ -124,13 +127,12 @@ namespace denta_med_crm
                     _patient_shuduler.AddEvent(
                        new Event()
                        {
-                           Subject = string.Format("Доктор: {0}\rПроцедура: {1}", Procedure.Doctor, Procedure.ProcedureName),
+                           Subject = string.Format("Доктор: {0}\rПроцедура: {1}", Procedure.Doctor, Procedure.Description),
                            Color = Brushes.LightGreen,
-                           Start = Procedure.ProcedureDate,
+                           Start = Procedure.ProcedureDate, 
                            End = Procedure.ProcedureDate.AddMinutes(Procedure.ProcedureDuration),
                            RelObject = Client
                        });
-
 
         }
         void patient_shuduler_OnScheduleDoubleClick(object sender, DateTime e)
@@ -143,7 +145,7 @@ namespace denta_med_crm
 
         private void DataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if ( dataGrid.SelectedItem == null)
+            if (dataGrid.SelectedItem == null)
                 return;
             var client = (Client)dataGrid.SelectedItem;
             new AddOrEditUserWindow(client).ShowDialog();

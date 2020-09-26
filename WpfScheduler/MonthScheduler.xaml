@@ -25,13 +25,13 @@
             </Grid.ColumnDefinitions>
 
             <!--Week days-->
-            <Label Grid.Column="0" Content="Mon"></Label>
-            <Label Grid.Column="1" Content="Tue"></Label>
-            <Label Grid.Column="2" Content="Wed"></Label>
-            <Label Grid.Column="3" Content="Thu"></Label>
-            <Label Grid.Column="4" Content="Fri"></Label>
-            <Label Grid.Column="5" Content="Sat"></Label>
-            <Label Grid.Column="6" Content="Sun"></Label>
+            <Label Grid.Column="0" Content="Понедельник"></Label>
+            <Label Grid.Column="1" Content="Вторник"></Label>
+            <Label Grid.Column="2" Content="Среда"></Label>
+            <Label Grid.Column="3" Content="Четверг"></Label>
+            <Label Grid.Column="4" Content="Пятница"></Label>
+            <Label Grid.Column="5" Content="Суббота"></Label>
+            <Label Grid.Column="6" Content="Воскресенье"></Label>
         </Grid>
 
         <Grid x:Name="EventsGrid" Grid.Row="1">

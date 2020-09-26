@@ -104,6 +104,7 @@
                                 Loaded="patient_shuduler_Loaded"
                                 OnEventDoubleClick="patient_shuduler_OnEventDoubleClick"
                                 OnScheduleDoubleClick="patient_shuduler_OnScheduleDoubleClick"
+                                Mode="Month"
                                 >
                 </my:Scheduler>
             </TabItem>

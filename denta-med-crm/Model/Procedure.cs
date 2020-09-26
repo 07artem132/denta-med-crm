@@ -10,8 +10,6 @@ namespace denta_med_crm.Model
     [Serializable]
     public class Procedure
     {
-        //Авто подсказка по первым буквам (поиск по всей строке любых процедур которые когда либо и кому либо были проведены, при поиске приведение к одному регистру)
-        [JsonProperty("procedure_name")]
         public string ProcedureName { get; set; } = "";
         [JsonProperty("procedure_duration")]
         public int ProcedureDuration { get; set; } = 30;
