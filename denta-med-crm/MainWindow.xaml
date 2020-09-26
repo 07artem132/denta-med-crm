@@ -17,8 +17,8 @@
             <MenuItem x:Name="menuFields" Header="Поля" ></MenuItem>
             <MenuItem Header="О программе" ></MenuItem>
             <Separator Width="10"></Separator>
-            <MenuItem Header="Пациенты" Foreground="#FF0169B0" ></MenuItem>
-            <MenuItem Header="Записи" Foreground="#FF0169B0" ></MenuItem>
+            <MenuItem Header="Пациенты" Foreground="#FF0169B0" Click="MenuItemTabClient_Click"></MenuItem>
+            <MenuItem Header="Записи" Foreground="#FF0169B0" Click="MenuItemTabShudler_Click"></MenuItem>
         </Menu>
         <TabControl x:Name="_tabControl" Margin="0,27,0,0"   >
             <!--<TabControl.ItemContainerStyle>
@@ -104,6 +104,7 @@
                                 Loaded="patient_shuduler_Loaded"
                                 OnEventDoubleClick="patient_shuduler_OnEventDoubleClick"
                                 OnScheduleDoubleClick="patient_shuduler_OnScheduleDoubleClick"
+                                Mode="Month"
                                 >
                 </my:Scheduler>
             </TabItem>

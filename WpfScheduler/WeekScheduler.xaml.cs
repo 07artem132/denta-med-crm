@@ -199,7 +199,7 @@ namespace WpfScheduler
                 else
                 {
                     int numColumn = (int)date.Value.Date.Subtract(FirstDay.Date).TotalDays + 1;
-                    ((Canvas)this.FindName("column" + numColumn)).Children.Clear();
+                    ((Canvas)this.FindName("column" + numColumn))?.Children.Clear();
 
                     eventList = eventList.Where(ev => ev.Start.Date == date.Value.Date).OrderBy(ev => ev.Start);
                 }
@@ -209,7 +209,7 @@ namespace WpfScheduler
                 foreach (Event e in eventList)
                 {
                     int numColumn = (int)e.Start.Date.Subtract(FirstDay.Date).TotalDays + 1;
-                    if (numColumn >= 0 && numColumn < 7)
+                    if (numColumn > 0 && numColumn <= 7)
                     {
                         Canvas sp = (Canvas)this.FindName("column" + numColumn);
                         sp.Width = columnWidth;

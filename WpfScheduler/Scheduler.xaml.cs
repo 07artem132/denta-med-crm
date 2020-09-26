@@ -169,7 +169,7 @@ namespace WpfScheduler
             switch (mode)
             {
                 case WpfScheduler.Mode.Day:
-                    sc.DayScheduler.CurrentDay = sc.WeekScheduler.FirstDay;
+                    sc.DayScheduler.CurrentDay = sc.DayScheduler.CurrentDay;
                     break;
                 case WpfScheduler.Mode.Week:
                     sc.WeekScheduler.FirstDay = sc.DayScheduler.CurrentDay;
