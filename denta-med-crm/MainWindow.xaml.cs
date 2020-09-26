@@ -160,6 +160,21 @@ namespace denta_med_crm
         {
             _tabControl.SelectedIndex = 1;
         }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedItem = dataGrid.SelectedItem;
+            if (selectedItem is Client client)
+            {
+                db.Clients.Remove(client);
+                db.Export(dbFile);
+                dataGrid.Items.Refresh();
+            }
+        }
+
+        private void DataGrid_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+        }
     }
 
 

@@ -10,7 +10,7 @@ namespace denta_med_crm.Model
     [Serializable]
     public class Procedure
     {
-        public string ProcedureName { get; set; } = "";
+        //public string ProcedureName { get; set; } = "";
         [JsonProperty("procedure_duration")]
         public int ProcedureDuration { get; set; } = 30;
         //до какого гарантия, автоматически выставлять +1 год от текущей даты

@@ -12,7 +12,6 @@ namespace denta_med_crm.Model
     {
         public List<Client> Clients;
         public readonly HistoryCache DoctorsHistory;
-        public readonly HistoryCache ProcedureNameHistory;
         private Timer Timer = null;
         private string Path;
         private object locker = new object();
@@ -21,7 +20,6 @@ namespace denta_med_crm.Model
         {
             Clients = new List<Client>();
             DoctorsHistory = new HistoryCache();
-            ProcedureNameHistory = new HistoryCache();
         }
 
         private void FillInHistory()
@@ -29,7 +27,6 @@ namespace denta_med_crm.Model
             foreach (var procedure in EnumerateProcedures())
             {
                 DoctorsHistory.TryAdd(procedure.Doctor);
-                ProcedureNameHistory.TryAdd(procedure.ProcedureName);
             }
         }
 
@@ -77,7 +74,6 @@ namespace denta_med_crm.Model
         public void OnProcedureAdded(Procedure procedure)
         {
             DoctorsHistory.TryAdd(procedure.Doctor);
-            ProcedureNameHistory.TryAdd(procedure.ProcedureName);
         }
 
     }

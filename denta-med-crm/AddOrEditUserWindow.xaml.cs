@@ -126,5 +126,22 @@ namespace denta_med_crm
             Client.Procedures.Add(new Procedure());
             _procedures.SelectedIndex = _procedures.Items.Count - 1;
         }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedItem = _procedures.SelectedItem;
+            if (selectedItem is Procedure procedure)
+            {
+                Client.Procedures.Remove(procedure);
+                _procedures.Items.Refresh();
+                _procedures.SelectedItem = null;
+            }
+            if (selectedItem is Inspection inspection)
+            {
+                Client.Inspections.Remove(inspection);
+                _inspections.Items.Refresh();
+                _inspections.SelectedItem = null;
+            }
+        }
     }
 }

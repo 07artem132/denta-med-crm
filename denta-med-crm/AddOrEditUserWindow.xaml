@@ -57,6 +57,11 @@
             <TabItem Header="Зубная формула" >
                 <Grid>
                     <ListView x:Name="_inspections" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="10,10,280,225" ItemsSource="{Binding ElementName=addOrEditUserWindow, Path=Client.Inspections}" Background="#FFF6F6F6" >
+                        <ListView.ContextMenu>
+                            <ContextMenu  >
+                                <MenuItem Header="Удалить" Click="MenuItem_Click" />
+                            </ContextMenu>
+                        </ListView.ContextMenu>
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Дата осмотра" Width="140"   DisplayMemberBinding="{Binding InspectionDate, StringFormat='{}{0:dd.MM.yyyy}'}" />
@@ -226,6 +231,11 @@ C - Кариес
             <TabItem Header="Записи">
                 <Grid>
                     <ListView x:Name="_procedures" Margin="10,10,10,258" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding ElementName=addOrEditUserWindow, Path=Client.Procedures}" Background="#FFF6F6F6" >
+                        <ListView.ContextMenu>
+                            <ContextMenu  >
+                                <MenuItem Header="Удалить" Click="MenuItem_Click" />
+                            </ContextMenu>
+                        </ListView.ContextMenu>
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Дата время" Width="140" DisplayMemberBinding="{Binding ProcedureDate, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}" />

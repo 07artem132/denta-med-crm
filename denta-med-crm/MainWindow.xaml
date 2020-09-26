@@ -46,7 +46,13 @@
                         </Button.Template>
                     </Button>
                     <DataGrid IsReadOnly="true" AutoGenerateColumns="false" x:Name="dataGrid" Margin="0,52,0,0" 
-                              MouseDoubleClick="DataGrid_MouseDoubleClick">
+                              MouseDoubleClick="DataGrid_MouseDoubleClick"
+                              ContextMenuOpening ="DataGrid_ContextMenuOpening">
+                        <DataGrid.ContextMenu >
+                            <ContextMenu  >
+                                <MenuItem Header="Удалить" Click="MenuItem_Click" />
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ФИО" Binding="{Binding FullName}" Width="150" />
                             <DataGridTextColumn Header="Дата рождения" Binding="{Binding DateOfBirth}" Width="150" />
