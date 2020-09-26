@@ -203,19 +203,20 @@
                             <TextBox Tag="21" TextWrapping="Wrap" Grid.Row="1" Grid.Column="0" />
                         </Grid>
                         <Label Margin="0,202,0,177" Content="" Background="#FFE7E8EC" FontSize="14"/>
-                        <Button x:Name="_formulaTt" Content="?" HorizontalAlignment="Left" Margin="210,206,0,0" VerticalAlignment="Top" Width="87" Height="28" FontSize="16" FontWeight="Bold" Foreground="#FF6C6C6C" Background="#FFEEEEEE" xml:space="preserve">
+                        <Button x:Name="_formulaTt" Content="?" HorizontalAlignment="Left" Margin="210,206,0,0" VerticalAlignment="Top" 
+                                Width="87" Height="28" FontSize="16" FontWeight="Bold" Foreground="#FF6C6C6C" Background="#FFEEEEEE" xml:space="preserve" ToolTipService.InitialShowDelay="50">
                             <Button.ToolTip>
-Расшифровка:&#xa;
-O - Отсутствует&#xa;
-R - Корень&#xa;
-P - Пульпит&#xa;
-Pt - Переодонтит&#xa;
-A - Пародонтоз&#xa;
-К - Коронка&#xa;
-C - Кариес&#xa;
-П - Пломбированный&#xa;
-B - Искусственный зуб&#xa;
-П/С - Пломба/Кариес&#xa;
+Расшифровка:
+O - Отсутствует
+R - Корень
+P - Пульпит
+Pt - Переодонтит
+A - Пародонтоз
+К - Коронка;
+C - Кариес
+П - Пломбированный
+И - Искусственный зуб
+П/С - Пломба/Кариес
                             </Button.ToolTip>
                         </Button>
                         <Button x:Name="_addFormula" Content="Добавить осмотр" HorizontalAlignment="Left" Margin="10,206,0,0" VerticalAlignment="Top" Width="195" Height="28" FontSize="14" Click="_addFormula_Click"/>
