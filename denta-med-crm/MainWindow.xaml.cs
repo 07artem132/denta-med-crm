@@ -174,6 +174,7 @@ namespace denta_med_crm
 
         private void DataGrid_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
+            
         }
     }
 

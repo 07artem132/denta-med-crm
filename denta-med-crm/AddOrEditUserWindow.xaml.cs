@@ -65,6 +65,7 @@ namespace denta_med_crm
             };
             dt.Interval = new TimeSpan(0, 0, 0, 0, 500);
             dt.Start();
+
         }
         static AddOrEditUserWindow()
         {
@@ -127,7 +128,18 @@ namespace denta_med_crm
             _procedures.SelectedIndex = _procedures.Items.Count - 1;
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        private void MenuItem1_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedItem = _inspections.SelectedItem;
+            if (selectedItem is Inspection inspection)
+            {
+                Client.Inspections.Remove(inspection);
+                _inspections.Items.Refresh();
+                _inspections.SelectedItem = null;
+            }
+        }
+
+        private void MenuItem2_Click(object sender, RoutedEventArgs e)
         {
             var selectedItem = _procedures.SelectedItem;
             if (selectedItem is Procedure procedure)
@@ -136,12 +148,16 @@ namespace denta_med_crm
                 _procedures.Items.Refresh();
                 _procedures.SelectedItem = null;
             }
-            if (selectedItem is Inspection inspection)
-            {
-                Client.Inspections.Remove(inspection);
-                _inspections.Items.Refresh();
-                _inspections.SelectedItem = null;
-            }
+        }
+
+        private void MenuItem_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void MenuItem_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+
         }
     }
 }

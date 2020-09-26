@@ -10,6 +10,7 @@
         mc:Ignorable="d"
         ResizeMode="NoResize"
         local:WindowBehavior.HideCloseButton="True"
+        WindowStartupLocation="CenterScreen"
         Title="Клиент" Height="534" Width="842" Name="addOrEditUserWindow" >
 
     <Grid Background="#FF4D6082">
@@ -59,7 +60,7 @@
                     <ListView x:Name="_inspections" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="10,10,280,225" ItemsSource="{Binding ElementName=addOrEditUserWindow, Path=Client.Inspections}" Background="#FFF6F6F6" >
                         <ListView.ContextMenu>
                             <ContextMenu  >
-                                <MenuItem Header="Удалить" Click="MenuItem_Click" />
+                                <MenuItem Header="Удалить" Click="MenuItem1_Click" />
                             </ContextMenu>
                         </ListView.ContextMenu>
                         <ListView.View>
@@ -233,9 +234,24 @@ C - Кариес
                     <ListView x:Name="_procedures" Margin="10,10,10,258" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding ElementName=addOrEditUserWindow, Path=Client.Procedures}" Background="#FFF6F6F6" >
                         <ListView.ContextMenu>
                             <ContextMenu  >
-                                <MenuItem Header="Удалить" Click="MenuItem_Click" />
+                                <MenuItem Header="Удалить" Click="MenuItem2_Click" />
                             </ContextMenu>
                         </ListView.ContextMenu>
+
+                        <!--<ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="ContextMenu">
+                                    <Setter.Value>
+                                        <ContextMenu>
+                                            <MenuItem Header="Удалить" 
+                                                     Command="{Binding RemoveItem}"
+                                                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
+                                        </ContextMenu>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListBox.ItemContainerStyle>-->
+                        
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Дата время" Width="140" DisplayMemberBinding="{Binding ProcedureDate, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}" />

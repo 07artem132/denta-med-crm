@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
        xmlns:my="clr-namespace:WpfScheduler;assembly=WpfScheduler"
         Closing="Window_Closing"
+        WindowStartupLocation="CenterScreen"
         xmlns:local="clr-namespace:denta_med_crm"
         mc:Ignorable="d"
         Title="Denta Med crm" Height="450" Width="800">
@@ -29,17 +30,28 @@
             <TabItem >
                 <Grid>
                     <Button x:Name="btAddUser" Content="" Margin="0,10,0,0" Click="BtAddUser_Click" Height="37" VerticalAlignment="Top" HorizontalAlignment="Left" Width="75">
-                        <Button.Background>
+                        <!--<Button.Background>
                             <ImageBrush ImageSource="Images/AddUser.png" Stretch="Uniform"/>
-                        </Button.Background>
+                        </Button.Background>-->
                         <Button.Template>
                             <ControlTemplate TargetType="{x:Type Button}">
                                 <Border Name="Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
                                     <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" Margin="{TemplateBinding Padding}" />
                                 </Border>
                                 <ControlTemplate.Triggers>
-                                    <Trigger Property="Button.IsFocused" Value="True">
-                                        <Setter TargetName="Border" Property="Background" Value="#3F96C1FF" />
+                                    <Trigger Property="Button.IsMouseOver" Value="True">
+                                        <Setter Property="Background">
+                                            <Setter.Value>
+                                                <ImageBrush ImageSource="Images/AddUserF.png" Stretch="Uniform" />
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Trigger>
+                                    <Trigger Property="Button.IsMouseOver" Value="False">
+                                        <Setter Property="Background">
+                                            <Setter.Value>
+                                                <ImageBrush ImageSource="Images/AddUser.png" Stretch="Uniform" />
+                                            </Setter.Value>
+                                        </Setter>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
@@ -72,12 +84,7 @@
 
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Button x:Name="btAddEvent" Content="" Margin="80,10,0,0" Click="BtAddEvent_Click" Height="37" VerticalAlignment="Top" HorizontalAlignment="Left" Width="75">
-                        <Button.Background>
-                            <ImageBrush ImageSource="Images/AddItem.png" Stretch="Uniform"/>
-                        </Button.Background>
-                    </Button>
-                    <TextBox x:Name="_filterINput" TextWrapping="Wrap" Text="" Margin="160,10,10,0" Height="37" VerticalAlignment="Top" VerticalContentAlignment="Center" Padding="2,0,0,0" TextChanged="TextBox_TextChanged">
+                    <TextBox x:Name="_filterINput" TextWrapping="Wrap" Text="" Margin="80,10,10,0" Height="37" VerticalAlignment="Top" VerticalContentAlignment="Center" Padding="2,0,0,0" TextChanged="TextBox_TextChanged">
                         <TextBox.Style>
                             <Style TargetType="TextBox" xmlns:sys="clr-namespace:System;assembly=mscorlib">
                                 <Style.Resources>
