@@ -68,9 +68,9 @@
                         </DataGrid.ContextMenu>
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ФИО" Binding="{Binding FullName}" Width="200" />
-                            <DataGridTextColumn Header="Дата рождения" Binding="{Binding DateOfBirth}" Width="100" />
-                            <DataGridTextColumn Header="Первый визит" Binding="{Binding FirstVisit}" Width="100" />
-                            <DataGridTextColumn Header="Последний визит" Binding="{Binding LastVisit}" Width="100" />
+                            <DataGridTextColumn Header="Дата рождения" Binding="{Binding DateOfBirth, StringFormat='{}{0:dd.MM.yyyy}'}" Width="100" />
+                            <DataGridTextColumn Header="Первый визит" Binding="{Binding FirstVisit, StringFormat='{}{0:dd.MM.yyyy}'}" Width="100" />
+                            <DataGridTextColumn Header="Последний визит" Binding="{Binding LastVisit, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}" Width="100" />
                             <DataGridTextColumn Header="Сидка" Binding="{Binding Discount}" Width="100" />
                             <DataGridTextColumn Header="Телефон" Binding="{Binding MainPhoneNumber}" Width="150" />
                             <DataGridTextColumn Header="Доп. телефон" Binding="{Binding AlternativePhoneNumber}" Width="150" />

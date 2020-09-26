@@ -25,8 +25,8 @@ namespace denta_med_crm
     /// </summary>
     public partial class MainWindow : Window
     {
-        Database db = new Database();
         const string dbFile = "db.json";
+        Database db = new Database(dbFile);
 
         public MainWindow()
         {
@@ -37,7 +37,6 @@ namespace denta_med_crm
 
             if (File.Exists(dbFile))
                 db.Import(dbFile);
-            db.RunTimer(dbFile);
 
             InitializeOrUpdate();
 
@@ -62,6 +61,7 @@ namespace denta_med_crm
         private void Window_Closing(object sender, CancelEventArgs e)
         {
             db.Export(dbFile);
+            db.Dispose();
         }
 
         public void InitializeOrUpdate(Func<Client, bool> filter = null)
@@ -179,15 +179,12 @@ namespace denta_med_crm
 
         private void MenuItem_ExportDb(object sender, RoutedEventArgs e)
         {
-            using (var fbd = new System.Windows.Forms.FolderBrowserDialog())
-            {
-                var result = fbd.ShowDialog();
-                if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
-                {
-                    var full = System.IO.Path.Combine(fbd.SelectedPath, dbFile);
-                    db.Export(full);
-                }
-            }
+            var dlg = new Microsoft.Win32.SaveFileDialog();
+            dlg.Title = "Сохранить базу данных";
+            dlg.Filter = $"DB Files (*.json)|*.json";
+            var result = dlg.ShowDialog();
+            if (result == true)
+                db.Export(dlg.FileName);
         }
 
         private void MenuItem_ImportDb(object sender, RoutedEventArgs e)
@@ -195,7 +192,7 @@ namespace denta_med_crm
             var dlg = new Microsoft.Win32.OpenFileDialog();
             dlg.Title = "Открыть существующую базу данных?";
             dlg.Multiselect = false;
-            dlg.Filter = $"DB Files (*.json)";
+            dlg.Filter = $"DB Files (*.json)|*.json";
             var result = dlg.ShowDialog();
             if (result == true)
                 db.Import(dlg.FileName);
