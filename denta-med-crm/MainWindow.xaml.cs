@@ -126,8 +126,8 @@ namespace denta_med_crm
                        {
                            Subject = string.Format("Доктор: {0}\rПроцедура: {1}", Procedure.Doctor, Procedure.ProcedureName),
                            Color = Brushes.LightGreen,
-                           Start = DateTime.Now,
-                           End = DateTime.Now.AddMinutes(90),
+                           Start = Procedure.ProcedureDate,
+                           End = Procedure.ProcedureDate.AddMinutes(Procedure.ProcedureDuration),
                            RelObject = Client
                        });
 
@@ -148,6 +148,15 @@ namespace denta_med_crm
             var client = (Client)dataGrid.SelectedItem;
             new AddOrEditUserWindow(client).ShowDialog();
             dataGrid.Items.Refresh();
+        }
+
+        private void MenuItemTabClient_Click(object sender, RoutedEventArgs e)
+        {
+            _tabControl.SelectedIndex = 0;
+        }
+        private void MenuItemTabShudler_Click(object sender, RoutedEventArgs e)
+        {
+            _tabControl.SelectedIndex = 1;
         }
     }
 
