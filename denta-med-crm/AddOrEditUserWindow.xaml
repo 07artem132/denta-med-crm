@@ -56,10 +56,10 @@
             </TabItem>
             <TabItem Header="Зубная формула" >
                 <Grid>
-                    <ListView x:Name="_inspections"  Margin="10,10,280,225" ItemsSource="{Binding ElementName=addOrEditUserWindow, Path=Client.Inspections}" Background="#FFF6F6F6" >
+                    <ListView x:Name="_inspections" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="10,10,280,225" ItemsSource="{Binding ElementName=addOrEditUserWindow, Path=Client.Inspections}" Background="#FFF6F6F6" >
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="Дата осмотра" Width="140" DisplayMemberBinding="{Binding InspectionDate}" />
+                                <GridViewColumn Header="Дата осмотра" Width="140"   DisplayMemberBinding="{Binding InspectionDate, StringFormat='{}{0:dd.MM.yyyy}'}" />
                                 <GridViewColumn Header="Врач" Width="150" DisplayMemberBinding="{Binding Doctor}" />
                                 <GridViewColumn Header="Описание" Width="215" DisplayMemberBinding="{Binding Description}" />
                             </GridView>
@@ -224,10 +224,10 @@ B - Искусственный зуб&#xa;
             </TabItem>
             <TabItem Header="Записи">
                 <Grid>
-                    <ListView x:Name="_procedures" Margin="10,10,10,258"  ItemsSource="{Binding ElementName=addOrEditUserWindow, Path=Client.Procedures}" Background="#FFF6F6F6" >
+                    <ListView x:Name="_procedures" Margin="10,10,10,258" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding ElementName=addOrEditUserWindow, Path=Client.Procedures}" Background="#FFF6F6F6" >
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="Дата время" Width="140" DisplayMemberBinding="{Binding ProcedureDate}" />
+                                <GridViewColumn Header="Дата время" Width="140" DisplayMemberBinding="{Binding ProcedureDate, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}" />
                                 <GridViewColumn Header="Дительность" Width="140" DisplayMemberBinding="{Binding ProcedureDuration}" />
                                 <GridViewColumn Header="Врач" Width="170" DisplayMemberBinding="{Binding Doctor}" />
                                 <GridViewColumn Header="Описание" Width="220" DisplayMemberBinding="{Binding Description}" />
