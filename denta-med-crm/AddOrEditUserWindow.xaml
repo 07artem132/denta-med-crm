@@ -58,11 +58,17 @@
             <TabItem Header="Зубная формула" >
                 <Grid>
                     <ListView x:Name="_inspections" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="10,10,280,225" ItemsSource="{Binding ElementName=addOrEditUserWindow, Path=Client.Inspections}" Background="#FFF6F6F6" >
-                        <ListView.ContextMenu>
-                            <ContextMenu  >
-                                <MenuItem Header="Удалить" Click="MenuItem1_Click" />
+                        <ListView.Resources>
+                            <ContextMenu x:Key="ItemContextMenu">
+                                <MenuItem Header="Удалить"   Click="Delete_inspection" />
                             </ContextMenu>
-                        </ListView.ContextMenu>
+                        </ListView.Resources>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListViewItem}" >
+                                <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
+
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Дата осмотра" Width="140"   DisplayMemberBinding="{Binding InspectionDate, StringFormat='{}{0:dd.MM.yyyy}'}" />
@@ -232,11 +238,17 @@ C - Кариес
             <TabItem Header="Записи">
                 <Grid>
                     <ListView x:Name="_procedures" Margin="10,10,10,258" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding ElementName=addOrEditUserWindow, Path=Client.Procedures}" Background="#FFF6F6F6" >
-                        <ListView.ContextMenu>
-                            <ContextMenu  >
-                                <MenuItem Header="Удалить" Click="MenuItem2_Click" />
+                        <ListView.Resources>
+                            <ContextMenu x:Key="ItemContextMenu">
+                                <MenuItem Header="Удалить"   Click="Delete_record" />
                             </ContextMenu>
-                        </ListView.ContextMenu>
+                        </ListView.Resources>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListViewItem}" >
+                                <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
+
 
                         <!--<ListBox.ItemContainerStyle>
                             <Style TargetType="ListBoxItem">
@@ -251,7 +263,7 @@ C - Кариес
                                 </Setter>
                             </Style>
                         </ListBox.ItemContainerStyle>-->
-                        
+
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Дата время" Width="140" DisplayMemberBinding="{Binding ProcedureDate, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}" />

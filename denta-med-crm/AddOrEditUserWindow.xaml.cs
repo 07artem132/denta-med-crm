@@ -27,7 +27,6 @@ namespace denta_med_crm
             set { SetValue(ClientProperty, value); }
         }
 
-
         public static readonly DependencyProperty ClientProperty;
         public Client AddedUser;
 
@@ -128,25 +127,21 @@ namespace denta_med_crm
             _procedures.SelectedIndex = _procedures.Items.Count - 1;
         }
 
-        private void MenuItem1_Click(object sender, RoutedEventArgs e)
+        private void Delete_inspection(object sender, RoutedEventArgs e)
         {
             var selectedItem = _inspections.SelectedItem;
             if (selectedItem is Inspection inspection)
             {
                 Client.Inspections.Remove(inspection);
-                _inspections.Items.Refresh();
-                _inspections.SelectedItem = null;
             }
         }
 
-        private void MenuItem2_Click(object sender, RoutedEventArgs e)
+        private void Delete_record(object sender, RoutedEventArgs e)
         {
             var selectedItem = _procedures.SelectedItem;
             if (selectedItem is Procedure procedure)
             {
                 Client.Procedures.Remove(procedure);
-                _procedures.Items.Refresh();
-                _procedures.SelectedItem = null;
             }
         }
 
@@ -156,6 +151,11 @@ namespace denta_med_crm
         }
 
         private void MenuItem_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
 
         }
