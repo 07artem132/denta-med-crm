@@ -125,6 +125,7 @@
             <MenuItem Header="База данных">
                 <MenuItem Header="Загрузить" Click="MenuItem_ImportDb"/>
                 <MenuItem Header="Выгрузить"  Click="MenuItem_ExportDb"/>
+                <MenuItem Header="Автозапуск" x:Name="_autorunItem" IsCheckable="true" Initialized="MenuItem_Initialized" Checked="MenuItem_Checked" Unchecked="MenuItem_Unchecked"/>
                 <MenuItem Header="Выход"  Click="MenuItem_Exit"/>
             </MenuItem>
             <MenuItem x:Name="menuFields" Header="Поля" />

@@ -227,6 +227,31 @@ namespace denta_med_crm
         {
             _patient_shuduler.NextPage();
         }
+
+
+        //Autorun
+        private void MenuItem_Initialized(object sender, EventArgs e)
+        {
+            Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+            _autorunItem.IsChecked = key.GetValue("DentCrm") != null;
+            key.Close();
+        }
+        private void MenuItem_Checked(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.RegistryKey Key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run\\", true);
+
+            //добавляем первый параметр - название ключа  
+            // Второй параметр - это путь к   
+            // исполняемому файлу нашей программы.  
+            Key.SetValue("DentCrm", System.Reflection.Assembly.GetEntryAssembly().Location);
+            Key.Close();
+        }
+        private void MenuItem_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+            key.DeleteValue("DentCrm", false);
+            key.Close();
+        }
     }
 
 
