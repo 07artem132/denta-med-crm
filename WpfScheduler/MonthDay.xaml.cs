@@ -20,8 +20,8 @@ namespace WpfScheduler
     /// </summary>
     public partial class MonthDay : UserControl
     {
-        internal event EventHandler<Event> OnEventDoubleClick;
-        internal event EventHandler<DateTime> OnScheduleDoubleClick;
+        internal event Action<object, Event> OnEventDoubleClick;
+        internal event Action<object, DateTime> OnScheduleDoubleClick;
 
         private bool _currentMonth;
         private DateTime _date;

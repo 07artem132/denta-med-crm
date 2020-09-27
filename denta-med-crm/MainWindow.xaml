@@ -8,20 +8,9 @@
         WindowStartupLocation="CenterScreen"
         xmlns:local="clr-namespace:denta_med_crm"
         mc:Ignorable="d"
-        Title="Denta Med crm" Height="450" Width="800" Icon="Images/Icon.ico">
+        Title="Denta Med crm" Height="600" Width="1200" Icon="Images/Icon.ico">
     <Grid>
-        <Menu VerticalAlignment="Top" Height="22" FontSize="14" >
-            <MenuItem Header="База данных">
-                <MenuItem Header="Загрузить" Click="MenuItem_ImportDb"></MenuItem>
-                <MenuItem Header="Выгрузить"  Click="MenuItem_ExportDb"></MenuItem>
-            </MenuItem>
-            <MenuItem x:Name="menuFields" Header="Поля" ></MenuItem>
-            <MenuItem Header="О программе" ></MenuItem>
-            <Separator Width="10"></Separator>
-            <MenuItem Header="Пациенты" Foreground="#FF0169B0" Click="MenuItemTabClient_Click"></MenuItem>
-            <MenuItem Header="Записи" Foreground="#FF0169B0" Click="MenuItemTabShudler_Click"></MenuItem>
-        </Menu>
-        <TabControl x:Name="_tabControl" Margin="0,27,0,0"   >
+        <TabControl x:Name="_tabControl" Margin="0,16,0,0" BorderBrush="{x:Null}" Padding="0"   >
             <!--<TabControl.ItemContainerStyle>
                 <Style TargetType="{x:Type TabItem}">
                     <Setter Property="Visibility" Value="Collapsed"/>
@@ -70,7 +59,7 @@
                             <DataGridTextColumn Header="ФИО" Binding="{Binding FullName}" Width="200" />
                             <DataGridTextColumn Header="Дата рождения" Binding="{Binding DateOfBirth, StringFormat='{}{0:dd.MM.yyyy}'}" Width="100" />
                             <DataGridTextColumn Header="Первый визит" Binding="{Binding FirstVisit, StringFormat='{}{0:dd.MM.yyyy}'}" Width="100" />
-                            <DataGridTextColumn Header="Последний визит" Binding="{Binding LastVisit, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}" Width="100" />
+                            <DataGridTextColumn Header="Последний визит" Binding="{Binding LastVisitInfo}" Width="100" />
                             <DataGridTextColumn Header="Сидка" Binding="{Binding Discount}" Width="100" />
                             <DataGridTextColumn Header="Телефон" Binding="{Binding MainPhoneNumber}" Width="150" />
                             <DataGridTextColumn Header="Доп. телефон" Binding="{Binding AlternativePhoneNumber}" Width="150" />
@@ -113,18 +102,37 @@
             </TabItem>
 
             <TabItem >
-                <my:Scheduler   HorizontalAlignment="Stretch" Name="_patient_shuduler"
-                                VerticalAlignment="Stretch"
-                                Loaded="patient_shuduler_Loaded"
-                                OnEventDoubleClick="patient_shuduler_OnEventDoubleClick"
-                                OnScheduleDoubleClick="patient_shuduler_OnScheduleDoubleClick"
-                                Mode="Month"
-                                >
-                </my:Scheduler>
+                <Grid>
+                    <Grid Height="35" VerticalAlignment="Top" Background="#FFF6F6F6"/>
+                    <my:Scheduler   HorizontalAlignment="Stretch" x:Name="_patient_shuduler"
+                                    VerticalAlignment="Stretch"
+                                    Loaded="patient_shuduler_Loaded"
+                                    OnEventDoubleClick="patient_shuduler_OnEventDoubleClick"
+                                    OnScheduleDoubleClick="patient_shuduler_OnScheduleDoubleClick"
+                                    Mode="Month" Margin="0,35,0,0"
+                                    />
+                    <Button x:Name="_sModeDay" Margin="5,5,0,0" Content="День" Click="_sModeDay_Click" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Width="111"/>
+                    <Button x:Name="_sModeWeek" Margin="121,5,0,0" Content="Неделя" Click="_sModeWeek_Click" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Width="111"/>
+                    <Button x:Name="_sModeMonth" Margin="237,5,0,0" Content="Месяц" Click="_sModeMonth_Click" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Width="111"/>
+                    <Button x:Name="_sPrev" Margin="353,5,0,0" Content="⇐" FontSize="20" Padding="1,-5,1,1" Background="#FFEFEFF2" Click="_sPrev_Click" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Width="67"/>
+                    <Button x:Name="_sNext" Margin="425,5,0,0" Content="⇒" FontSize="20" Padding="1,-5,1,1" Background="#FFEFEFF2" Click="_sNext_Click" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Width="67"/>
+                </Grid>
             </TabItem>
 
 
         </TabControl>
+        <Menu VerticalAlignment="Top" Height="22" FontSize="14" >
+            <MenuItem Header="База данных">
+                <MenuItem Header="Загрузить" Click="MenuItem_ImportDb"/>
+                <MenuItem Header="Выгрузить"  Click="MenuItem_ExportDb"/>
+                <MenuItem Header="Выход"  Click="MenuItem_Exit"/>
+            </MenuItem>
+            <MenuItem x:Name="menuFields" Header="Поля" />
+            <MenuItem Header="О программе" />
+            <Separator Width="10"/>
+            <MenuItem Header="Пациенты" Foreground="#FF0169B0" Click="MenuItemTabClient_Click"/>
+            <MenuItem Header="Записи" Foreground="#FF0169B0" Click="MenuItemTabShudler_Click"/>
+        </Menu>
 
     </Grid>
 </Window>

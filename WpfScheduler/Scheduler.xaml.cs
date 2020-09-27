@@ -28,15 +28,15 @@ namespace WpfScheduler
     /// </summary>
     public partial class Scheduler : UserControl
     {
-        public event EventHandler<Event> OnEventDoubleClick;
-        public event EventHandler<DateTime> OnScheduleDoubleClick;
+        public event Action<object, Event> OnEventDoubleClick;
+        public event Action<object, DateTime> OnScheduleDoubleClick;
 
-        internal event EventHandler<Event> OnEventAdded;
-        internal event EventHandler<Event> OnEventDeleted;
+        internal event Action<object, Event> OnEventAdded;
+        internal event Action<object, Event> OnEventDeleted;
         internal event EventHandler OnEventsModified;
 
-        internal event EventHandler<TimeSpan> OnStartJourneyChanged;
-        internal event EventHandler<TimeSpan> OnEndJourneyChanged;
+        internal event Action<object, TimeSpan> OnStartJourneyChanged;
+        internal event Action<object, TimeSpan> OnEndJourneyChanged;
 
 
         #region SelectedDate

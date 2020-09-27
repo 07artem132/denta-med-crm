@@ -24,7 +24,7 @@
                 <Setter Property="Background" Value="{x:Null}" />
             </Style>
         </Grid.Resources>
-        <TabControl Margin="10,10,0,0" HorizontalAlignment="Left" Width="811" Height="441" VerticalAlignment="Top" >
+        <TabControl x:Name="_tab" Margin="10,10,0,0" HorizontalAlignment="Left" Width="811" Height="441" VerticalAlignment="Top" >
             <TabItem   Header="Общее" >
                 <Grid>
 

@@ -24,8 +24,8 @@ namespace WpfScheduler
         private DateTime firstDay;
         private DateTime lastDay;
 
-        internal event EventHandler<Event> OnEventDoubleClick;
-        internal event EventHandler<DateTime> OnScheduleDoubleClick;
+        internal event Action<object, Event> OnEventDoubleClick;
+        internal event Action<object, DateTime> OnScheduleDoubleClick;
 
         #region CurrentMonth
 

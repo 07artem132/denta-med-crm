@@ -32,7 +32,7 @@ namespace denta_med_crm
 
         private bool disallowEditingTeeth;
 
-        public AddOrEditUserWindow(Client clientOrNull)
+        public AddOrEditUserWindow(Client clientOrNull, Procedure redirectTo = null)
         {
             InitializeComponent();
 
@@ -65,6 +65,11 @@ namespace denta_med_crm
             dt.Interval = new TimeSpan(0, 0, 0, 0, 500);
             dt.Start();
 
+            if (redirectTo != null)
+            {
+                _tab.SelectedIndex = 2;
+                _procedures.SelectedItem = redirectTo;
+            }
         }
         static AddOrEditUserWindow()
         {

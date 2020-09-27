@@ -129,7 +129,7 @@ namespace denta_med_crm
                        {
                            Subject = string.Format("Доктор: {0}\rПроцедура: {1}", Procedure.Doctor, Procedure.Description),
                            Color = Brushes.LightGreen,
-                           Start = Procedure.ProcedureDate, 
+                           Start = Procedure.ProcedureDate,
                            End = Procedure.ProcedureDate.AddMinutes(Procedure.ProcedureDuration),
                            RelObject = Client
                        });
@@ -140,7 +140,7 @@ namespace denta_med_crm
         }
         void patient_shuduler_OnEventDoubleClick(object sender, Event e)
         {
-            new AddOrEditUserWindow((Client)e.RelObject).Show();
+            new AddOrEditUserWindow((Client)e.RelObject, процедлура).Show();
         }
 
         private void DataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -174,7 +174,7 @@ namespace denta_med_crm
 
         private void DataGrid_ContextMenuOpening(object sender, ContextMenuEventArgs e)
         {
-            
+
         }
 
         private void MenuItem_ExportDb(object sender, RoutedEventArgs e)
@@ -196,6 +196,36 @@ namespace denta_med_crm
             var result = dlg.ShowDialog();
             if (result == true)
                 db.Import(dlg.FileName);
+        }
+
+        private void MenuItem_Exit(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void _sModeDay_Click(object sender, RoutedEventArgs e)
+        {
+            _patient_shuduler.Mode = Mode.Day;
+        }
+
+        private void _sModeWeek_Click(object sender, RoutedEventArgs e)
+        {
+            _patient_shuduler.Mode = Mode.Week;
+        }
+
+        private void _sModeMonth_Click(object sender, RoutedEventArgs e)
+        {
+            _patient_shuduler.Mode = Mode.Month;
+        }
+
+        private void _sPrev_Click(object sender, RoutedEventArgs e)
+        {
+            _patient_shuduler.PrevPage();
+        }
+
+        private void _sNext_Click(object sender, RoutedEventArgs e)
+        {
+            _patient_shuduler.NextPage();
         }
     }
 
