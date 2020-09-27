@@ -16,7 +16,7 @@ namespace WpfScheduler
         public DateTime End { get; set; }
         public bool AllDay { get; set; }
         public Brush Color { get; set; }
-        public object RelObject { get; set; }
+        public object[] RelObject { get; set; }
 
         public Event()
         {

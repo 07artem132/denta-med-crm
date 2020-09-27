@@ -131,7 +131,7 @@ namespace denta_med_crm
                            Color = Brushes.LightGreen,
                            Start = Procedure.ProcedureDate,
                            End = Procedure.ProcedureDate.AddMinutes(Procedure.ProcedureDuration),
-                           RelObject = Client
+                           RelObject = new object[] { Client, Procedure },
                        });
 
         }
@@ -140,7 +140,7 @@ namespace denta_med_crm
         }
         void patient_shuduler_OnEventDoubleClick(object sender, Event e)
         {
-            new AddOrEditUserWindow((Client)e.RelObject, процедлура).Show();
+            new AddOrEditUserWindow((Client)e.RelObject[0], (Procedure)e.RelObject[1]).Show();
         }
 
         private void DataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
