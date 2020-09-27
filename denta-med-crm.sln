@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "denta-med-crm", "denta-med-
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfScheduler", "WpfScheduler\WpfScheduler.csproj", "{F9954C26-6234-43F5-8D96-8EC6E03C03B9}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoCompleteTextBox", "AutoCompleteTextBox\AutoCompleteTextBox.csproj", "{053E28E4-AB06-456D-8444-2012E5F9D668}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{F9954C26-6234-43F5-8D96-8EC6E03C03B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9954C26-6234-43F5-8D96-8EC6E03C03B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9954C26-6234-43F5-8D96-8EC6E03C03B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{053E28E4-AB06-456D-8444-2012E5F9D668}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{053E28E4-AB06-456D-8444-2012E5F9D668}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{053E28E4-AB06-456D-8444-2012E5F9D668}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{053E28E4-AB06-456D-8444-2012E5F9D668}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

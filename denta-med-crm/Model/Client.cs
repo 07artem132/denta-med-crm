@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,48 @@ namespace denta_med_crm.Model
     [Serializable]
     public class Client
     {
+        public Client()
+        {
+            Procedures.CollectionChanged += Procedures_CollectionChanged;
+            Inspections.CollectionChanged += Inspections_CollectionChanged;
+        }
+
+        private void Inspections_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Remove)
+            {
+                foreach (Inspection item in e.OldItems)
+                {
+                    MainWindow.db?.OnInspectionRemoved(item);
+                }
+            }
+            else if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                foreach (Inspection item in e.NewItems)
+                {
+                    MainWindow.db?.OnInspectionAdded(item);
+                }
+            }
+        }
+
+        private void Procedures_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Remove)
+            {
+                foreach (Procedure item in e.OldItems)
+                {
+                    MainWindow.db?.OnProcedureRemoved(item);
+                }
+            }
+            else if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                foreach (Procedure item in e.NewItems)
+                {
+                    MainWindow.db?.OnProcedureAdded(item);
+                }
+            }
+        }
+
         [JsonProperty("full_name")]
         public string FullName { get; set; } = "";
         [JsonProperty("sex")]
@@ -23,26 +66,6 @@ namespace denta_med_crm.Model
         //Типа он с нами c такого-то (сколько-то в карточке)
         [JsonProperty("first_visit")]
         public DateTime FirstVisit { get; set; } = DateTime.Now;
-        /*//Типа он был у нас последний раз ....
-        [JsonProperty("last_visit")]
-        public DateTime LastVisit { get; set; }*/
-        /*
-        [JsonIgnore]
-        public string ClientLong
-        {
-            get
-            {
-                double diffSec = (DateTime.Now -FirstVisit  ).TotalSeconds;
-                if (diffSec < 30 * 86400)
-                {
-                    return String.Format("{0} дня(-ей)", Math.Ceiling(diffSec / 86400));
-                } else
-                {
-                    return String.Format("{0} дня(-ей)", Math.Ceiling(diffSec / 2628000));
-
-                }
-            }
-        }*/
         //0 - нет, если есть то сумма скидки в % вводится
         [JsonProperty("discount")]
         public int Discount { get; set; } = 0;
@@ -57,20 +80,19 @@ namespace denta_med_crm.Model
         public ObservableCollection<Procedure> Procedures { get; set; } = new ObservableCollection<Procedure>();
         [JsonProperty("inspections")]
         public ObservableCollection<Inspection> Inspections { get; set; } = new ObservableCollection<Inspection>();
-
-
-
-
         [JsonIgnore]
         public string DaysToBirthday
         {
             get
             {
-                var value = (int)Math.Floor(DateTime.Now.Subtract(DateOfBirth).TotalDays);
-                value = 364 - value % 365;
-                if (value == 0)
-                    return "Сегодня";
-                return string.Format("Через {0} дня(ей)", value);
+                DateTime today = DateTime.Today;
+                DateTime next = DateOfBirth.AddYears(today.Year - DateOfBirth.Year);
+
+                if (next < today)
+                    next = next.AddYears(1);
+
+                int numDays = (next - today).Days;
+                return string.Format("Через {0} дня(ей)", numDays);
             }
         }
 

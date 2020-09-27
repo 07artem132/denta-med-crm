@@ -24,7 +24,7 @@ namespace denta_med_crm.Model
         public bool Сompleted { get; set; } = true;
         //Авто подсказка по первым буквам (поиск по всей строке прошлых докторов которые когда либо и кому либо были указаны, при поиске приведение к одному регистру)
         [JsonProperty("doctor")]
-        public string Doctor { get; set; } = "";
+        public Doctor Doctor { get; set; } = new Doctor("");
         [JsonProperty("description")]
         public string Description { get; set; } = "";
 

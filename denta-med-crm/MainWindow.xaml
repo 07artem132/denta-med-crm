@@ -122,14 +122,14 @@
 
         </TabControl>
         <Menu VerticalAlignment="Top" Height="22" FontSize="14" >
-            <MenuItem Header="База данных">
-                <MenuItem Header="Загрузить" Click="MenuItem_ImportDb"/>
-                <MenuItem Header="Выгрузить"  Click="MenuItem_ExportDb"/>
+            <MenuItem Header="Общее">
                 <MenuItem Header="Автозапуск" x:Name="_autorunItem" IsCheckable="true" Initialized="MenuItem_Initialized" Checked="MenuItem_Checked" Unchecked="MenuItem_Unchecked"/>
                 <MenuItem Header="Выход"  Click="MenuItem_Exit"/>
+            </MenuItem> <MenuItem Header="База данных">
+                <MenuItem Header="Загрузить" Click="MenuItem_ImportDb"/>
+                <MenuItem Header="Выгрузить"  Click="MenuItem_ExportDb"/>
             </MenuItem>
             <MenuItem x:Name="menuFields" Header="Поля" />
-            <MenuItem Header="О программе" />
             <Separator Width="10"/>
             <MenuItem Header="Пациенты" Foreground="#FF0169B0" Click="MenuItemTabClient_Click"/>
             <MenuItem Header="Записи" Foreground="#FF0169B0" Click="MenuItemTabShudler_Click"/>

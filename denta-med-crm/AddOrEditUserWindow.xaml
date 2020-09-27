@@ -6,12 +6,22 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:denta_med_crm"
         xmlns:model="clr-namespace:denta_med_crm.Model"
+        xmlns:acb="clr-namespace:AutoCompleteTextBox.Editors;assembly=AutoCompleteTextBox"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         ResizeMode="NoResize"
         local:WindowBehavior.HideCloseButton="True"
         WindowStartupLocation="CenterScreen"
         Title="Клиент" Height="534" Width="842" Name="addOrEditUserWindow" Icon="Images/Icon.ico" >
+    <Window.Resources>
+        <local:DoctorSuggestionProvider x:Key="DoctorSuggestionProvider"/>
+        <TextBlock x:Key="LoadingContent" Text="Загрузка..." Margin="5" FontSize="14" />
+        <DataTemplate x:Key="DoctorTemplate">
+            <Grid>
+                <TextBlock Text="{Binding Name}"></TextBlock>
+            </Grid>
+        </DataTemplate>
+    </Window.Resources>
 
     <Grid Background="#FFE7E8EC">
         <Grid.Resources>
@@ -71,7 +81,7 @@
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Дата осмотра" Width="140"   DisplayMemberBinding="{Binding InspectionDate, StringFormat='{}{0:dd.MM.yyyy}'}" />
-                                <GridViewColumn Header="Врач" Width="150" DisplayMemberBinding="{Binding Doctor}" />
+                                <GridViewColumn Header="Врач" Width="150" DisplayMemberBinding="{Binding Doctor.Name}" />
                                 <GridViewColumn Header="Описание" Width="215" DisplayMemberBinding="{Binding Description}" />
                             </GridView>
                         </ListView.View>
@@ -84,7 +94,18 @@
 
                         <Label Margin="361,246,172,138" Content="{Binding Path=InspectionDate}"  ContentStringFormat="Выбранная дата: dd.MM.yyyy"></Label>
                         <Label Margin="10,246,736,138" Content="Врач:" FontSize="14"/>
-                        <TextBox Text="{Binding Path=Doctor}" Margin="74,246,0,0" HorizontalAlignment="Left" Width="261" Height="29" VerticalAlignment="Top" />
+                        <!--{Binding Path=Doctor}-->
+                        <acb:AutoCompleteTextBox 
+                                                 MaxLength="50"
+                                                 CharacterCasing="Upper"
+                                                 DisplayMember="Name"
+                                                 Margin="74,246,0,0" HorizontalAlignment="Left" Width="261" Height="29" VerticalAlignment="Top"
+                                                 Provider="{StaticResource ResourceKey=DoctorSuggestionProvider}"
+                                                 LoadingContent="{StaticResource LoadingContent}"
+                                                 ItemTemplate="{StaticResource ResourceKey=DoctorTemplate}"
+                                                 Delay="0"
+                                                 SelectedItem="{Binding Doctor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
+                        </acb:AutoCompleteTextBox>
                         <Grid x:Name="_ts3" Margin="348,342,130,10">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition></ColumnDefinition>
@@ -267,7 +288,7 @@ C - Кариес
                             <GridView>
                                 <GridViewColumn Header="Дата время" Width="140" DisplayMemberBinding="{Binding ProcedureDate, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}" />
                                 <GridViewColumn Header="Дительность" Width="140" DisplayMemberBinding="{Binding ProcedureDuration}" />
-                                <GridViewColumn Header="Врач" Width="170" DisplayMemberBinding="{Binding Doctor}" />
+                                <GridViewColumn Header="Врач" Width="170" DisplayMemberBinding="{Binding Doctor.Name}" />
                                 <GridViewColumn Header="Описание" Width="220" DisplayMemberBinding="{Binding Description}" />
                             </GridView>
                         </ListView.View>
@@ -282,7 +303,17 @@ C - Кариес
                         <Label Content="Описание:" Margin="366,165,10,120" FontSize="14" Background="#FFE7E8EC" />
                         <Label Content="Врач:" Margin="10,237,730,49" FontSize="14"/>
                         <TextBox HorizontalAlignment="Left" Height="208" Margin="366,195,0,0" TextWrapping="Wrap" Text="{Binding Path=Description}" VerticalAlignment="Top" Width="429" Grid.RowSpan="2" VerticalContentAlignment="Top"/>
-                        <TextBox HorizontalAlignment="Left" Height="29" Margin="89,237,0,0" TextWrapping="Wrap" Text="{Binding Path=Doctor}" VerticalAlignment="Top" Width="219"/>
+                        <acb:AutoCompleteTextBox 
+                                                 MaxLength="50"
+                                                 CharacterCasing="Upper"
+                                                 DisplayMember="Name"
+                                                 HorizontalAlignment="Left" Height="29" Margin="89,237,0,0"  VerticalAlignment="Top" Width="219"
+                                                 Provider="{StaticResource ResourceKey=DoctorSuggestionProvider}"
+                                                 LoadingContent="{StaticResource LoadingContent}"
+                                                 ItemTemplate="{StaticResource ResourceKey=DoctorTemplate}"
+                                                 Delay="0"
+                                                 SelectedItem="{Binding Doctor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
+                        </acb:AutoCompleteTextBox>
                         <xctk:DateTimePicker Value="{Binding Path=ProcedureDate}" Margin="89,203,497,83" FontSize="14" VerticalContentAlignment="Center"/>
                         <Label Content="Длительность (минут):" Margin="10,273,611,13" FontSize="14"/>
                         <TextBox HorizontalAlignment="Left" Height="29" Margin="182,273,0,0" TextWrapping="Wrap" Text="{Binding Path=ProcedureDuration}" VerticalAlignment="Top" Width="126"/>

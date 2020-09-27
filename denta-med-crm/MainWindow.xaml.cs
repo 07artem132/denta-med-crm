@@ -26,7 +26,7 @@ namespace denta_med_crm
     public partial class MainWindow : Window
     {
         const string dbFile = "db.json";
-        Database db = new Database(dbFile);
+        internal static Database db = new Database(dbFile);
 
         public MainWindow()
         {
@@ -34,9 +34,6 @@ namespace denta_med_crm
             Style s = new Style();
             s.Setters.Add(new Setter(VisibilityProperty, Visibility.Collapsed));
             _tabControl.ItemContainerStyle = s;
-
-            if (File.Exists(dbFile))
-                db.Import(dbFile);
 
             InitializeOrUpdate();
 

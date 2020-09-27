@@ -35,9 +35,7 @@ namespace denta_med_crm
         public AddOrEditUserWindow(Client clientOrNull, Procedure redirectTo = null)
         {
             InitializeComponent();
-
             _undoButton.Visibility = clientOrNull == null ? Visibility.Visible : Visibility.Hidden;
-
              if (clientOrNull == null)
                 Client = new Client();
             else Client = clientOrNull;

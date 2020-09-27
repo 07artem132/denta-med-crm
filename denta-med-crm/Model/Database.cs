@@ -11,24 +11,48 @@ namespace denta_med_crm.Model
     public class Database
     {
         public List<Client> Clients;
-        public readonly HistoryCache DoctorsHistory;
+        public HistoryCache DoctorsHistory;
         private readonly Timer Timer = null;
         private readonly string Path;
+        private readonly string PathBackup;
         private readonly object locker = new object();
 
         public Database(string permanentPath)
         {
             Path = permanentPath;
+            PathBackup = permanentPath + ".backup";
             Clients = new List<Client>();
             DoctorsHistory = new HistoryCache();
-            Timer = new Timer(new TimerCallback(x => Export(this.Path)), null, 0, 1000 * 1);
+            if (File.Exists(Path))
+            {
+                try
+                {
+                    Import(Path);
+                }
+                catch
+                {
+                    Import(PathBackup);
+                }
+            }
+            Timer = new Timer(
+                new TimerCallback
+                (x =>
+                {
+                    Export(Path);
+                    Export(PathBackup);
+                }), null, 0, 1000 * 1);
         }
 
         private void FillInHistory()
         {
+            DoctorsHistory.Clear();
             foreach (var procedure in EnumerateProcedures())
             {
                 DoctorsHistory.TryAdd(procedure.Doctor);
+            }
+            foreach (var inspection in EnumerateInspection())
+            {
+                DoctorsHistory.TryAdd(inspection.Doctor);
             }
         }
 
@@ -59,6 +83,17 @@ namespace denta_med_crm.Model
                 }
             }
         }
+        public IEnumerable<Inspection> EnumerateInspection()
+        {
+            foreach (var item in Clients)
+            {
+                foreach (var p in item.Inspections)
+                {
+                    //TODO: filters
+                    yield return p;
+                }
+            }
+        }
 
         public void AddClient(Client client)
         {
@@ -68,6 +103,22 @@ namespace denta_med_crm.Model
         public void OnProcedureAdded(Procedure procedure)
         {
             DoctorsHistory.TryAdd(procedure.Doctor);
+        }
+        public void OnInspectionAdded(Inspection procedure)
+        {
+            DoctorsHistory.TryAdd(procedure.Doctor);
+        }
+        public void OnInspectionRemoved(Inspection procedure)
+        {
+            FillInHistory();
+        }
+        public void OnProcedureRemoved(Procedure procedure)
+        {
+            FillInHistory();
+        }
+        public void OnDoctorRename()
+        {
+            FillInHistory();
         }
 
         public void Dispose()
