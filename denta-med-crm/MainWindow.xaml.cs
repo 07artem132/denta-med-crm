@@ -1,10 +1,13 @@
 ﻿using denta_med_crm.Model;
+using Microsoft.Win32.TaskScheduler;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -17,6 +20,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WpfScheduler;
+using Path = System.IO.Path;
 
 namespace denta_med_crm
 {
@@ -192,7 +196,11 @@ namespace denta_med_crm
             dlg.Filter = $"DB Files (*.json)|*.json";
             var result = dlg.ShowDialog();
             if (result == true)
+            {
                 db.Import(dlg.FileName);
+                dataGrid.ItemsSource = null;
+                InitializeOrUpdate();
+            }
         }
 
         private void MenuItem_Exit(object sender, RoutedEventArgs e)
@@ -225,29 +233,83 @@ namespace denta_med_crm
             _patient_shuduler.NextPage();
         }
 
-
-        //Autorun
         private void MenuItem_Initialized(object sender, EventArgs e)
         {
-            Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-            _autorunItem.IsChecked = key.GetValue("DentCrm") != null;
-            key.Close();
+            try
+            {
+                using (TaskService ts = new TaskService())
+                {
+                    var result = ts.FindTask(System.Reflection.Assembly.GetExecutingAssembly().GetName().Name);
+                    if (result != null)
+                    {
+                        _autorunItem.IsChecked = true;
+                        var actions = result.Definition.Actions;
+                        var action = (ExecAction)actions[0];
+                        if (action.Path == Assembly.GetEntryAssembly().Location)
+                            if (action.WorkingDirectory == AssemblyDirectory)
+                            {
+                                _autorunItem.IsChecked = true;
+                            }
+                            else
+                            {
+                                ts.RootFolder.DeleteTask(result.Name);
+                                createTask();
+                            }
+                        else
+                        {
+                            ts.RootFolder.DeleteTask(result.Name);
+                            createTask();
+                        }
+                    }
+                }
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.Message);
+            }
+        }
+        public static string AssemblyDirectory
+        {
+            get
+            {
+                string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+                UriBuilder uri = new UriBuilder(codeBase);
+                string path = Uri.UnescapeDataString(uri.Path);
+                return Path.GetDirectoryName(path);
+            }
+        }
+        private void createTask()
+        {
+            using (TaskService ts = new TaskService())
+            {
+                TaskDefinition td = ts.NewTask();
+                td.RegistrationInfo.Description = "Авто запуск CRM";
+
+                var dt = new LogonTrigger();
+                dt.UserId = Environment.UserName;
+                td.Triggers.Add(dt);
+                td.Actions.Add(new ExecAction(System.Reflection.Assembly.GetEntryAssembly().Location, null, AssemblyDirectory));
+                ts.RootFolder.RegisterTaskDefinition(System.Reflection.Assembly.GetExecutingAssembly().GetName().Name, td);
+            }
+        }
+        private void deleteTask()
+        {
+            using (TaskService ts = new TaskService())
+            {
+                var result = ts.FindTask(System.Reflection.Assembly.GetExecutingAssembly().GetName().Name);
+                if (result != null)
+                {
+                    ts.RootFolder.DeleteTask(result.Name);
+                }
+            }
         }
         private void MenuItem_Checked(object sender, RoutedEventArgs e)
         {
-            Microsoft.Win32.RegistryKey Key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run\\", true);
-
-            //добавляем первый параметр - название ключа  
-            // Второй параметр - это путь к   
-            // исполняемому файлу нашей программы.  
-            Key.SetValue("DentCrm", System.Reflection.Assembly.GetEntryAssembly().Location);
-            Key.Close();
+            createTask();
         }
         private void MenuItem_Unchecked(object sender, RoutedEventArgs e)
         {
-            Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-            key.DeleteValue("DentCrm", false);
-            key.Close();
+            deleteTask();
         }
     }
 

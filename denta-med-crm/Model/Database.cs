@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Windows;
 
 namespace denta_med_crm.Model
 {
@@ -31,7 +32,12 @@ namespace denta_med_crm.Model
                 }
                 catch
                 {
+                    try { 
                     Import(PathBackup);
+                    } catch(Exception e)
+                    {
+                        MessageBox.Show("При загрузке основной и резервной базы данных произошла ошибка, критическая ситуация сообщения об ошибке:" + e.Message + e.StackTrace);
+                    }
                 }
             }
             Timer = new Timer(

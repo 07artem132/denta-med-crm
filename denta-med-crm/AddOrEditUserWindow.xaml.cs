@@ -188,7 +188,7 @@ namespace denta_med_crm
 
         private void _inspections_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            _inspections.IsEnabled = _inspections.SelectedItem != null;
+            _inspectionsGrid.IsEnabled = _inspections.SelectedItem != null;
         }
 
         private void _procedures_SelectionChanged(object sender, SelectionChangedEventArgs e)
