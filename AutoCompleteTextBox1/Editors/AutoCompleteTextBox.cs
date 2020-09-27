@@ -331,14 +331,8 @@ namespace AutoCompleteTextBox.Editors
             }
         }
 
-
-        object prevDataContext;
-
         private void OnEditorTextChanged(object sender, TextChangedEventArgs e)
         {
-            if (DataContext != prevDataContext)
-                prevDataContext = DataContext;
-            else Provider.OnTextChanged(Text, Editor.Text);
             Text = Editor.Text;
             if (_isUpdatingText)
                 return;

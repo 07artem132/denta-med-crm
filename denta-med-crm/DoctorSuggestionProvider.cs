@@ -10,27 +10,26 @@ namespace denta_med_crm
 {
     class DoctorSuggestionProvider : ISuggestionProvider
     {
+        public IEnumerable<string> ListOfDoctors => MainWindow.db.DoctorsHistory.Keys;
 
-        public IEnumerable<Doctor> ListOfDoctors { get; set; }
-
-        public Doctor GetExactSuggestion(string filter)
+        public string GetExactSuggestion(string filter)
         {
             if (string.IsNullOrWhiteSpace(filter)) return null;
             return
-                ListOfDoctors
-                    .FirstOrDefault(doctor => string.Equals(doctor.Name, filter, StringComparison.CurrentCultureIgnoreCase));
+                (ListOfDoctors
+                    .FirstOrDefault(doctor => string.Equals(doctor, filter, StringComparison.CurrentCultureIgnoreCase)));
         }
 
-        public IEnumerable<Doctor> GetSuggestions(string filter)
+        public IEnumerable<string> GetSuggestions(string filter)
         {
             if (string.IsNullOrWhiteSpace(filter)) return null;
 
             var result = ListOfDoctors
-                   .Where(doctor => doctor.Name.IndexOf(filter, StringComparison.CurrentCultureIgnoreCase) > -1)
+                   .Where(doctor => doctor.IndexOf(filter, StringComparison.CurrentCultureIgnoreCase) > -1)
                    .ToList();
             
             if (result.Count == 0)
-                result.Add(new Doctor(filter));
+                result.Add(filter);
             
             return result;
         }
@@ -40,9 +39,11 @@ namespace denta_med_crm
             return GetSuggestions(filter);
         }
 
-        public DoctorSuggestionProvider()
+        public void OnTextChanged(string prev, string value)
         {
-            ListOfDoctors = MainWindow.db.DoctorsHistory;
+            MainWindow.db?.OnDoctorRename(prev, value);
+            System.Diagnostics.Debug.WriteLine(prev + " -> " + value);
         }
+
     }
 }

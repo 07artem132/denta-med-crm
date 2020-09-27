@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace AutoCompleteTextBox.Editors
 {
-    /*public class SuggestionProvider : ISuggestionProvider
+    public class SuggestionProvider : ISuggestionProvider
     {
 
 
@@ -31,5 +31,5 @@ namespace AutoCompleteTextBox.Editors
 
         #endregion Public Methods
 
-    }*/
+    }
 }

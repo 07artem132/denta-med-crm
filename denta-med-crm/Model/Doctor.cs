@@ -5,20 +5,21 @@ using System.Text;
 
 namespace denta_med_crm.Model
 {
-    public class Doctor
+    public struct Doctor
     {
         public Doctor(string text)
         {
-            Name=text;
+            _name = text;
         }
-        public Doctor()
-        {
-        }
+
         private string _name;
         public string Name
         {
             get { return _name; }
-            set { _name = value; MainWindow.db?.OnDoctorRename(); }
+            set {
+                MainWindow.db?.OnDoctorRename(_name, value);
+                _name = value;
+                 }
         }
     }
 }

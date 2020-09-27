@@ -6,35 +6,48 @@ using System.Threading.Tasks;
 
 namespace denta_med_crm.Model
 {
+
+
+
     //Список всех строк
-    public class HistoryCache : HashSet<Doctor>
+    public class HistoryCache : Dictionary<string, int>, IEnumerable<string>
     {
         public HistoryCache()
         {
         }
 
-        public void TryAdd(Doctor item)
+        public void TryAdd(string item)
         {
-            if (!Contains(item) && item != null && item.Name != "")
-                Add(item);
+            if (string.IsNullOrEmpty(item))
+                return;
+
+            if (TryGetValue(item, out var t))
+                this[item] = t + 1;
+            else Add(item, 1);
         }
 
-        public HistoryCache(IEnumerable<Doctor> selection)
+        public void TryRemove(string item)
+        {
+            if (TryGetValue(item, out var t) && t > 1)
+                this[item] = t - 1;
+            else Remove(item);
+        }
+
+        public HistoryCache(IEnumerable<string> selection)
         {
             foreach (var item in selection)
-            {
-                if (!Contains(item))
-                    Add(item);
-            }
+                TryAdd(item);
         }
 
-        public IEnumerable<Doctor> Tip(Doctor startsWith)
+        public IEnumerable<string> Tip(string startsWith)
         {
             foreach (var item in this)
             {
-                if (item.Name.StartsWith(startsWith.Name))
-                    yield return item;
+                if (item.Key.StartsWith(startsWith))
+                    yield return item.Key;
             }
         }
+
+        IEnumerator<string> IEnumerable<string>.GetEnumerator() => this.Keys.GetEnumerator();
     }
 }

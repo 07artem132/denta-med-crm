@@ -5,9 +5,11 @@ namespace AutoCompleteTextBox.Editors
     public interface ISuggestionProvider
     {
 
+        #region Public Methods
 
         IEnumerable GetSuggestions(string filter);
 
-        void OnTextChanged(string prev, string value);
+        #endregion Public Methods
+
     }
 }

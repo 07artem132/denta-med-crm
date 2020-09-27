@@ -100,25 +100,34 @@ namespace denta_med_crm.Model
             Clients.Add(client);
         }
 
+
+
+
         public void OnProcedureAdded(Procedure procedure)
         {
             DoctorsHistory.TryAdd(procedure.Doctor);
         }
+
         public void OnInspectionAdded(Inspection procedure)
         {
             DoctorsHistory.TryAdd(procedure.Doctor);
         }
+
         public void OnInspectionRemoved(Inspection procedure)
         {
-            FillInHistory();
+            DoctorsHistory.TryRemove(procedure.Doctor);
+
         }
+
         public void OnProcedureRemoved(Procedure procedure)
         {
-            FillInHistory();
+            DoctorsHistory.TryRemove(procedure.Doctor);
         }
-        public void OnDoctorRename()
+
+        public void OnDoctorRename(string oldName, string newName)
         {
-            FillInHistory();
+            DoctorsHistory.TryRemove(oldName);
+            DoctorsHistory.TryAdd(newName);
         }
 
         public void Dispose()

@@ -169,7 +169,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AutoCompleteTextBox\AutoCompleteTextBox.csproj">
-      <Project>{053e28e4-ab06-456d-8444-2012e5f9d668}</Project>
+      <Project>{d23c65cb-9edb-4e1a-b7c3-f5c1583fb4ff}</Project>
       <Name>AutoCompleteTextBox</Name>
     </ProjectReference>
     <ProjectReference Include="..\WpfScheduler\WpfScheduler.csproj">

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -68,6 +69,21 @@ namespace denta_med_crm
                 _tab.SelectedIndex = 2;
                 _procedures.SelectedItem = redirectTo;
             }
+
+            /*
+            _TEST.AutoSuggestionList = new List<string>()
+            {
+                "qwer",
+                "erewt",
+                "gerger",
+                "erher",
+                "erher1",
+                "erher2",
+                "erher3",
+                "erher4",
+                "erher5",
+                "erher6",
+            };*/
         }
         static AddOrEditUserWindow()
         {
@@ -161,6 +177,23 @@ namespace denta_med_crm
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+
+
+        private void _qTest_TextChanged(object sender, TextChangedEventArgs e)
+        {
+           
+        }
+
+        private void _inspections_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            _inspections.IsEnabled = _inspections.SelectedItem != null;
+        }
+
+        private void _procedures_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            _proceduresGrid.IsEnabled = _procedures.SelectedItem != null;
         }
     }
 }

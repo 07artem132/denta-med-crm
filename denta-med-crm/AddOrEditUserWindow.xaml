@@ -18,7 +18,7 @@
         <TextBlock x:Key="LoadingContent" Text="Загрузка..." Margin="5" FontSize="14" />
         <DataTemplate x:Key="DoctorTemplate">
             <Grid>
-                <TextBlock Text="{Binding Name}"></TextBlock>
+                <TextBlock Text="{Binding}"></TextBlock>
             </Grid>
         </DataTemplate>
     </Window.Resources>
@@ -66,7 +66,9 @@
             </TabItem>
             <TabItem Header="Зубная формула" >
                 <Grid>
-                    <ListView x:Name="_inspections" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="10,10,280,225" ItemsSource="{Binding ElementName=addOrEditUserWindow, Path=Client.Inspections}" Background="#FFF6F6F6" >
+                    <ListView x:Name="_inspections" ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                              Margin="10,10,280,225" ItemsSource="{Binding ElementName=addOrEditUserWindow, Path=Client.Inspections}" 
+                              Background="#FFF6F6F6" SelectionChanged="_inspections_SelectionChanged">
                         <ListView.Resources>
                             <ContextMenu x:Key="ItemContextMenu">
                                 <MenuItem Header="Удалить"   Click="Delete_inspection" />
@@ -81,45 +83,46 @@
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Дата осмотра" Width="140"   DisplayMemberBinding="{Binding InspectionDate, StringFormat='{}{0:dd.MM.yyyy}'}" />
-                                <GridViewColumn Header="Врач" Width="150" DisplayMemberBinding="{Binding Doctor.Name}" />
+                                <GridViewColumn Header="Врач" Width="150" DisplayMemberBinding="{Binding Doctor}" />
                                 <GridViewColumn Header="Описание" Width="215" DisplayMemberBinding="{Binding Description}" />
                             </GridView>
                         </ListView.View>
                     </ListView>
-                    <Grid DataContext="{Binding ElementName=_inspections, Path=SelectedItem}">
+                    
+                    <Grid x:Name="_inspectionsGrid" IsEnabled="false" DataContext="{Binding ElementName=_inspections, Path=SelectedItem}">
+                        <Label Margin="0,202,0,177" Content="" Background="#FFE7E8EC" FontSize="14"/>
+
                         <Grid Background="#FFE7E8EC" Margin="535,10,0,225">
                             <Label Content="Описание:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.555,1.93" FontSize="14" Width="250" Background="#FFF3F3F3"/>
-                            <TextBox TextWrapping="Wrap" Text="{Binding Path=Description}" Margin="10,39,10,10" Background="White" VerticalContentAlignment="Top" />
+                            <TextBox TextWrapping="Wrap" Text="{Binding Description}" Margin="10,39,10,10" Background="White" VerticalContentAlignment="Top" />
                         </Grid>
 
-                        <Label Margin="361,246,172,138" Content="{Binding Path=InspectionDate}"  ContentStringFormat="Выбранная дата: dd.MM.yyyy"></Label>
+                        <Label Margin="361,246,172,138" Content="{Binding InspectionDate}"  ContentStringFormat="Выбранная дата: dd.MM.yyyy"/>
                         <Label Margin="10,246,736,138" Content="Врач:" FontSize="14"/>
                         <!--{Binding Path=Doctor}-->
                         <acb:AutoCompleteTextBox 
                                                  MaxLength="50"
                                                  CharacterCasing="Upper"
-                                                 DisplayMember="Name"
                                                  Margin="74,246,0,0" HorizontalAlignment="Left" Width="261" Height="29" VerticalAlignment="Top"
                                                  Provider="{StaticResource ResourceKey=DoctorSuggestionProvider}"
                                                  LoadingContent="{StaticResource LoadingContent}"
                                                  ItemTemplate="{StaticResource ResourceKey=DoctorTemplate}"
                                                  Delay="0"
-                                                 SelectedItem="{Binding Doctor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
-                        </acb:AutoCompleteTextBox>
+                                                 SelectedItem="{Binding Doctor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
                         <Grid x:Name="_ts3" Margin="348,342,130,10">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
+                                <RowDefinition/>
+                                <RowDefinition/>
                             </Grid.RowDefinitions>
                             <Label Grid.Row="0" Grid.Column="0" Content="31"/>
                             <Label Grid.Row="0" Grid.Column="1" Content="32"/>
@@ -140,18 +143,18 @@
                         </Grid>
                         <Grid x:Name="_ts1" Margin="10,282,473,71">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
+                                <RowDefinition/>
+                                <RowDefinition/>
                             </Grid.RowDefinitions>
                             <Label Grid.Row="0" Grid.Column="0" Content="18"/>
                             <Label Grid.Row="0" Grid.Column="1" Content="17"/>
@@ -172,18 +175,18 @@
                         </Grid>
                         <Grid x:Name="_ts4" Margin="10,342,473,10">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
+                                <RowDefinition/>
+                                <RowDefinition/>
                             </Grid.RowDefinitions>
                             <Label Grid.Row="0" Grid.Column="0" Content="48"/>
                             <Label Grid.Row="0" Grid.Column="1" Content="47"/>
@@ -204,18 +207,18 @@
                         </Grid>
                         <Grid x:Name="_ts2" Margin="348,282,130,71">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition></RowDefinition>
-                                <RowDefinition></RowDefinition>
+                                <RowDefinition/>
+                                <RowDefinition/>
                             </Grid.RowDefinitions>
                             <Label Grid.Row="0" Grid.Column="0" Content="21"/>
                             <Label Grid.Row="0" Grid.Column="1" Content="22"/>
@@ -234,8 +237,9 @@
                             <TextBox Tag="22" TextWrapping="Wrap" Grid.Row="1" Grid.Column="1" />
                             <TextBox Tag="21" TextWrapping="Wrap" Grid.Row="1" Grid.Column="0" />
                         </Grid>
-                        <Label Margin="0,202,0,177" Content="" Background="#FFE7E8EC" FontSize="14"/>
-                        <Button x:Name="_formulaTt" Content="?" HorizontalAlignment="Left" Margin="210,206,0,0" VerticalAlignment="Top" 
+
+                    </Grid>
+                    <Button x:Name="_formulaTt" Content="?" HorizontalAlignment="Left" Margin="210,206,0,0" VerticalAlignment="Top" 
                                 Width="87" Height="28" FontSize="16" FontWeight="Bold" Foreground="#FF6C6C6C" Background="#FFEEEEEE" xml:space="preserve" ToolTipService.InitialShowDelay="50">
                             <Button.ToolTip>
 Расшифровка:
@@ -251,13 +255,15 @@ C - Кариес
 П/С - Пломба/Кариес
                             </Button.ToolTip>
                         </Button>
-                        <Button x:Name="_addFormula" Content="Добавить осмотр" HorizontalAlignment="Left" Margin="10,206,0,0" VerticalAlignment="Top" Width="195" Height="28" FontSize="14" Click="_addFormula_Click"/>
-                    </Grid>
+                    <Button x:Name="_addFormula" Content="Добавить осмотр" HorizontalAlignment="Left" Margin="10,206,0,0" VerticalAlignment="Top" Width="195" Height="28" FontSize="14" Click="_addFormula_Click"/>
+
                 </Grid>
             </TabItem>
             <TabItem Header="Записи">
                 <Grid>
-                    <ListView x:Name="_procedures" Margin="10,10,10,258" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding ElementName=addOrEditUserWindow, Path=Client.Procedures}" Background="#FFF6F6F6" >
+                    <ListView x:Name="_procedures" Margin="10,10,10,258" ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                              ItemsSource="{Binding ElementName=addOrEditUserWindow, Path=Client.Procedures}" Background="#FFF6F6F6"
+                              SelectionChanged="_procedures_SelectionChanged">
                         <ListView.Resources>
                             <ContextMenu x:Key="ItemContextMenu">
                                 <MenuItem Header="Удалить"   Click="Delete_record" />
@@ -288,13 +294,13 @@ C - Кариес
                             <GridView>
                                 <GridViewColumn Header="Дата время" Width="140" DisplayMemberBinding="{Binding ProcedureDate, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}" />
                                 <GridViewColumn Header="Дительность" Width="140" DisplayMemberBinding="{Binding ProcedureDuration}" />
-                                <GridViewColumn Header="Врач" Width="170" DisplayMemberBinding="{Binding Doctor.Name}" />
+                                <GridViewColumn Header="Врач" Width="170" DisplayMemberBinding="{Binding Doctor}" />
                                 <GridViewColumn Header="Описание" Width="220" DisplayMemberBinding="{Binding Description}" />
                             </GridView>
                         </ListView.View>
                     </ListView>
                     <Button x:Name="_addLabel" Content="Добавить запись" HorizontalAlignment="Left" Margin="10,160,0,0" VerticalAlignment="Top" Width="173" Height="24" FontSize="14" Click="_addLabel_Click"/>
-                    <Grid DataContext="{Binding ElementName=_procedures, Path=SelectedItem}">
+                    <Grid x:Name="_proceduresGrid" IsEnabled="False" DataContext="{Binding ElementName=_procedures, Path=SelectedItem}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="45*"/>
                             <RowDefinition Height="14*"/>
@@ -306,7 +312,6 @@ C - Кариес
                         <acb:AutoCompleteTextBox 
                                                  MaxLength="50"
                                                  CharacterCasing="Upper"
-                                                 DisplayMember="Name"
                                                  HorizontalAlignment="Left" Height="29" Margin="89,237,0,0"  VerticalAlignment="Top" Width="219"
                                                  Provider="{StaticResource ResourceKey=DoctorSuggestionProvider}"
                                                  LoadingContent="{StaticResource LoadingContent}"
