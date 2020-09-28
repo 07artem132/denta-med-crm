@@ -38,7 +38,6 @@ namespace denta_med_crm
         {
             InitializeComponent();
 
-            teethViewTest.SetAvailableTeeth(11, 12, 13, 14);
 
 
             _undoButton.Visibility = clientOrNull == null ? Visibility.Visible : Visibility.Hidden;
@@ -89,6 +88,37 @@ namespace denta_med_crm
                 "erher5",
                 "erher6",
             };*/
+        }
+        private void updateAvalibleTeethHistory()
+        {
+            HashSet<int> available = new HashSet<int>();
+            foreach (var inspection in Client.Inspections)
+            {
+                for (int i = 1; i <= 8; i++)
+                {
+                    for (int j = 1; j <= 4; j++)
+                    {
+                        var fullNm = j * 10 + i;
+                        var result = inspection.GetToothData(fullNm);
+                        if (!string.IsNullOrEmpty(result))
+                            available.Add(fullNm);
+                    }
+                }
+            }
+            foreach (var procedure in Client.Procedures)
+            {
+                for (int i = 1; i <= 8; i++)
+                {
+                    for (int j = 1; j <= 4; j++)
+                    {
+                        var fullNm = j * 10 + i;
+                        var result = procedure.GetToothData(fullNm);
+                        if (!string.IsNullOrEmpty(result))
+                            available.Add(fullNm);
+                    }
+                }
+            }
+            teethViewTest.SetAvailableTeeth(available.ToArray());
         }
         static AddOrEditUserWindow()
         {
@@ -268,29 +298,38 @@ namespace denta_med_crm
         private string _inspection_reduction_decipher(string reduction)
         {
             return reduction;
-             
-               // case :
-                 //   return "Отсутствует";
-                //case "R":
-                //    return "Корень";
-                //case "P":
-                //    return "Пульпит";
-                //case "Pt":
-                //    return "Переодонтит";
-                //case "A":
-                //    return "Пародонтоз";
-                //case "К":
-                //    return "Коронка";
-                //case "C":
-                //    return "Кариес";
-                //case "П":
-                //    return "Пломбированный";
-                //case "И":
-                //    return "Искусственный зуб";
-                //case "П/С":
-                //    return "Пломба/Кариес";
-                 
-             
+
+            // case :
+            //   return "Отсутствует";
+            //case "R":
+            //    return "Корень";
+            //case "P":
+            //    return "Пульпит";
+            //case "Pt":
+            //    return "Переодонтит";
+            //case "A":
+            //    return "Пародонтоз";
+            //case "К":
+            //    return "Коронка";
+            //case "C":
+            //    return "Кариес";
+            //case "П":
+            //    return "Пломбированный";
+            //case "И":
+            //    return "Искусственный зуб";
+            //case "П/С":
+            //    return "Пломба/Кариес";
+
+
+        }
+
+        private void _tab_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (_tab.SelectedIndex == 3)//your specific tabname
+            {
+                updateAvalibleTeethHistory();
+            }
+
         }
     }
 }
