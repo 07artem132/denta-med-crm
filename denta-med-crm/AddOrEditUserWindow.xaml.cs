@@ -31,6 +31,7 @@ namespace denta_med_crm
         public static readonly DependencyProperty ClientProperty;
         public Client AddedUser;
 
+        private int proceduresCurrentTeeth = -1;
         private bool disallowEditingTeeth;
 
         public AddOrEditUserWindow(Client clientOrNull, Procedure redirectTo = null)
@@ -198,6 +199,42 @@ namespace denta_med_crm
         private void _procedures_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             _proceduresGrid.IsEnabled = _procedures.SelectedItem != null;
+        }
+
+        private void _proceduresGrid_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (_proceduresGrid.DataContext == null)
+                return;
+            var newDC = (Procedure)_proceduresGrid.DataContext;
+
+            List<int> available = new List<int>();
+            for (int i = 1; i <= 8; i++)
+            {
+                for (int j = 1; j <= 4; j++)
+                {
+                    var fullNm = j * 10 + i;
+                    if (!string.IsNullOrEmpty(newDC.GetToothData(fullNm)))
+                        available.Add(fullNm);
+                }
+            }
+            _teethViewProcedures.SetAvailableTeeth(available.ToArray());
+        }
+
+        private void _teethViewProcedures_ToothPicked(int obj)
+        {
+            var newDC = (Procedure)_proceduresGrid.DataContext;
+            proceduresCurrentTeeth = obj;
+            _teethProcedureDescription.Text = newDC.GetToothData(obj);
+        }
+
+        private void _teethProcedureDescription_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (proceduresCurrentTeeth != -1)
+            {
+                var newDC = (Procedure)_proceduresGrid.DataContext;
+                newDC.SetToothData(proceduresCurrentTeeth, _teethProcedureDescription.Text);
+                _proceduresGrid_DataContextChanged(null, new DependencyPropertyChangedEventArgs());
+            }
         }
     }
 }

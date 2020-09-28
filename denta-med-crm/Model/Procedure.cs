@@ -21,7 +21,7 @@ namespace denta_med_crm.Model
         public string Doctor { get; set; } = "";
         //Зубы
         [JsonProperty("teeth")]
-        public string[] Teeth { get; set; } = new string[400];
+        public string[] Teeth { get; set; } = new string[32];
         public string GetToothData(int num)
         {
             var x = num / 10;

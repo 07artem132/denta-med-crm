@@ -67,12 +67,17 @@ namespace denta_med_crm.Controls
             //Reset
             foreach (var item in FindVisualChildren<MultistateButton>(this))
             {
+                if ((int)item.State == 2 && AllowPickAnyTooth)
+                    continue;
                 item.State = 0;
             }
 
             foreach (var item in availableTags)
             {
-                SearchByTag(item.ToString()).State = 1;
+                var button = SearchByTag(item.ToString());
+                if ((int)button.State == 2 && AllowPickAnyTooth)
+                    continue;
+                button.State = 1;
             }
         }
 
@@ -82,7 +87,7 @@ namespace denta_med_crm.Controls
             var tag = src.Tag.ToString();
             var tagInt = int.Parse(tag);
 
-            if (availableTags.Contains(tagInt))
+            if (availableTags.Contains(tagInt) || AllowPickAnyTooth)
             {
                 foreach (var item in FindVisualChildren<MultistateButton>(this))
                 {

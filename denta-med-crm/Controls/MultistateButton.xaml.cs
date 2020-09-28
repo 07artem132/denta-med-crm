@@ -24,6 +24,7 @@ namespace denta_med_crm.Controls
             DependencyProperty.Register("State", typeof(object), typeof(MultistateButton));
         
 
+
         public event RoutedEventHandler Click
         {
             add
@@ -40,9 +41,11 @@ namespace denta_med_crm.Controls
         public MultistateButton()
         {
             InitializeComponent();
+
+            State = 0; //first init
         }
 
-        object _state = 0;
+        object _state = null;
 
         public Dictionary<object, string> Statuses { get; set; } = new Dictionary<object, string>()
         {

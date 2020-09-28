@@ -296,20 +296,21 @@ C - Кариес
                                 <GridViewColumn Header="Дата время" Width="140" DisplayMemberBinding="{Binding ProcedureDate, StringFormat=\{0:dd.MM.yyyy HH:mm\}}" />
                                 <GridViewColumn Header="Дительность" Width="140" DisplayMemberBinding="{Binding ProcedureDuration}" />
                                 <GridViewColumn Header="Врач" Width="170" DisplayMemberBinding="{Binding Doctor}" />
-                                <GridViewColumn Header="Описание" Width="220" DisplayMemberBinding="{Binding Description}" />
                             </GridView>
                         </ListView.View>
                     </ListView>
                     <Button x:Name="_addLabel" Content="Добавить запись" HorizontalAlignment="Left" Margin="10,160,0,0" VerticalAlignment="Top" Width="173" Height="24" FontSize="14" Click="_addLabel_Click"/>
-                    <Grid x:Name="_proceduresGrid" IsEnabled="False" DataContext="{Binding SelectedItem, ElementName=_procedures}">
+                    <Grid x:Name="_proceduresGrid" IsEnabled="False" 
+                          DataContext="{Binding SelectedItem, ElementName=_procedures}"
+                          DataContextChanged="_proceduresGrid_DataContextChanged">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="45*"/>
                             <RowDefinition Height="14*"/>
                         </Grid.RowDefinitions>
                         <Label Content="Дата:" Margin="10,203,751,83" FontSize="14"/>
-                        <Label Content="Описание:" Margin="366,165,10,120" FontSize="14" Background="#FFE7E8EC" />
+                        <Label Content="Описание:" Margin="10,10,10,58" FontSize="14" Background="#FFE7E8EC" Grid.Row="1" />
                         <Label Content="Врач:" Margin="10,237,730,49" FontSize="14"/>
-                        <TextBox HorizontalAlignment="Left" Height="208" Margin="366,195,0,0" TextWrapping="Wrap" Text="{Binding Description}" VerticalAlignment="Top" Width="429" Grid.RowSpan="2" VerticalContentAlignment="Top"/>
+                        <TextBox x:Name="_teethProcedureDescription" TextChanged="_teethProcedureDescription_TextChanged" HorizontalAlignment="Left" Height="48" Margin="10,40,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="785" VerticalContentAlignment="Top" Grid.Row="1"/>
                         <acb:AutoCompleteTextBox 
                                                  MaxLength="50"
                                                  CharacterCasing="Upper"
@@ -322,8 +323,7 @@ C - Кариес
                         <xctk:DateTimePicker Value="{Binding ProcedureDate}" Margin="89,203,497,83" FontSize="14" VerticalContentAlignment="Center"/>
                         <Label Content="Длительность (минут):" Margin="10,273,611,13" FontSize="14"/>
                         <TextBox HorizontalAlignment="Left" Height="29" Margin="182,273,0,0" TextWrapping="Wrap" Text="{Binding ProcedureDuration}" VerticalAlignment="Top" Width="126"/>
-                        <CheckBox Content="Завершено" IsChecked="{Binding Сompleted}"  HorizontalAlignment="Left" Margin="14,310,0,0" VerticalAlignment="Top" FontSize="14" Width="222" Grid.RowSpan="2"/>
-
+                        <Controls:TeethView Margin="320,190,10,88" x:Name="_teethViewProcedures" AllowPickAnyTooth="True" ToothPicked="_teethViewProcedures_ToothPicked" Grid.RowSpan="2"/>
                     </Grid>
                 </Grid>
             </TabItem>
