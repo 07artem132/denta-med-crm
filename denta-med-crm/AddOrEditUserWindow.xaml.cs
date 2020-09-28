@@ -297,35 +297,50 @@ namespace denta_med_crm
 
         private string _inspection_reduction_decipher(string reduction)
         {
-            return reduction;
+            reduction = reduction.ToUpper();
+            reduction = reduction
+                .Replace('А', 'A')
+                .Replace('В', 'B')
+                .Replace('С', 'C')
+                .Replace('Е', 'E')
+                .Replace('Н', 'H')
+                .Replace('К', 'K')
+                .Replace('М', 'M')
+                .Replace('О', 'O')
+                .Replace('Р', 'P')
+                .Replace('Т', 'T')
+                .Replace('Х', 'X');
 
-            // case :
-            //   return "Отсутствует";
-            //case "R":
-            //    return "Корень";
-            //case "P":
-            //    return "Пульпит";
-            //case "Pt":
-            //    return "Переодонтит";
-            //case "A":
-            //    return "Пародонтоз";
-            //case "К":
-            //    return "Коронка";
-            //case "C":
-            //    return "Кариес";
-            //case "П":
-            //    return "Пломбированный";
-            //case "И":
-            //    return "Искусственный зуб";
-            //case "П/С":
-            //    return "Пломба/Кариес";
-
-
+            switch (reduction)
+            {
+                case "O":
+                    return "Отсутствует";
+                case "R":
+                    return "Корень";
+                case "P":
+                    return "Пульпит";
+                case "PT":
+                    return "Переодонтит";
+                case "A":
+                    return "Пародонтоз";
+                case "К":
+                    return "Коронка";
+                case "C":
+                    return "Кариес";
+                case "П":
+                    return "Пломбированный";
+                case "И":
+                    return "Искусственный зуб";
+                case "П/C":
+                    return "Пломба/Кариес";
+                default:
+                    return reduction;
+            }
         }
 
         private void _tab_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (_tab.SelectedIndex == 3)//your specific tabname
+            if (_tab.SelectedIndex == 3 && e.Source == sender)//your specific tabname
             {
                 updateAvalibleTeethHistory();
             }

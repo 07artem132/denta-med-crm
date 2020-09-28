@@ -109,7 +109,7 @@
                                     Loaded="patient_shuduler_Loaded"
                                     OnEventDoubleClick="patient_shuduler_OnEventDoubleClick"
                                     OnScheduleDoubleClick="patient_shuduler_OnScheduleDoubleClick"
-                                    Mode="Month" Margin="0,35,0,0"
+                                    Mode="Week" Margin="0,35,0,0"
                                     />
                     <Button x:Name="_sModeDay" Margin="5,5,0,0" Content="День" Click="_sModeDay_Click" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Width="111"/>
                     <Button x:Name="_sModeWeek" Margin="121,5,0,0" Content="Неделя" Click="_sModeWeek_Click" Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Width="111"/>

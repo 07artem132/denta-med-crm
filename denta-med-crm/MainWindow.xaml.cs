@@ -38,7 +38,7 @@ namespace denta_med_crm
             Style s = new Style();
             s.Setters.Add(new Setter(VisibilityProperty, Visibility.Collapsed));
             _tabControl.ItemContainerStyle = s;
-
+            
             InitializeOrUpdate();
 
             foreach (var column in dataGrid.Columns)
@@ -130,7 +130,7 @@ namespace denta_med_crm
                 return;
 
             _patient_shuduler.SelectedDate = DateTime.Now;
-            _patient_shuduler.Mode = Mode.Day;
+            _patient_shuduler.Mode = Mode.Week;
             _patient_shuduler.Events.Clear();
             foreach (Client Client in db.Clients)
                 AddEvents(Client);
