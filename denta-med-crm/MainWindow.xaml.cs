@@ -113,7 +113,16 @@ namespace denta_med_crm
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            InitializeOrUpdate(x => x.FullName.Contains(this._filterINput.Text));
+            InitializeOrUpdate(x =>
+            {
+                if (x.FullName.ToUpper().Contains(this._filterINput.Text.ToUpper()))
+                    return true;
+                else if (x.MainPhoneNumber.ToUpper().Contains(this._filterINput.Text.ToUpper()))
+                    return true;
+                else if (x.AlternativePhoneNumber.ToUpper().Contains(this._filterINput.Text.ToUpper()))
+                    return true;
+                else return false;  
+            });
         }
         private void patient_shuduler_Loaded(object sender, RoutedEventArgs e)
         {

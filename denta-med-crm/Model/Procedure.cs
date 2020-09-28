@@ -13,20 +13,28 @@ namespace denta_med_crm.Model
         //public string ProcedureName { get; set; } = "";
         [JsonProperty("procedure_duration")]
         public int ProcedureDuration { get; set; } = 30;
-        //до какого гарантия, автоматически выставлять +1 год от текущей даты
-        [JsonProperty("warranty_period")]
-        public DateTime WarrantyPeriod { get; set; } = DateTime.Now.AddYears(1);
         //по умолчанию текущая дата может быть будующей датой (записан пациент на какое-то число)
         [JsonProperty("procedure_date")]
         public DateTime ProcedureDate { get; set; } = DateTime.Now;
-        //Выполнена или нет
-        [JsonProperty("completed")]
-        public bool Сompleted { get; set; } = true;
         //Авто подсказка по первым буквам (поиск по всей строке прошлых докторов которые когда либо и кому либо были указаны, при поиске приведение к одному регистру)
         [JsonProperty("doctor")]
         public string Doctor { get; set; } = "";
-        [JsonProperty("description")]
-        public string Description { get; set; } = "";
-
+        //Зубы
+        [JsonProperty("teeth")]
+        public string[] Teeth { get; set; } = new string[400];
+        public string GetToothData(int num)
+        {
+            var x = num / 10;
+            var y = num - x * 10;
+            var index = y - 1 + (x - 1) * 8;
+            return Teeth[index];
+        }
+        public void SetToothData(int num, string data)
+        {
+            var x = num / 10;
+            var y = num - x * 10;
+            var index = y - 1 + (x - 1) * 8;
+            Teeth[index] = data;
+        }
     }
 }

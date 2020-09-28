@@ -102,7 +102,7 @@ namespace denta_med_crm.Model
             get
             {
                 var max = FirstVisit.Ticks;
-                var proceduresF = Procedures.Where(x => x.Сompleted);
+                var proceduresF = Procedures.Where(x => DateTime.Now>x.ProcedureDate);
                 if (proceduresF.Count() != 0)
                     max = Math.Max(max, proceduresF.Max(x => x.ProcedureDate.Ticks));
                 if (Inspections.Count != 0)
