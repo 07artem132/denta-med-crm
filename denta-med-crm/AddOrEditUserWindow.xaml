@@ -275,22 +275,6 @@ C - Кариес
                                 <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
                             </Style>
                         </ListView.ItemContainerStyle>
-
-
-                        <!--<ListBox.ItemContainerStyle>
-                            <Style TargetType="ListBoxItem">
-                                <Setter Property="ContextMenu">
-                                    <Setter.Value>
-                                        <ContextMenu>
-                                            <MenuItem Header="Удалить" 
-                                                     Command="{Binding RemoveItem}"
-                                                    CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}" />
-                                        </ContextMenu>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </ListBox.ItemContainerStyle>-->
-
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Дата время" Width="140" DisplayMemberBinding="{Binding ProcedureDate, StringFormat=\{0:dd.MM.yyyy HH:mm\}}" />
@@ -330,7 +314,22 @@ C - Кариес
 
             <TabItem Header="История">
                 <Grid>
-                    <Controls:TeethView Margin="60,31,64,200" x:Name="teethViewTest"/>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="193*"/>
+                        <RowDefinition Height="220*"/>
+                    </Grid.RowDefinitions>
+
+                    <Controls:TeethView Grid.Row="0"  x:Name="teethViewTest" ToothPicked="teethViewTest_ToothPicked" Margin="0,0,-0.4,219.8" Grid.RowSpan="2" />
+                    <ListView Grid.Row="1"  x:Name="_teethInfo">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Дата время" Width="80" DisplayMemberBinding="{Binding [0]}" />
+                                <GridViewColumn Header="Тип" Width="79"  DisplayMemberBinding="{Binding [1]}" />
+                                <GridViewColumn Header="Врач" Width="170"   DisplayMemberBinding="{Binding [2]}"  />
+                                <GridViewColumn Header="Описание" Width="460" DisplayMemberBinding="{Binding [3]}"  />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
                 </Grid>
             </TabItem>
 

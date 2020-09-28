@@ -139,7 +139,11 @@ namespace denta_med_crm
         private void RemoveEvents(Client client)
         {
             foreach (var ev in client.Procedures)
-                _patient_shuduler.Events.Remove(_patient_shuduler.Events.First(x => x.RelObject[1] == ev));
+            {
+                var result = _patient_shuduler.Events.FirstOrDefault(x => x.RelObject[1] == ev);
+                if (result != null)
+                    _patient_shuduler.Events.Remove(result);
+            }
         }
         private void AddEvents(Client client)
         {

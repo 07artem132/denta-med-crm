@@ -42,7 +42,7 @@ namespace denta_med_crm
 
 
             _undoButton.Visibility = clientOrNull == null ? Visibility.Visible : Visibility.Hidden;
-             if (clientOrNull == null)
+            if (clientOrNull == null)
                 Client = new Client();
             else Client = clientOrNull;
 
@@ -59,9 +59,9 @@ namespace denta_med_crm
                     return;
                 LoadToothData(selectedInspection);
             };
-            
+
             var dt = new DispatcherTimer();
-            dt.Tick += (x,y) =>
+            dt.Tick += (x, y) =>
             {
                 _daysToBirthday.Content = Client.DaysToBirthday;
                 _lastVisitInfo.Content = Client.LastVisitInfo;
@@ -112,7 +112,7 @@ namespace denta_med_crm
         private void LoadToothData(Inspection from)
         {
             disallowEditingTeeth = true;
-             var enu = new Grid[] { _ts1, _ts2, _ts3, _ts4 };
+            var enu = new Grid[] { _ts1, _ts2, _ts3, _ts4 };
             foreach (var grid in enu)
                 foreach (var ui in grid.Children)
                 {
@@ -188,7 +188,7 @@ namespace denta_med_crm
 
         private void _qTest_TextChanged(object sender, TextChangedEventArgs e)
         {
-           
+
         }
 
         private void _inspections_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -235,6 +235,62 @@ namespace denta_med_crm
                 newDC.SetToothData(proceduresCurrentTeeth, _teethProcedureDescription.Text);
                 _proceduresGrid_DataContextChanged(null, new DependencyPropertyChangedEventArgs());
             }
+        }
+
+        private void teethViewTest_ToothPicked(int obj)
+        {
+            _teethInfo.Items.Clear();
+            foreach (var inspection in Client.Inspections)
+            {
+                var result = inspection.GetToothData(obj);
+                if (!string.IsNullOrEmpty(result))
+                    _teethInfo.Items.Add(new string[4] {
+                        inspection.InspectionDate.ToString("dd.MM.yyyy"),
+                        "Осмотр",
+                        inspection.Doctor,
+                        _inspection_reduction_decipher(result)
+                    });
+            }
+            foreach (var procedure in Client.Procedures)
+            {
+                var result = procedure.GetToothData(obj);
+                if (!string.IsNullOrEmpty(result))
+                    _teethInfo.Items.Add(new string[4] {
+                        procedure.ProcedureDate.ToString("dd.MM.yyyy"),
+                        "Процедура",
+                        procedure.Doctor,
+                        result
+                    });
+            }
+            _teethInfo.Items.Refresh();
+        }
+
+        private string _inspection_reduction_decipher(string reduction)
+        {
+            return reduction;
+             
+               // case :
+                 //   return "Отсутствует";
+                //case "R":
+                //    return "Корень";
+                //case "P":
+                //    return "Пульпит";
+                //case "Pt":
+                //    return "Переодонтит";
+                //case "A":
+                //    return "Пародонтоз";
+                //case "К":
+                //    return "Коронка";
+                //case "C":
+                //    return "Кариес";
+                //case "П":
+                //    return "Пломбированный";
+                //case "И":
+                //    return "Искусственный зуб";
+                //case "П/С":
+                //    return "Пломба/Кариес";
+                 
+             
         }
     }
 }
