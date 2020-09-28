@@ -6,8 +6,17 @@
              xmlns:local="clr-namespace:denta_med_crm.Controls"
              mc:Ignorable="d" d:DesignHeight="30" d:DesignWidth="50">
     <Grid>
+        <Grid.Resources>
+           
+        </Grid.Resources>
         <Button x:Name="_button" BorderBrush="{x:Null}" Content="" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            
+            <Button.Template>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                        <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" Margin="{TemplateBinding Padding}" />
+                    </Border>
+                </ControlTemplate>
+            </Button.Template>
         </Button>
 
     </Grid>

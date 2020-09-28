@@ -21,6 +21,7 @@ namespace denta_med_crm.Controls
     {
         private List<int> availableTags;
 
+        public bool AllowPickAnyTooth { get; set; }
         public event Action<int> ToothPicked;
 
         public TeethView()
@@ -77,7 +78,7 @@ namespace denta_med_crm.Controls
 
         private void MultistateButton_Click(object sender, RoutedEventArgs e)
         {
-            var src = (MultistateButton)sender;
+            var src = (MultistateButton)(((Grid)((Button)sender).Parent).Parent);
             var tag = src.Tag.ToString();
             var tagInt = int.Parse(tag);
 
@@ -86,10 +87,10 @@ namespace denta_med_crm.Controls
                 foreach (var item in FindVisualChildren<MultistateButton>(this))
                 {
                     if ((int)item.State == 2)
-                        item.State = 1;
+                        item.State = availableTags.IndexOf(int.Parse(item.Tag.ToString())) == -1 ? 0 : 1;
                 }
 
-                if ((int)src.State == 1)
+                if ((int)src.State == 1 || AllowPickAnyTooth)
                 {
                     src.State = 2;
                     ToothPicked?.Invoke(tagInt);

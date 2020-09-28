@@ -4,12 +4,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:denta_med_crm.Controls"
-             mc:Ignorable="d" Height="184" Width="680">
+             mc:Ignorable="d" Height="179" Width="723">
     <Grid>
-        <Grid.Resources>
-           
-        </Grid.Resources>
-        <Grid x:Name="_ts1" Margin="348,107,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="80" Width="322">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid x:Name="_ts1" Grid.Row="1" Grid.Column="1" Margin="5,5,5,5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -24,14 +30,14 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Label Grid.Row="1" Grid.Column="0" Content="31"/>
-            <Label Grid.Row="1" Grid.Column="1" Content="32"/>
-            <Label Grid.Row="1" Grid.Column="2" Content="33"/>
-            <Label Grid.Row="1" Grid.Column="3" Content="34"/>
-            <Label Grid.Row="1" Grid.Column="4" Content="35"/>
-            <Label Grid.Row="1" Grid.Column="5" Content="36"/>
-            <Label Grid.Row="1" Grid.Column="6" Content="37"/>
-            <Label Grid.Row="1" Grid.Column="7" Content="38"/>
+            <Label  HorizontalAlignment="Center" VerticalAlignment="Center"   Grid.Row="1" Grid.Column="0" Content="31"/>
+            <Label  HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="1" Grid.Column="1" Content="32"/>
+            <Label  HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="1" Grid.Column="2" Content="33"/>
+            <Label  HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="1" Grid.Column="3" Content="34"/>
+            <Label  HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="1" Grid.Column="4" Content="35"/>
+            <Label  HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="1" Grid.Column="5" Content="36"/>
+            <Label  HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="1" Grid.Column="6" Content="37"/>
+            <Label  HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="1" Grid.Column="7" Content="38"/>
             <local:MultistateButton  Tag="38" Grid.Row="0" Grid.Column="7" Click="MultistateButton_Click" />
             <local:MultistateButton  Tag="37" Grid.Row="0" Grid.Column="6" Click="MultistateButton_Click" />
             <local:MultistateButton  Tag="36" Grid.Row="0" Grid.Column="5" Click="MultistateButton_Click" />
@@ -41,7 +47,7 @@
             <local:MultistateButton  Tag="32" Grid.Row="0" Grid.Column="1" Click="MultistateButton_Click" />
             <local:MultistateButton  Tag="31" Grid.Row="0" Grid.Column="0" Click="MultistateButton_Click" />
         </Grid>
-        <Grid x:Name="_ts2" Margin="10,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Height="80" Width="317">
+        <Grid x:Name="_ts2" Grid.Row="0" Grid.Column="0" Margin="5,5,5,5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -56,14 +62,14 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" Grid.Column="0" Content="18"/>
-            <Label Grid.Row="0" Grid.Column="1" Content="17"/>
-            <Label Grid.Row="0" Grid.Column="2" Content="16"/>
-            <Label Grid.Row="0" Grid.Column="3" Content="15"/>
-            <Label Grid.Row="0" Grid.Column="4" Content="14"/>
-            <Label Grid.Row="0" Grid.Column="5" Content="13"/>
-            <Label Grid.Row="0" Grid.Column="6" Content="12"/>
-            <Label Grid.Row="0" Grid.Column="7" Content="11"/>
+            <Label  HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="0" Grid.Column="0" Content="18"/>
+            <Label  HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="0" Grid.Column="1" Content="17"/>
+            <Label  HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="0" Grid.Column="2" Content="16"/>
+            <Label  HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="0" Grid.Column="3" Content="15"/>
+            <Label  HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="0" Grid.Column="4" Content="14"/>
+            <Label  HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="0" Grid.Column="5" Content="13"/>
+            <Label  HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="0" Grid.Column="6" Content="12"/>
+            <Label  HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="0" Grid.Column="7" Content="11"/>
             <local:MultistateButton Tag="11"    Grid.Row="1" Grid.Column="7" Click="MultistateButton_Click" />
             <local:MultistateButton Tag="12"    Grid.Row="1" Grid.Column="6" Click="MultistateButton_Click" />
             <local:MultistateButton Tag="13"    Grid.Row="1" Grid.Column="5" Click="MultistateButton_Click" />
@@ -73,7 +79,7 @@
             <local:MultistateButton Tag="17"   Grid.Row="1" Grid.Column="1" Click="MultistateButton_Click" />
             <local:MultistateButton Tag="18"    Grid.Row="1" Grid.Column="0" Click="MultistateButton_Click"  />
         </Grid>
-        <Grid x:Name="_ts3" Margin="10,107,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Height="80" Width="317">
+        <Grid x:Name="_ts3" Grid.Row="1" Grid.Column="0" Margin="5,5,5,5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -88,14 +94,14 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Label Grid.Row="1" Grid.Column="0" Content="48"/>
-            <Label Grid.Row="1" Grid.Column="1" Content="47"/>
-            <Label Grid.Row="1" Grid.Column="2" Content="46"/>
-            <Label Grid.Row="1" Grid.Column="3" Content="45"/>
-            <Label Grid.Row="1" Grid.Column="4" Content="44"/>
-            <Label Grid.Row="1" Grid.Column="5" Content="43"/>
-            <Label Grid.Row="1" Grid.Column="6" Content="42"/>
-            <Label Grid.Row="1" Grid.Column="7" Content="41"/>
+            <Label  HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="1" Grid.Column="0" Content="48"/>
+            <Label  HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="1" Grid.Column="1" Content="47"/>
+            <Label  HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="1" Grid.Column="2" Content="46"/>
+            <Label  HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="1" Grid.Column="3" Content="45"/>
+            <Label  HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="1" Grid.Column="4" Content="44"/>
+            <Label  HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="1" Grid.Column="5" Content="43"/>
+            <Label  HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="1" Grid.Column="6" Content="42"/>
+            <Label  HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="1" Grid.Column="7" Content="41"/>
             <local:MultistateButton  Tag="41" Grid.Row="0" Grid.Column="7" Click="MultistateButton_Click" />
             <local:MultistateButton  Tag="42" Grid.Row="0" Grid.Column="6" Click="MultistateButton_Click" />
             <local:MultistateButton  Tag="43" Grid.Row="0" Grid.Column="5" Click="MultistateButton_Click" />
@@ -105,7 +111,7 @@
             <local:MultistateButton  Tag="47" Grid.Row="0" Grid.Column="1" Click="MultistateButton_Click" />
             <local:MultistateButton  Tag="48" Grid.Row="0" Grid.Column="0" Click="MultistateButton_Click"  />
         </Grid>
-        <Grid x:Name="_ts4" Margin="348,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Height="80" Width="322">
+        <Grid x:Name="_ts4" Grid.Row="0" Grid.Column="1" Margin="5,5,5,5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -120,14 +126,14 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Label Grid.Row="0" Grid.Column="0" Content="21"/>
-            <Label Grid.Row="0" Grid.Column="1" Content="22"/>
-            <Label Grid.Row="0" Grid.Column="2" Content="23"/>
-            <Label Grid.Row="0" Grid.Column="3" Content="24"/>
-            <Label Grid.Row="0" Grid.Column="4" Content="25"/>
-            <Label Grid.Row="0" Grid.Column="5" Content="26"/>
-            <Label Grid.Row="0" Grid.Column="6" Content="27"/>
-            <Label Grid.Row="0" Grid.Column="7" Content="28"/>
+            <Label  HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="0" Grid.Column="0" Content="21"/>
+            <Label  HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="0" Grid.Column="1" Content="22"/>
+            <Label  HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="0" Grid.Column="2" Content="23"/>
+            <Label  HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="0" Grid.Column="3" Content="24"/>
+            <Label  HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="0" Grid.Column="4" Content="25"/>
+            <Label  HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="0" Grid.Column="5" Content="26"/>
+            <Label  HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="0" Grid.Column="6" Content="27"/>
+            <Label  HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="0" Grid.Column="7" Content="28"/>
             <local:MultistateButton Tag="28"  Grid.Row="1" Grid.Column="7" Click="MultistateButton_Click" />
             <local:MultistateButton Tag="27"  Grid.Row="1" Grid.Column="6" Click="MultistateButton_Click" />
             <local:MultistateButton Tag="26"  Grid.Row="1" Grid.Column="5" Click="MultistateButton_Click" />

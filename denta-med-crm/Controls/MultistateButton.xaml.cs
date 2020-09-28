@@ -69,11 +69,12 @@ namespace denta_med_crm.Controls
                     if (Statuses.ContainsKey(value))
                     {
                         var image = Statuses[value];
+                        var sr = Application.GetResourceStream(new Uri(@"Images\" + image, UriKind.Relative));
                         BitmapImage btpImg = new BitmapImage();
                         btpImg.BeginInit();
-                        btpImg.UriSource = new Uri(@"/denta_med_crm;component/Images/" + image, UriKind.Relative);
+                        btpImg.StreamSource = sr.Stream;
                         btpImg.EndInit();
-                        Background = new ImageBrush(btpImg) { Stretch = Stretch.Uniform };
+                        _button.Background = new ImageBrush(btpImg) { Stretch = Stretch.Uniform };
                     }
                     _state = value;
                 }
