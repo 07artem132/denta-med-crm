@@ -147,7 +147,7 @@ namespace denta_med_crm
                 _patient_shuduler.AddEvent(
                        new Event()
                        {
-                           Subject = string.Format("Доктор: {0}\rПроцедура: {1}", procedure.Doctor, procedure.Description),
+                           Subject = string.Format("Доктор: {0}\r", procedure.Doctor),
                            Color = Brushes.LightGreen,
                            Start = procedure.ProcedureDate,
                            End = procedure.ProcedureDate.AddMinutes(procedure.ProcedureDuration),
