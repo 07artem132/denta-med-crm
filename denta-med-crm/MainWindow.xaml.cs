@@ -133,24 +133,36 @@ namespace denta_med_crm
             _patient_shuduler.Mode = Mode.Day;
             _patient_shuduler.Events.Clear();
             foreach (Client Client in db.Clients)
-                foreach (Procedure Procedure in Client.Procedures)
-                    _patient_shuduler.AddEvent(
+                AddEvents(Client);
+
+        }
+        private void RemoveEvents(Client client)
+        {
+            foreach (var ev in client.Procedures)
+                _patient_shuduler.Events.Remove(_patient_shuduler.Events.First(x => x.RelObject[1] == ev));
+        }
+        private void AddEvents(Client client)
+        {
+            foreach (var procedure in client.Procedures)
+                _patient_shuduler.AddEvent(
                        new Event()
                        {
-                           Subject = string.Format("Доктор: {0}\rПроцедура: {1}", Procedure.Doctor, Procedure.Description),
+                           Subject = string.Format("Доктор: {0}\rПроцедура: {1}", procedure.Doctor, procedure.Description),
                            Color = Brushes.LightGreen,
-                           Start = Procedure.ProcedureDate,
-                           End = Procedure.ProcedureDate.AddMinutes(Procedure.ProcedureDuration),
-                           RelObject = new object[] { Client, Procedure },
+                           Start = procedure.ProcedureDate,
+                           End = procedure.ProcedureDate.AddMinutes(procedure.ProcedureDuration),
+                           RelObject = new object[] { client, procedure },
                        });
-
         }
         void patient_shuduler_OnScheduleDoubleClick(object sender, DateTime e)
         {
         }
         void patient_shuduler_OnEventDoubleClick(object sender, Event e)
         {
-            new AddOrEditUserWindow((Client)e.RelObject[0], (Procedure)e.RelObject[1]).Show();
+            RemoveEvents((Client)e.RelObject[0]);
+            new AddOrEditUserWindow((Client)e.RelObject[0], (Procedure)e.RelObject[1]).ShowDialog();
+            dataGrid.Items.Refresh();
+            AddEvents((Client)e.RelObject[0]);
         }
 
         private void DataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -158,8 +170,10 @@ namespace denta_med_crm
             if (dataGrid.SelectedItem == null)
                 return;
             var client = (Client)dataGrid.SelectedItem;
+            RemoveEvents(client);
             new AddOrEditUserWindow(client).ShowDialog();
             dataGrid.Items.Refresh();
+            AddEvents(client);
         }
 
         private void MenuItemTabClient_Click(object sender, RoutedEventArgs e)

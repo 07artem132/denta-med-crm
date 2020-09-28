@@ -92,6 +92,12 @@
     <Compile Include="Controls\CTextBox.xaml.cs">
       <DependentUpon>CTextBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\MultistateButton.xaml.cs">
+      <DependentUpon>MultistateButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TeethView.xaml.cs">
+      <DependentUpon>TeethView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DoctorSuggestionProvider.cs" />
     <Compile Include="EnumBindingSourceExtension.cs" />
     <Compile Include="EnumDescriptionTypeConverter.cs" />
@@ -105,6 +111,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\CTextBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MultistateButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\TeethView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -182,6 +196,15 @@
       <Project>{f9954c26-6234-43f5-8d96-8ec6e03c03b9}</Project>
       <Name>WpfScheduler</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\MultistateButton0.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\MultistateButton1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\MultistateButton2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
