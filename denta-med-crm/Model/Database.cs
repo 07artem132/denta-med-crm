@@ -32,11 +32,14 @@ namespace denta_med_crm.Model
                 }
                 catch
                 {
-                    try { 
-                    Import(PathBackup);
-                    } catch(Exception e)
+                    try
+                    {
+                        Import(PathBackup);
+                    }
+                    catch (Exception e)
                     {
                         MessageBox.Show("При загрузке основной и резервной базы данных произошла ошибка, критическая ситуация сообщения об ошибке:" + e.Message + e.StackTrace);
+                        Application.Current.Shutdown();
                     }
                 }
             }
@@ -64,7 +67,6 @@ namespace denta_med_crm.Model
 
         public void Import(string path)
         {
-            var serializer = JsonSerializer.Create();
             Clients = JsonConvert.DeserializeObject<List<Client>>(File.ReadAllText(path));
             FillInHistory();
         }
@@ -89,6 +91,7 @@ namespace denta_med_crm.Model
                 }
             }
         }
+
         public IEnumerable<Inspection> EnumerateInspection()
         {
             foreach (var item in Clients)
@@ -106,9 +109,6 @@ namespace denta_med_crm.Model
             Clients.Add(client);
         }
 
-
-
-
         public void OnProcedureAdded(Procedure procedure)
         {
             DoctorsHistory.TryAdd(procedure.Doctor);
@@ -122,7 +122,6 @@ namespace denta_med_crm.Model
         public void OnInspectionRemoved(Inspection procedure)
         {
             DoctorsHistory.TryRemove(procedure.Doctor);
-
         }
 
         public void OnProcedureRemoved(Procedure procedure)
