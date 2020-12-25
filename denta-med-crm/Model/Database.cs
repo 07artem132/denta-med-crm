@@ -40,7 +40,7 @@ namespace denta_med_crm.Model
                         System.IO.Path.Combine(Environment.CurrentDirectory, string.Format(@"backups\{0}.json.bin", DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss")))
                         );
                 }
-                catch
+                catch (Exception e)
                 {
                     MessageBox.Show("При загрузке основной и резервной базы данных произошла ошибка, критическая ситуация сообщения об ошибке:" + e.Message + e.StackTrace);
                     Application.Current.Shutdown();
