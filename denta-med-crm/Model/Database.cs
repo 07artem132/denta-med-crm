@@ -24,17 +24,28 @@ namespace denta_med_crm.Model
             PathBackup = permanentPath + ".backup";
             Clients = new List<Client>();
             DoctorsHistory = new HistoryCache();
+
+            if (!Directory.Exists("backups"))
+                Directory.CreateDirectory("backups");
+
             if (File.Exists(Path))
             {
                 try
                 {
                     Import(Path);
+                    File.Copy(System.IO.Path.Combine(
+                        Environment.CurrentDirectory, Path),
+                        System.IO.Path.Combine(Environment.CurrentDirectory, string.Format(@"backups\{0}.json", DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss")))
+                        );
                 }
                 catch
                 {
                     try
                     {
                         Import(PathBackup);
+                        File.Copy(
+                            System.IO.Path.Combine(Environment.CurrentDirectory, PathBackup),
+                            System.IO.Path.Combine(Environment.CurrentDirectory, string.Format(@"backups\{0}.json", DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"))));
                     }
                     catch (Exception e)
                     {
