@@ -80,6 +80,7 @@ namespace denta_med_crm.Model
         public ObservableCollection<Procedure> Procedures { get; set; } = new ObservableCollection<Procedure>();
         [JsonProperty("inspections")]
         public ObservableCollection<Inspection> Inspections { get; set; } = new ObservableCollection<Inspection>();
+
         [JsonIgnore]
         public string DaysToBirthday
         {

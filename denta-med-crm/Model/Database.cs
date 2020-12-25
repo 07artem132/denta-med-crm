@@ -15,13 +15,11 @@ namespace denta_med_crm.Model
         public HistoryCache DoctorsHistory;
         private readonly Timer Timer = null;
         private readonly string Path;
-        private readonly string PathBackup;
         private readonly object locker = new object();
 
         public Database(string permanentPath)
         {
             Path = permanentPath;
-            PathBackup = permanentPath + ".backup";
             Clients = new List<Client>();
             DoctorsHistory = new HistoryCache();
 
@@ -37,21 +35,15 @@ namespace denta_med_crm.Model
                         Environment.CurrentDirectory, Path),
                         System.IO.Path.Combine(Environment.CurrentDirectory, string.Format(@"backups\{0}.json", DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss")))
                         );
+                    File.Copy(System.IO.Path.Combine(
+                        Environment.CurrentDirectory, Path),
+                        System.IO.Path.Combine(Environment.CurrentDirectory, string.Format(@"backups\{0}.json.bin", DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss")))
+                        );
                 }
                 catch
                 {
-                    try
-                    {
-                        Import(PathBackup);
-                        File.Copy(
-                            System.IO.Path.Combine(Environment.CurrentDirectory, PathBackup),
-                            System.IO.Path.Combine(Environment.CurrentDirectory, string.Format(@"backups\{0}.json", DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"))));
-                    }
-                    catch (Exception e)
-                    {
-                        MessageBox.Show("При загрузке основной и резервной базы данных произошла ошибка, критическая ситуация сообщения об ошибке:" + e.Message + e.StackTrace);
-                        Application.Current.Shutdown();
-                    }
+                    MessageBox.Show("При загрузке основной и резервной базы данных произошла ошибка, критическая ситуация сообщения об ошибке:" + e.Message + e.StackTrace);
+                    Application.Current.Shutdown();
                 }
             }
             Timer = new Timer(
@@ -59,7 +51,6 @@ namespace denta_med_crm.Model
                 (x =>
                 {
                     Export(Path);
-                    Export(PathBackup);
                 }), null, 0, 1000 * 1);
         }
 
@@ -78,7 +69,23 @@ namespace denta_med_crm.Model
 
         public void Import(string path)
         {
-            Clients = JsonConvert.DeserializeObject<List<Client>>(File.ReadAllText(path));
+            try
+            {
+                var text = File.ReadAllText(path);
+                Clients = JsonConvert.DeserializeObject<List<Client>>(text);
+            }
+            catch (Exception e)
+            {
+                var bf = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+                using (var fs = File.Open(path + ".bin", FileMode.Open))
+                {
+                    Clients = bf.Deserialize(fs) as List<Client>;
+                }
+            }
+
+            if (Clients == null)
+                throw new Exception();
+
             FillInHistory();
         }
 
@@ -88,6 +95,13 @@ namespace denta_med_crm.Model
             {
                 var json = JsonConvert.SerializeObject(Clients);
                 File.WriteAllText(path, json);
+                {
+                    var bf = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+                    using (var fs = File.Create(path + ".bin"))
+                    {
+                        bf.Serialize(fs, Clients);
+                    }
+                }
             }
         }
 
