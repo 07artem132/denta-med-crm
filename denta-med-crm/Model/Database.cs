@@ -95,12 +95,10 @@ namespace denta_med_crm.Model
             {
                 var json = JsonConvert.SerializeObject(Clients);
                 File.WriteAllText(path, json);
+                var bf = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
+                using (var fs = File.Create(path + ".bin"))
                 {
-                    var bf = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-                    using (var fs = File.Create(path + ".bin"))
-                    {
-                        bf.Serialize(fs, Clients);
-                    }
+                    bf.Serialize(fs, Clients);
                 }
             }
         }
