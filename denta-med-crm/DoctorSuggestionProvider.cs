@@ -1,10 +1,9 @@
-﻿using AutoCompleteTextBox.Editors;
-using denta_med_crm.Model;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using System.Text;
+using AutoCompleteTextBox.Editors;
 
 namespace denta_med_crm
 {
@@ -42,7 +41,7 @@ namespace denta_med_crm
         public void OnTextChanged(string prev, string value)
         {
             MainWindow.db?.OnDoctorRename(prev, value);
-            System.Diagnostics.Debug.WriteLine(prev + " -> " + value);
+            Debug.WriteLine(prev + " -> " + value);
         }
 
     }

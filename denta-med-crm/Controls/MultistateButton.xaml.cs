@@ -1,17 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace denta_med_crm.Controls
 {
@@ -45,9 +37,9 @@ namespace denta_med_crm.Controls
             State = 0; //first init
         }
 
-        object _state = null;
+        object _state;
 
-        public Dictionary<object, string> Statuses { get; set; } = new Dictionary<object, string>()
+        public Dictionary<object, string> Statuses { get; set; } = new Dictionary<object, string>
         {
             [0] = "MultistateButton0.png",
             [1] = "MultistateButton1.png",

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace denta_med_crm.Model
+﻿namespace denta_med_crm.Model
 {
     public struct Doctor
     {

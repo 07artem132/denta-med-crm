@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace denta_med_crm.Model
 {
@@ -48,6 +44,6 @@ namespace denta_med_crm.Model
             }
         }
 
-        IEnumerator<string> IEnumerable<string>.GetEnumerator() => this.Keys.GetEnumerator();
+        IEnumerator<string> IEnumerable<string>.GetEnumerator() => Keys.GetEnumerator();
     }
 }

@@ -1,11 +1,8 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace denta_med_crm.Model
 {
@@ -16,6 +13,7 @@ namespace denta_med_crm.Model
         {
             Procedures.CollectionChanged += Procedures_CollectionChanged;
             Inspections.CollectionChanged += Inspections_CollectionChanged;
+
         }
 
         private void Inspections_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -54,30 +52,32 @@ namespace denta_med_crm.Model
             }
         }
 
-        [JsonProperty("full_name")]
-        public string FullName { get; set; } = "";
-        [JsonProperty("sex")]
-        public Sex Sex { get; set; } = Sex.Male;
-        [JsonProperty("client_description")]
-        public string ClientDescription { get; set; } = "";
+        public string Id { get; set; }
+        [JsonProperty("full_name")] public string FullName { get; set; } = "";
+        [JsonProperty("sex")] public Sex Sex { get; set; } = Sex.Male;
+
+        [JsonProperty("client_description")] public string ClientDescription { get; set; } = "";
+
         //подсветить если сегодня его день рождения или в пределах 7 дней в карточке
-        [JsonProperty("date_of_birth")]
-        public DateTime DateOfBirth { get; set; } = DateTime.Now;
+        [JsonProperty("date_of_birth")] public DateTime DateOfBirth { get; set; } = DateTime.Now;
+
         //Типа он с нами c такого-то (сколько-то в карточке)
-        [JsonProperty("first_visit")]
-        public DateTime FirstVisit { get; set; } = DateTime.Now;
+        [JsonProperty("first_visit")] public DateTime FirstVisit { get; set; } = DateTime.Now;
+
         //0 - нет, если есть то сумма скидки в % вводится
-        [JsonProperty("discount")]
-        public int Discount { get; set; } = 0;
+        [JsonProperty("discount")] public int Discount { get; set; }
+
         //основной
-        [JsonProperty("main_phone_number")]
-        public string MainPhoneNumber { get; set; } = "";
+        [JsonProperty("main_phone_number")] public string MainPhoneNumber { get; set; } = "";
+
         //альтернативный
         [JsonProperty("alternative_phone_number")]
         public string AlternativePhoneNumber { get; set; } = "";
+
         //список процедур открывается в отдельном окне
         [JsonProperty("procedures")]
         public ObservableCollection<Procedure> Procedures { get; set; } = new ObservableCollection<Procedure>();
+
         [JsonProperty("inspections")]
         public ObservableCollection<Inspection> Inspections { get; set; } = new ObservableCollection<Inspection>();
 
@@ -103,7 +103,7 @@ namespace denta_med_crm.Model
             get
             {
                 var max = FirstVisit.Ticks;
-                var proceduresF = Procedures.Where(x => DateTime.Now>x.ProcedureDate);
+                var proceduresF = Procedures.Where(x => DateTime.Now > x.ProcedureDate);
                 if (proceduresF.Count() != 0)
                     max = Math.Max(max, proceduresF.Max(x => x.ProcedureDate.Ticks));
                 if (Inspections.Count != 0)

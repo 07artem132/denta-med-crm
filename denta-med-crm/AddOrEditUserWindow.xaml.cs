@@ -1,19 +1,11 @@
-﻿using denta_med_crm.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Windows.Threading;
+using denta_med_crm.Model;
 
 namespace denta_med_crm
 {
@@ -45,7 +37,7 @@ namespace denta_med_crm
                 Client = new Client();
             else Client = clientOrNull;
 
-            var enu = new Grid[] { _ts1, _ts2, _ts3, _ts4 };
+            var enu = new[] { _ts1, _ts2, _ts3, _ts4 };
             foreach (var grid in enu)
                 foreach (var ui in grid.Children)
                     if (ui is TextBox tb)
@@ -129,12 +121,12 @@ namespace denta_med_crm
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             AddedUser = Client;
-            this.Close();
+            Close();
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Close();
         }
 
 
@@ -142,7 +134,7 @@ namespace denta_med_crm
         private void LoadToothData(Inspection from)
         {
             disallowEditingTeeth = true;
-            var enu = new Grid[] { _ts1, _ts2, _ts3, _ts4 };
+            var enu = new[] { _ts1, _ts2, _ts3, _ts4 };
             foreach (var grid in enu)
                 foreach (var ui in grid.Children)
                 {

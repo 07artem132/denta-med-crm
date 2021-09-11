@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
 
@@ -20,7 +16,7 @@ namespace denta_med_crm
                 "HideCloseButton",
                 typeof(bool),
                 OwnerType,
-                new FrameworkPropertyMetadata(false, new PropertyChangedCallback(HideCloseButtonChangedCallback)));
+                new FrameworkPropertyMetadata(false, HideCloseButtonChangedCallback));
 
         [AttachedPropertyBrowsableForType(typeof(Window))]
         public static bool GetHideCloseButton(Window obj)

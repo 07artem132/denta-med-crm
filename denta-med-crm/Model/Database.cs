@@ -1,11 +1,15 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
+using System.Reactive.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading;
 using System.Windows;
+using Akavache;
+using Akavache.Sqlite3;
+using Newtonsoft.Json;
+using Registrations = Akavache.Registrations;
 
 namespace denta_med_crm.Model
 {
@@ -14,44 +18,42 @@ namespace denta_med_crm.Model
         public List<Client> Clients;
         public HistoryCache DoctorsHistory;
         private readonly Timer Timer = null;
-        private readonly string Path;
         private readonly object locker = new object();
 
-        public Database(string permanentPath)
+        private static string CurrentPath
         {
-            Path = permanentPath;
-            Clients = new List<Client>();
+            get
+            {
+                var path = AppDomain.CurrentDomain.BaseDirectory;
+                return Uri.UnescapeDataString(
+                    new Uri(Path.GetDirectoryName(path) ?? throw new InvalidOperationException()).AbsolutePath);
+            }
+        }
+
+        public Database()
+        {
             DoctorsHistory = new HistoryCache();
 
             if (!Directory.Exists("backups"))
                 Directory.CreateDirectory("backups");
+            Registrations.Start("DriverControl");
 
-            if (File.Exists(Path))
+            BlobCache.LocalMachine = new SqlRawPersistentBlobCache(Path.Combine(CurrentPath, "local.db"));
+            BlobCache.UserAccount = new SqlRawPersistentBlobCache(Path.Combine(CurrentPath, "user.db"));
+            BlobCache.Secure = new SQLiteEncryptedBlobCache(Path.Combine(CurrentPath, "secure.db"));
+            try
             {
-                try
-                {
-                    Import(Path);
-                    File.Copy(System.IO.Path.Combine(
-                        Environment.CurrentDirectory, Path),
-                        System.IO.Path.Combine(Environment.CurrentDirectory, string.Format(@"backups\{0}.json", DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss")))
-                        );
-                    File.Copy(System.IO.Path.Combine(
-                        Environment.CurrentDirectory, Path),
-                        System.IO.Path.Combine(Environment.CurrentDirectory, string.Format(@"backups\{0}.json.bin", DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss")))
-                        );
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show("При загрузке основной и резервной базы данных произошла ошибка, критическая ситуация сообщения об ошибке:" + e.Message + e.StackTrace);
-                    Application.Current.Shutdown();
-                }
+                Clients = (List<Client>) BlobCache.UserAccount.GetAllObjects<Client>().Wait();
+                FillInHistory();
+                Export(Path.Combine(Environment.CurrentDirectory,$@"backups\{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.json"));
             }
-            Timer = new Timer(
-                new TimerCallback
-                (x =>
-                {
-                    Export(Path);
-                }), null, 0, 1000 * 1);
+            catch (KeyNotFoundException e)
+            {
+                MessageBox.Show(
+                    "При загрузке основной базы данных произошла ошибка, загрузите резервную... критическая ситуация сообщения об ошибке:" +
+                    e.Message + e.StackTrace);
+                Application.Current.Shutdown();
+            }
         }
 
         private void FillInHistory()
@@ -61,6 +63,7 @@ namespace denta_med_crm.Model
             {
                 DoctorsHistory.TryAdd(procedure.Doctor);
             }
+
             foreach (var inspection in EnumerateInspection())
             {
                 DoctorsHistory.TryAdd(inspection.Doctor);
@@ -72,19 +75,24 @@ namespace denta_med_crm.Model
             try
             {
                 var text = File.ReadAllText(path);
-                Clients = JsonConvert.DeserializeObject<List<Client>>(text);
+                var clients = JsonConvert.DeserializeObject<List<Client>>(text);
+                if (clients == null)
+                    throw new Exception();
+                var id = 0;
+                BlobCache.UserAccount.InvalidateAll();
+                foreach (var x in clients)
+                {
+                    BlobCache.UserAccount.InsertObject((++id).ToString(), x);
+                }
+                BlobCache.UserAccount.Flush();
             }
             catch (Exception e)
             {
-                var bf = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-                using (var fs = File.Open(path + ".bin", FileMode.Open))
-                {
-                    Clients = bf.Deserialize(fs) as List<Client>;
-                }
+                MessageBox.Show("При загрузке базы данных произошла ошибка, критическая ситуация сообщения об ошибке:" +
+                                e.Message + e.StackTrace);
+                return;
             }
 
-            if (Clients == null)
-                throw new Exception();
 
             FillInHistory();
         }
@@ -95,15 +103,10 @@ namespace denta_med_crm.Model
             {
                 var json = JsonConvert.SerializeObject(Clients);
                 File.WriteAllText(path, json);
-                var bf = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-                using (var fs = File.Create(path + ".bin"))
-                {
-                    bf.Serialize(fs, Clients);
-                }
             }
         }
 
-        public IEnumerable<Procedure> EnumerateProcedures()
+        private IEnumerable<Procedure> EnumerateProcedures()
         {
             foreach (var item in Clients)
             {
@@ -160,7 +163,7 @@ namespace denta_med_crm.Model
 
         public void Dispose()
         {
-            Timer.Dispose();
+            //Timer.Dispose();
         }
     }
 }
