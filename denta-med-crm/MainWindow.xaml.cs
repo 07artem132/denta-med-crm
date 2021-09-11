@@ -77,9 +77,16 @@ namespace denta_med_crm
             temp.ShowDialog();
             if (temp.AddedUser != null)
             {
-                var id = db.Clients.Max(x => int.Parse(x.Id));
+                var id = 0;
+                if (db.Clients.Count > 0)
+                {
+                    id = db.Clients.Max(x => int.Parse(x.Id));
+                }
+
+                temp.AddedUser.Id = (++id).ToString();
+                
                 db.Clients.Add(temp.AddedUser);
-                BlobCache.UserAccount.InsertObject((++id).ToString(), temp.AddedUser);
+                BlobCache.UserAccount.InsertObject(temp.AddedUser.Id, temp.AddedUser);
                 BlobCache.UserAccount.Flush();
                 dataGrid.Items.Refresh();
             }

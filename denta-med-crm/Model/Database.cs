@@ -82,7 +82,8 @@ namespace denta_med_crm.Model
                 BlobCache.UserAccount.InvalidateAll();
                 foreach (var x in clients)
                 {
-                    BlobCache.UserAccount.InsertObject((++id).ToString(), x);
+                    x.Id = (++id).ToString();
+                    BlobCache.UserAccount.InsertObject(x.Id, x);
                 }
                 BlobCache.UserAccount.Flush();
             }
@@ -94,6 +95,7 @@ namespace denta_med_crm.Model
             }
 
 
+            Clients = (List<Client>) BlobCache.UserAccount.GetAllObjects<Client>().Wait();
             FillInHistory();
         }
 
