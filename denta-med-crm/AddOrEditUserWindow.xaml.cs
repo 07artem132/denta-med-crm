@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 using denta_med_crm.Model;
+using DynamicData;
 
 namespace denta_med_crm
 {
@@ -16,7 +18,7 @@ namespace denta_med_crm
     {
         public Client Client
         {
-            get { return (Client)GetValue(ClientProperty); }
+            get { return (Client) GetValue(ClientProperty); }
             set { SetValue(ClientProperty, value); }
         }
 
@@ -31,17 +33,21 @@ namespace denta_med_crm
             InitializeComponent();
 
 
-
             _undoButton.Visibility = clientOrNull == null ? Visibility.Visible : Visibility.Hidden;
             if (clientOrNull == null)
+            {
                 Client = new Client();
+                //иначе не работает!!
+                Client.Inspections = new ObservableCollection<Inspection>();
+                Client.Procedures = new ObservableCollection<Procedure>();
+            }
             else Client = clientOrNull;
 
-            var enu = new[] { _ts1, _ts2, _ts3, _ts4 };
+            var enu = new[] {_ts1, _ts2, _ts3, _ts4};
             foreach (var grid in enu)
-                foreach (var ui in grid.Children)
-                    if (ui is TextBox tb)
-                        tb.TextChanged += OnToothTextboxChanged;
+            foreach (var ui in grid.Children)
+                if (ui is TextBox tb)
+                    tb.TextChanged += OnToothTextboxChanged;
 
             _inspections.SelectionChanged += (x, y) =>
             {
@@ -81,6 +87,7 @@ namespace denta_med_crm
                 "erher6",
             };*/
         }
+
         private void updateAvalibleTeethHistory()
         {
             HashSet<int> available = new HashSet<int>();
@@ -97,6 +104,7 @@ namespace denta_med_crm
                     }
                 }
             }
+
             foreach (var procedure in Client.Procedures)
             {
                 for (int i = 1; i <= 8; i++)
@@ -110,8 +118,10 @@ namespace denta_med_crm
                     }
                 }
             }
+
             teethViewTest.SetAvailableTeeth(available.ToArray());
         }
+
         static AddOrEditUserWindow()
         {
             ClientProperty = DependencyProperty.Register("Client", typeof(Client), typeof(AddOrEditUserWindow));
@@ -130,19 +140,19 @@ namespace denta_med_crm
         }
 
 
-
         private void LoadToothData(Inspection from)
         {
             disallowEditingTeeth = true;
-            var enu = new[] { _ts1, _ts2, _ts3, _ts4 };
+            var enu = new[] {_ts1, _ts2, _ts3, _ts4};
             foreach (var grid in enu)
-                foreach (var ui in grid.Children)
+            foreach (var ui in grid.Children)
+            {
+                if (ui is TextBox tb && tb.Tag != null)
                 {
-                    if (ui is TextBox tb && tb.Tag != null)
-                    {
-                        tb.Text = from.GetToothData(int.Parse(tb.Tag.ToString()));
-                    }
+                    tb.Text = from.GetToothData(int.Parse(tb.Tag.ToString()));
                 }
+            }
+
             disallowEditingTeeth = false;
         }
 
@@ -151,7 +161,7 @@ namespace denta_med_crm
             if (disallowEditingTeeth)
                 return;
 
-            var textBox = ((TextBox)sender);
+            var textBox = ((TextBox) sender);
             var num = int.Parse(textBox.Tag.ToString());
 
             var selectedInspection = _inspections.SelectedItem as Inspection;
@@ -193,24 +203,19 @@ namespace denta_med_crm
 
         private void MenuItem_MouseDown(object sender, MouseButtonEventArgs e)
         {
-
         }
 
         private void MenuItem_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-
         }
-
 
 
         private void _qTest_TextChanged(object sender, TextChangedEventArgs e)
         {
-
         }
 
         private void _inspections_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -227,7 +232,7 @@ namespace denta_med_crm
         {
             if (_proceduresGrid.DataContext == null)
                 return;
-            var newDC = (Procedure)_proceduresGrid.DataContext;
+            var newDC = (Procedure) _proceduresGrid.DataContext;
 
             List<int> available = new List<int>();
             for (int i = 1; i <= 8; i++)
@@ -239,12 +244,13 @@ namespace denta_med_crm
                         available.Add(fullNm);
                 }
             }
+
             _teethViewProcedures.SetAvailableTeeth(available.ToArray());
         }
 
         private void _teethViewProcedures_ToothPicked(int obj)
         {
-            var newDC = (Procedure)_proceduresGrid.DataContext;
+            var newDC = (Procedure) _proceduresGrid.DataContext;
             proceduresCurrentTeeth = obj;
             _teethProcedureDescription.Text = newDC.GetToothData(obj);
         }
@@ -253,7 +259,7 @@ namespace denta_med_crm
         {
             if (proceduresCurrentTeeth != -1)
             {
-                var newDC = (Procedure)_proceduresGrid.DataContext;
+                var newDC = (Procedure) _proceduresGrid.DataContext;
                 newDC.SetToothData(proceduresCurrentTeeth, _teethProcedureDescription.Text);
                 _proceduresGrid_DataContextChanged(null, new DependencyPropertyChangedEventArgs());
             }
@@ -266,24 +272,28 @@ namespace denta_med_crm
             {
                 var result = inspection.GetToothData(obj);
                 if (!string.IsNullOrEmpty(result))
-                    _teethInfo.Items.Add(new string[4] {
+                    _teethInfo.Items.Add(new string[4]
+                    {
                         inspection.InspectionDate.ToString("dd.MM.yyyy"),
                         "Осмотр",
                         inspection.Doctor,
                         _inspection_reduction_decipher(result)
                     });
             }
+
             foreach (var procedure in Client.Procedures)
             {
                 var result = procedure.GetToothData(obj);
                 if (!string.IsNullOrEmpty(result))
-                    _teethInfo.Items.Add(new string[4] {
+                    _teethInfo.Items.Add(new string[4]
+                    {
                         procedure.ProcedureDate.ToString("dd.MM.yyyy"),
                         "Процедура",
                         procedure.Doctor,
                         result
                     });
             }
+
             _teethInfo.Items.Refresh();
         }
 
@@ -332,11 +342,10 @@ namespace denta_med_crm
 
         private void _tab_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (_tab.SelectedIndex == 3 && e.Source == sender)//your specific tabname
+            if (_tab.SelectedIndex == 3 && e.Source == sender) //your specific tabname
             {
                 updateAvalibleTeethHistory();
             }
-
         }
     }
 }

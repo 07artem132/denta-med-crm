@@ -25,12 +25,13 @@ namespace denta_med_crm
         public MainWindow()
         {
             InitializeComponent();
+            this.Dispatcher.UnhandledException += OnDispatcherUnhandledException;
             var s = new Style();
             s.Setters.Add(new Setter(VisibilityProperty, Visibility.Collapsed));
             _tabControl.ItemContainerStyle = s;
 
             InitializeOrUpdate();
-
+            
             foreach (var column in dataGrid.Columns)
             {
                 var item = new MenuItem {IsCheckable = true, IsChecked = true, Header = column.Header};
@@ -40,7 +41,14 @@ namespace denta_med_crm
                 menuFields.Items.Add(item);
             }
         }
-
+       
+        void OnDispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e) {
+            string errorMessage = string.Format("An unhandled exception occurred: {0}", e.Exception.Message);
+            MessageBox.Show(errorMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            // OR whatever you want like logging etc. MessageBox it's just example
+            // for quick debugging etc.
+            e.Handled = true;
+        }
         private void Window_Closing(object sender, CancelEventArgs e)
         {
             BlobCache.Shutdown().Wait();

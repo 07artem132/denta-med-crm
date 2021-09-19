@@ -1,19 +1,30 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Reactive.Linq;
+using System.Runtime.Serialization;
+using DynamicData;
 using Newtonsoft.Json;
+using ReactiveUI;
 
 namespace denta_med_crm.Model
 {
+    [DataContract]
     [Serializable]
-    public class Client
+    public class Client : ReactiveObject
     {
         public Client()
         {
-            Procedures.CollectionChanged += Procedures_CollectionChanged;
-            Inspections.CollectionChanged += Inspections_CollectionChanged;
-
+            this.WhenAnyValue(x => x.Procedures, x => x.Inspections)
+                .Where(x => x.Item1 != null && x.Item2 != null)
+                .Subscribe(x =>
+                {
+                    var (procedures, inspections) = x;
+                    procedures.CollectionChanged += Procedures_CollectionChanged;
+                    inspections.CollectionChanged += Inspections_CollectionChanged;
+                });
         }
 
         private void Inspections_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -52,35 +63,49 @@ namespace denta_med_crm.Model
             }
         }
 
-        public string Id { get; set; }
+        [DataMember] [JsonProperty("id")] public string? Id { get; set; }
         [JsonProperty("full_name")] public string FullName { get; set; } = "";
-        [JsonProperty("sex")] public Sex Sex { get; set; } = Sex.Male;
+        [DataMember] [JsonProperty("sex")] public Sex Sex { get; set; } = Sex.Male;
 
-        [JsonProperty("client_description")] public string ClientDescription { get; set; } = "";
+        [DataMember]
+        [JsonProperty("client_description")]
+        public string ClientDescription { get; set; } = "";
 
         //подсветить если сегодня его день рождения или в пределах 7 дней в карточке
-        [JsonProperty("date_of_birth")] public DateTime DateOfBirth { get; set; } = DateTime.Now;
+        [DataMember]
+        [JsonProperty("date_of_birth")]
+        public DateTime DateOfBirth { get; set; } = DateTime.Now;
 
         //Типа он с нами c такого-то (сколько-то в карточке)
-        [JsonProperty("first_visit")] public DateTime FirstVisit { get; set; } = DateTime.Now;
+        [DataMember]
+        [JsonProperty("first_visit")]
+        public DateTime FirstVisit { get; set; } = DateTime.Now;
 
         //0 - нет, если есть то сумма скидки в % вводится
-        [JsonProperty("discount")] public int Discount { get; set; }
+        [DataMember]
+        [JsonProperty("discount")]
+        public int Discount { get; set; }
 
         //основной
-        [JsonProperty("main_phone_number")] public string MainPhoneNumber { get; set; } = "";
+        [DataMember]
+        [JsonProperty("main_phone_number")]
+        public string MainPhoneNumber { get; set; } = "";
 
         //альтернативный
+        [DataMember]
         [JsonProperty("alternative_phone_number")]
         public string AlternativePhoneNumber { get; set; } = "";
 
         //список процедур открывается в отдельном окне
+        [DataMember]
         [JsonProperty("procedures")]
-        public ObservableCollection<Procedure> Procedures { get; set; } = new ObservableCollection<Procedure>();
+        public ObservableCollection<Procedure> Procedures { get; set; }
 
+        [DataMember]
         [JsonProperty("inspections")]
-        public ObservableCollection<Inspection> Inspections { get; set; } = new ObservableCollection<Inspection>();
+        public ObservableCollection<Inspection> Inspections { get; set; }
 
+        [IgnoreDataMember]
         [JsonIgnore]
         public string DaysToBirthday
         {
@@ -97,6 +122,7 @@ namespace denta_med_crm.Model
             }
         }
 
+        [IgnoreDataMember]
         [JsonIgnore]
         public string LastVisitInfo
         {

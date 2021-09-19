@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
@@ -9,13 +11,38 @@ using System.Windows;
 using Akavache;
 using Akavache.Sqlite3;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using ReactiveUI;
+using Splat;
 using Registrations = Akavache.Registrations;
 
 namespace denta_med_crm.Model
 {
+    public class TraceWriter : ITraceWriter
+    {
+        public TraceLevel LevelFilter
+        {
+            // trace all messages. nlog can handle filtering
+            get { return TraceLevel.Verbose; }
+        }
+
+        public void Trace(TraceLevel level, string message, Exception ex)
+        {
+            if (ex is null)
+                Debug.WriteLine($"{level}{message}");
+            else
+                Debug.WriteLine($"{level}{message}{ex.ToString()}");
+        }
+
+        private LogLevel GetLogLevel(TraceLevel level)
+        {
+            return LogLevel.Debug;
+        }
+    }
+
     public class Database
     {
-        public List<Client> Clients;
+        public List<Client> Clients = new List<Client>();
         public HistoryCache DoctorsHistory;
         private readonly Timer Timer = null;
         private readonly object locker = new object();
@@ -38,14 +65,20 @@ namespace denta_med_crm.Model
                 Directory.CreateDirectory("backups");
             Registrations.Start("DriverControl");
 
-            BlobCache.LocalMachine = new SqlRawPersistentBlobCache(Path.Combine(CurrentPath, "local.db"));
-            BlobCache.UserAccount = new SqlRawPersistentBlobCache(Path.Combine(CurrentPath, "user.db"));
+            BlobCache.LocalMachine =
+                new SqlRawPersistentBlobCache(Path.Combine(CurrentPath, "local.db"), RxApp.MainThreadScheduler);
+            BlobCache.UserAccount =
+                new SqlRawPersistentBlobCache(Path.Combine(CurrentPath, "user.db"), RxApp.MainThreadScheduler);
             BlobCache.Secure = new SQLiteEncryptedBlobCache(Path.Combine(CurrentPath, "secure.db"));
+            Locator.CurrentMutable.RegisterConstant<JsonSerializerSettings>(new JsonSerializerSettings()
+                {TraceWriter = new TraceWriter()});
             try
             {
+                //  Clients = (List<Client>) BlobCache.UserAccount.GetAllObjects<Client>().Wait();
+
                 Clients = (List<Client>) BlobCache.UserAccount.GetAllObjects<Client>().Wait();
                 FillInHistory();
-                Export(Path.Combine(Environment.CurrentDirectory,$@"backups\{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.json"));
+                Export(Path.Combine(Environment.CurrentDirectory, $@"backups\{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.json"));
             }
             catch (KeyNotFoundException e)
             {
@@ -85,7 +118,12 @@ namespace denta_med_crm.Model
                     x.Id = (++id).ToString();
                     BlobCache.UserAccount.InsertObject(x.Id, x);
                 }
+
                 BlobCache.UserAccount.Flush();
+
+
+                Clients = (List<Client>) BlobCache.UserAccount.GetAllObjects<Client>().Wait();
+                FillInHistory();
             }
             catch (Exception e)
             {
@@ -93,10 +131,6 @@ namespace denta_med_crm.Model
                                 e.Message + e.StackTrace);
                 return;
             }
-
-
-            Clients = (List<Client>) BlobCache.UserAccount.GetAllObjects<Client>().Wait();
-            FillInHistory();
         }
 
         public void Export(string path)

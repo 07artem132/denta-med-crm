@@ -7,5 +7,8 @@ namespace denta_med_crm
     /// </summary>
     public partial class App : Application
     {
+       
+
+
     }
 }
