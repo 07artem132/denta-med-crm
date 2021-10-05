@@ -72,20 +72,7 @@ namespace denta_med_crm
                 _procedures.SelectedItem = redirectTo;
             }
 
-            /*
-            _TEST.AutoSuggestionList = new List<string>()
-            {
-                "qwer",
-                "erewt",
-                "gerger",
-                "erher",
-                "erher1",
-                "erher2",
-                "erher3",
-                "erher4",
-                "erher5",
-                "erher6",
-            };*/
+          
         }
 
         private void updateAvalibleTeethHistory()

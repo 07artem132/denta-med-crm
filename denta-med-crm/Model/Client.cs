@@ -64,7 +64,7 @@ namespace denta_med_crm.Model
         }
 
         [DataMember] [JsonProperty("id")] public string? Id { get; set; }
-        [JsonProperty("full_name")] public string FullName { get; set; } = "";
+        [DataMember] [JsonProperty("full_name")] public string FullName { get; set; } = "";
         [DataMember] [JsonProperty("sex")] public Sex Sex { get; set; } = Sex.Male;
 
         [DataMember]

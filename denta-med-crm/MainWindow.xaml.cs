@@ -178,6 +178,8 @@ namespace denta_med_crm
             new AddOrEditUserWindow(client).ShowDialog();
             dataGrid.Items.Refresh();
             AddEvents(client);
+            BlobCache.UserAccount.InsertObject(client.Id, client);
+            BlobCache.UserAccount.Flush();
         }
 
         private void MenuItemTabClient_Click(object sender, RoutedEventArgs e)
